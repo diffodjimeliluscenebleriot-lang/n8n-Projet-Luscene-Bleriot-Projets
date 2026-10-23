@@ -8,8 +8,8 @@ Dépôt regroupant mes projets d'automatisation et de création de contenu : des
 
 - [Organisation du dépôt](#organisation-du-dépôt)
 - [Les skills Claude](#les-skills-claude)
-  - [Comment fonctionne un skill](#comment-fonctionne-un-skill)
-  - [Installer un skill](#installer-un-skill)
+  - [Vue d'ensemble](#vue-densemble)
+  - [Installation](#installation)
   - [interview](#interview)
   - [doubt-driven-dev](#doubt-driven-dev)
   - [hostile-review](#hostile-review)
@@ -36,22 +36,34 @@ Dépôt regroupant mes projets d'automatisation et de création de contenu : des
 
 ## Les skills Claude
 
-Un **skill** est un petit paquet d'instructions que Claude Code charge au moment où il en a besoin. Il ne s'exécute pas tout seul : Claude lit ses consignes et les applique à la tâche en cours.
+Les skills sont des modules d'instructions que Claude Code charge automatiquement lorsqu'une demande correspond à leur description. Ce dépôt en contient trois, conçus pour se compléter : **cadrer** une demande, **construire** avec des preuves, puis **contrôler** le résultat.
 
-### Comment fonctionne un skill
+### Vue d'ensemble
 
-Chaque skill est un dossier contenant un fichier `SKILL.md`, composé de deux parties :
+| Skill | Rôle | Déclenchement typique | Résultat |
+|---|---|---|---|
+| [`interview`](skills/interview/SKILL.md) | Cadrer une demande floue | « interview-moi », « pose-moi des questions » | Spécification validée |
+| [`doubt-driven-dev`](skills/doubt-driven-dev/SKILL.md) | Développer en vérifiant chaque hypothèse | « doubt-driven dev », bug difficile, code critique | Bilan : vérifié, supposé, risques restants |
+| [`hostile-review`](skills/hostile-review/SKILL.md) | Chercher ce qui va casser | « hostile review », « démonte mon code » | Rapport classé par gravité |
 
-1. **Un en-tête** entre deux lignes `---`, avec un `name` et une `description`. C'est la `description` qui décide quand Claude charge le skill : elle liste les situations et les phrases qui le déclenchent (« interview-moi », « hostile review », etc.). Claude lit cet en-tête pour savoir si le skill est pertinent ; le reste n'est chargé qu'une fois le skill choisi.
-2. **Le corps** en Markdown : les règles, la méthode pas à pas et le format de sortie attendu.
+### Structure d'un skill
 
-Un skill peut être déclenché de deux façons :
-- **automatiquement**, quand la demande correspond à sa description ;
-- **explicitement**, en tapant `/nom-du-skill` (par exemple `/interview`).
+```
+skills/
+└── interview/
+    └── SKILL.md
+```
 
-### Installer un skill
+Chaque `SKILL.md` comporte deux parties :
 
-Copie le dossier du skill dans ton dossier personnel de skills, puis relance Claude Code. Le skill doit se trouver à `~/.claude/skills/<nom>/SKILL.md`.
+- **un en-tête** (`name`, `description`) : Claude s'en sert pour décider si le skill est pertinent. La `description` énumère les phrases et situations qui déclenchent le skill ;
+- **un corps** en Markdown : la méthode à suivre, les règles et le format de sortie. Il n'est chargé que lorsque le skill est retenu.
+
+Un skill s'active de deux façons : **automatiquement**, selon sa description, ou **explicitement** avec la commande `/nom-du-skill`, par exemple `/hostile-review`.
+
+### Installation
+
+Copie le dossier du skill dans `~/.claude/skills/`, puis relance Claude Code.
 
 ```bash
 # Windows (PowerShell)
@@ -65,18 +77,17 @@ Répète l'opération pour `doubt-driven-dev` et `hostile-review`.
 
 ### interview
 
-**Pour quoi faire :** transformer une idée floue en spécification claire, **avant** d'écrire la moindre ligne de code.
+**Objectif.** Transformer une idée floue en spécification claire, avant toute ligne de code.
 
-**Quand il se déclenche :** « interview-moi », « pose-moi des questions », « aide-moi à préciser mon idée », ou toute demande de fonctionnalité trop vague pour être exécutée sans deviner.
+**Méthode.**
+1. Claude consulte le contexte disponible (README, structure du projet, fichiers concernés) afin de ne pas poser de question dont la réponse figure déjà dans le code.
+2. Il reformule la demande en une phrase pour validation.
+3. Il pose **une question à la fois**, si possible sous forme d'options (A, B, C) assorties d'une recommandation.
+4. Il couvre successivement le **pourquoi** (problème, public, situation actuelle), le **périmètre** (inclus et exclu), le **comportement** (parcours principal, cas limites, erreurs) et les **contraintes** (technique, performance, sécurité).
 
-**Fonctionnement :**
-1. Claude lit le contexte disponible (README, structure du projet, fichiers concernés) pour ne pas poser de questions dont la réponse est déjà dans le code.
-2. Il reformule la demande en une phrase.
-3. Il pose **une seule question à la fois**, de préférence sous forme d'options A / B / C avec sa recommandation.
-4. Il progresse du général au détail : **le pourquoi** (problème, public, situation actuelle), **le périmètre** (ce qui est inclus et surtout ce qui est exclu), **le comportement** (parcours principal, cas limites, erreurs, données vides), puis **les contraintes** (technologie imposée, performance, sécurité).
-5. Il ne code rien et ne crée aucun fichier tant que la spécification n'est pas validée.
+**Garde-fou.** Aucun code et aucun fichier ne sont produits tant que la spécification n'est pas validée.
 
-**Sortie :** une spécification au format suivant :
+**Résultat.** Une spécification structurée :
 
 ```markdown
 # Spec : <titre>
@@ -90,56 +101,51 @@ Répète l'opération pour `doubt-driven-dev` et `hostile-review`.
 ## Questions encore ouvertes
 ```
 
+**Exemple.** Demande : « Je veux une application de suivi de dépenses. » → Claude commence par demander quel problème elle doit résoudre et pour qui, puis fixe le périmètre avant de proposer une spécification.
+
 ### doubt-driven-dev
 
-**Pour quoi faire :** développer avec méthode quand un bug est difficile, quand le code est critique, ou quand une solution « qui marchait » s'est révélée fausse. Le principe : **tout ce que tu crois est suspect tant que tu ne l'as pas vérifié**, y compris ta mémoire, la documentation, les noms de fonctions et les tests qui passent.
+**Objectif.** Développer sans rien tenir pour acquis. Chaque hypothèse est listée, vérifiée, puis seulement ensuite utilisée. Ce skill convient aux bugs difficiles, au code critique et aux situations où une solution « qui marchait » s'est révélée fausse.
 
-**Quand il se déclenche :** « doubt-driven dev », « développement rigoureux », un bug difficile, du code critique.
+**Règles.**
+1. Aucune affirmation sans preuve : la commande et sa sortie doivent être citées.
+2. Vérifier avant d'utiliser : une API, une option ou une version se contrôle dans le code ou la documentation du projet, pas de mémoire.
+3. Un test qui n'a jamais échoué ne prouve rien : il doit d'abord échouer pour la bonne raison.
+4. Douter de son correctif : reproduire le bug d'origine pour confirmer que la cause, et non le symptôme, a été traitée.
+5. Distinguer ce qui est vérifié, supposé et inconnu.
 
-**Les cinq règles :**
-1. **Pas d'affirmation sans preuve.** Interdit de dire « ça marche » sans avoir exécuté quelque chose qui le montre : la commande et sa sortie doivent être citées.
-2. **Vérifier avant d'utiliser.** Une API, une option, une version : on lit le code ou la doc réelle du projet.
-3. **Un test qui n'a jamais échoué ne prouve rien.** On écrit le test, on vérifie qu'il échoue pour la bonne raison, puis on le fait passer.
-4. **Douter de son propre correctif.** Après une correction, on se demande si l'on a corrigé le symptôme plutôt que la cause, et on reproduit le bug d'origine.
-5. **Distinguer** ce qui est *vérifié*, *supposé* et *inconnu*.
+**Boucle de travail.** Pour chaque étape : formuler les hypothèses → vérifier les plus critiques par le moyen le moins coûteux → modifier le minimum → exécuter et montrer le résultat → chercher activement les cas qui peuvent encore échouer (entrée vide, `null`, volume élevé, concurrence, Windows et Linux, encodage).
 
-**La boucle de travail, pour chaque étape :**
-1. **Hypothèses** : lister ce qui conditionne la solution, chacune marquée « non vérifié » au départ ;
-2. **Vérification** : trouver le moyen le moins cher de confirmer ou d'infirmer chaque hypothèse critique (lire le code, un script d'une ligne, un test, un log) ;
-3. **Changement minimal** : modifier le moins de choses possible, une à la fois ;
-4. **Preuve** : exécuter et montrer le résultat. Si le résultat surprend, s'arrêter et comprendre avant de continuer ;
-5. **Contre-examen** : chercher activement ce qui peut encore casser (entrée vide, null, gros volume, concurrence, Windows et Linux, encodage).
-
-**Rapport final :** trois listes, « Vérifié », « Supposé (non vérifié) » et « Risques restants », puis un niveau de confiance (faible, moyen ou élevé) avec sa justification.
+**Résultat.** Un bilan en trois listes (**vérifié**, **supposé non vérifié**, **risques restants**) et un niveau de confiance (faible, moyen ou élevé), justifié en une phrase.
 
 ### hostile-review
 
-**Pour quoi faire :** trouver ce qui va casser en production **avant** que ça arrive. Le code est considéré comme faux jusqu'à preuve du contraire. La critique vise le code, jamais la personne : pas de moqueries, mais aucun compliment ni formule pour adoucir.
+**Objectif.** Trouver les défauts d'un code avant qu'ils n'atteignent la production. Le code est considéré comme défectueux tant qu'il n'a pas prouvé le contraire. La critique porte sur le code, jamais sur la personne, et ne contient ni compliment ni formule d'adoucissement.
 
-**Quand il se déclenche :** « hostile review », revue sans pitié ou adversariale, « démonte » ou « casse » mon code, un diff, une PR ou un fichier.
+**Méthode.**
+1. **Périmètre** : le fichier, la PR ou le diff indiqué ; à défaut, les modifications en cours (`git diff`, puis `git diff --staged`). Le code qui entoure les modifications (appelants, fonctions appelées, tests) est également lu.
+2. **Angles d'attaque** : exactitude, entrées hostiles, gestion des erreurs, concurrence, sécurité, performance.
+3. **Preuve** : chaque problème doit être accompagné de l'entrée ou de la situation qui le déclenche, idéalement d'un test qui le démontre. Une remarque sans scénario concret est retirée ou classée « à vérifier ».
 
-**Fonctionnement :**
-1. **Cibler** : le fichier, la PR ou le diff fourni. À défaut, les changements en cours (`git diff`, puis `git diff --staged`). Claude lit aussi le code autour (appelants, fonctions appelées, tests), car les bugs se cachent souvent aux frontières.
-2. **Attaquer** chaque morceau sous plusieurs angles : exactitude (décalages d'un, conditions inversées, valeurs de retour ignorées), entrées hostiles (vide, null, négatif, très grand, unicode, caractères spéciaux), erreurs mal gérées, concurrence, sécurité, performance.
-3. **Prouver** : chaque problème doit venir avec **l'entrée ou la situation exacte** qui produit le mauvais résultat, idéalement un petit test qui le démontre. Une remarque sans scénario concret est abandonnée ou classée « à vérifier ».
-4. **Rapporter** par niveau de gravité :
-   - 🔴 **Critique** : bug certain, faille, perte de données ;
-   - 🟠 **Majeur** : cassera dans des cas réalistes ;
-   - 🟡 **Mineur** : fragilité, dette, lisibilité qui cache un risque ;
-   - ❓ **À vérifier** : soupçon sans preuve.
+**Niveaux de gravité.**
 
-Chaque point indique le fichier et la ligne.
+| Niveau | Signification |
+|---|---|
+| 🔴 Critique | Bug certain, faille de sécurité, perte de données |
+| 🟠 Majeur | Défaillance dans des cas réalistes |
+| 🟡 Mineur | Fragilité, dette technique, lisibilité qui masque un risque |
+| ❓ À vérifier | Soupçon sans preuve à ce stade |
+
+Chaque point indique le fichier et la ligne concernés.
 
 ### Enchaîner les skills
 
-Les trois skills se complètent dans un ordre naturel :
-
 ```
-interview            →  on sait ce qu'on construit (spec validée)
-      ↓
-doubt-driven-dev     →  on le construit en vérifiant chaque hypothèse
-      ↓
-hostile-review       →  on attaque le résultat avant de le livrer
+interview  →  spécification validée
+     ↓
+doubt-driven-dev  →  implémentation vérifiée étape par étape
+     ↓
+hostile-review  →  contrôle final avant livraison
 ```
 
 ---
