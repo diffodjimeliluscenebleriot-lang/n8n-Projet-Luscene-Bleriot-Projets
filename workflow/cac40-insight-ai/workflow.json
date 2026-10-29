@@ -1,0 +1,3537 @@
+{
+  "id": "cac40-insight-ai",
+  "name": "CAC 40 Insight AI",
+  "nodes": [
+    {
+      "id": "93d8c207-4e9b-4873-bb3f-796168f9bb66",
+      "name": "Formulaire CAC 40 Insight",
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.6,
+      "position": [
+        100,
+        300
+      ],
+      "parameters": {
+        "formTitle": "CAC 40 Insight AI",
+        "formDescription": "Analyse comparative des sociétés du CAC 40 sur un mois glissant, à partir de cours de clôture réels (EODHD) et d’une composition de l’indice actualisée à chaque exécution. Outil pédagogique : ce rapport ne constitue pas un conseil en investissement.",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Périmètre analysé",
+              "fieldName": "perimetre",
+              "fieldType": "radio",
+              "requiredField": true,
+              "defaultValue": "Tout le CAC 40 (40 sociétés)",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "Tout le CAC 40 (40 sociétés)"
+                  },
+                  {
+                    "option": "Sélection personnalisée"
+                  }
+                ]
+              }
+            },
+            {
+              "fieldLabel": "Sociétés (uniquement pour une sélection personnalisée)",
+              "fieldName": "societes",
+              "fieldType": "checkbox",
+              "requiredField": false,
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "Accor (AC)"
+                  },
+                  {
+                    "option": "Air Liquide (AI)"
+                  },
+                  {
+                    "option": "Airbus (AIR)"
+                  },
+                  {
+                    "option": "ArcelorMittal (MT)"
+                  },
+                  {
+                    "option": "Axa (CS)"
+                  },
+                  {
+                    "option": "BNP Paribas (BNP)"
+                  },
+                  {
+                    "option": "Bouygues (EN)"
+                  },
+                  {
+                    "option": "Bureau Veritas (BVI)"
+                  },
+                  {
+                    "option": "Capgemini (CAP)"
+                  },
+                  {
+                    "option": "Carrefour (CA)"
+                  },
+                  {
+                    "option": "Crédit Agricole (ACA)"
+                  },
+                  {
+                    "option": "Danone (BN)"
+                  },
+                  {
+                    "option": "Dassault Systèmes (DSY)"
+                  },
+                  {
+                    "option": "Eiffage (FGR)"
+                  },
+                  {
+                    "option": "Engie (ENGI)"
+                  },
+                  {
+                    "option": "EssilorLuxottica (EL)"
+                  },
+                  {
+                    "option": "Eurofins Scientific (ERF)"
+                  },
+                  {
+                    "option": "Euronext (ENX)"
+                  },
+                  {
+                    "option": "Hermès (RMS)"
+                  },
+                  {
+                    "option": "Kering (KER)"
+                  },
+                  {
+                    "option": "Legrand (LR)"
+                  },
+                  {
+                    "option": "L'Oréal (OR)"
+                  },
+                  {
+                    "option": "LVMH (MC)"
+                  },
+                  {
+                    "option": "Michelin (ML)"
+                  },
+                  {
+                    "option": "Orange (ORA)"
+                  },
+                  {
+                    "option": "Pernod Ricard (RI)"
+                  },
+                  {
+                    "option": "Publicis (PUB)"
+                  },
+                  {
+                    "option": "Renault (RNO)"
+                  },
+                  {
+                    "option": "Safran (SAF)"
+                  },
+                  {
+                    "option": "Saint-Gobain (SGO)"
+                  },
+                  {
+                    "option": "Sanofi (SAN)"
+                  },
+                  {
+                    "option": "Schneider Electric (SU)"
+                  },
+                  {
+                    "option": "Société Générale (GLE)"
+                  },
+                  {
+                    "option": "Stellantis (STLAP)"
+                  },
+                  {
+                    "option": "STMicroelectronics (STMPA)"
+                  },
+                  {
+                    "option": "Thales (HO)"
+                  },
+                  {
+                    "option": "TotalEnergies (TTE)"
+                  },
+                  {
+                    "option": "Unibail-Rodamco-Westfield (URW)"
+                  },
+                  {
+                    "option": "Veolia (VIE)"
+                  },
+                  {
+                    "option": "Vinci (DG)"
+                  }
+                ]
+              }
+            },
+            {
+              "fieldLabel": "Période d’analyse",
+              "fieldName": "periode",
+              "fieldType": "dropdown",
+              "requiredField": true,
+              "defaultValue": "1 mois glissant",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "1 jour (dernière séance)"
+                  },
+                  {
+                    "option": "1 semaine glissante"
+                  },
+                  {
+                    "option": "1 mois glissant"
+                  },
+                  {
+                    "option": "1 trimestre glissant"
+                  },
+                  {
+                    "option": "1 semestre glissant"
+                  },
+                  {
+                    "option": "1 an glissant"
+                  }
+                ]
+              }
+            },
+            {
+              "fieldLabel": "Module comparaison",
+              "fieldName": "module_comparaison",
+              "fieldType": "dropdown",
+              "requiredField": true,
+              "defaultValue": "Oui",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "Oui"
+                  },
+                  {
+                    "option": "Non"
+                  }
+                ]
+              }
+            },
+            {
+              "fieldLabel": "Module risques",
+              "fieldName": "module_risques",
+              "fieldType": "dropdown",
+              "requiredField": true,
+              "defaultValue": "Oui",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "Oui"
+                  },
+                  {
+                    "option": "Non"
+                  }
+                ]
+              }
+            },
+            {
+              "fieldLabel": "Module actualités (5 appels EODHD par société)",
+              "fieldName": "module_actualites",
+              "fieldType": "dropdown",
+              "requiredField": true,
+              "defaultValue": "Non",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "Oui"
+                  },
+                  {
+                    "option": "Non"
+                  }
+                ]
+              }
+            },
+            {
+              "fieldLabel": "Module scénario",
+              "fieldName": "module_scenario",
+              "fieldType": "dropdown",
+              "requiredField": true,
+              "defaultValue": "Oui",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "Oui"
+                  },
+                  {
+                    "option": "Non"
+                  }
+                ]
+              }
+            },
+            {
+              "fieldLabel": "E-mail pour recevoir le rapport (facultatif)",
+              "fieldName": "email",
+              "fieldType": "email",
+              "requiredField": false,
+              "placeholder": "prenom.nom@exemple.fr"
+            }
+          ]
+        },
+        "options": {
+          "buttonLabel": "Lancer l’analyse",
+          "appendAttribution": false,
+          "customCss": "table{border-collapse:collapse;width:100%;font-size:13px}th,td{border:1px solid #d0d4dc;padding:4px 6px;text-align:left}th{background:#f1f3f7}"
+        }
+      },
+      "webhookId": "e44fb70c-ab1b-44b4-9230-2f5f6c7a6324"
+    },
+    {
+      "id": "51c0ae71-3538-4456-a40d-957c141c64e9",
+      "name": "Paramètres analyse",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        300,
+        300
+      ],
+      "parameters": {
+        "mode": "manual",
+        "includeOtherFields": false,
+        "assignments": {
+          "assignments": [
+            {
+              "id": "p-perimetre",
+              "name": "perimetreDemande",
+              "type": "string",
+              "value": "={{ String($json.perimetre ?? $json[\"Périmètre analysé\"] ?? \"Tout le CAC 40 (40 sociétés)\") }}"
+            },
+            {
+              "id": "p-selection",
+              "name": "selectionMnemos",
+              "type": "array",
+              "value": "={{ [].concat($json.societes ?? $json[\"Sociétés (uniquement pour une sélection personnalisée)\"] ?? []).map(l => (String(l).match(/\\(([A-Z0-9]+)\\)\\s*$/) || [])[1]).filter(Boolean) }}"
+            },
+            {
+              "id": "p-complete",
+              "name": "analyseComplete",
+              "type": "boolean",
+              "value": "={{ String($json.perimetre ?? $json[\"Périmètre analysé\"] ?? \"Tout\").startsWith(\"Tout\") || [].concat($json.societes ?? $json[\"Sociétés (uniquement pour une sélection personnalisée)\"] ?? []).length === 0 }}"
+            },
+            {
+              "id": "p-avert",
+              "name": "avertissementSelection",
+              "type": "string",
+              "value": "={{ !String($json.perimetre ?? $json[\"Périmètre analysé\"] ?? \"Tout\").startsWith(\"Tout\") && [].concat($json.societes ?? $json[\"Sociétés (uniquement pour une sélection personnalisée)\"] ?? []).length === 0 ? \"Sélection personnalisée demandée sans aucune société cochée : l’analyse a été étendue à tout le CAC 40.\" : \"\" }}"
+            },
+            {
+              "id": "p-periode",
+              "name": "periodeLibelle",
+              "type": "string",
+              "value": "={{ String($json.periode ?? $json[\"Période d’analyse\"] ?? \"1 mois glissant\") + \" (clôtures quotidiennes)\" }}"
+            },
+            {
+              "id": "p-fin",
+              "name": "dateFin",
+              "type": "string",
+              "value": "={{ $today.setZone(\"Europe/Paris\").toISODate() }}"
+            },
+            {
+              "id": "p-debut",
+              "name": "dateDebut",
+              "type": "string",
+              "value": "={{ $today.setZone(\"Europe/Paris\").minus(({ \"1 jour (dernière séance)\": { days: 10 }, \"1 semaine glissante\": { days: 7 }, \"1 mois glissant\": { months: 1 }, \"1 trimestre glissant\": { months: 3 }, \"1 semestre glissant\": { months: 6 }, \"1 an glissant\": { months: 12 } })[String($json.periode ?? $json[\"Période d’analyse\"] ?? \"1 mois glissant\")] || { months: 1 }).toISODate() }}"
+            },
+            {
+              "id": "p-exec",
+              "name": "dateExecution",
+              "type": "string",
+              "value": "={{ $now.setZone(\"Europe/Paris\").toFormat(\"dd/MM/yyyy HH:mm\") }}"
+            },
+            {
+              "id": "p-mcomp",
+              "name": "moduleComparaison",
+              "type": "boolean",
+              "value": "={{ String($json.module_comparaison ?? $json[\"Module comparaison\"] ?? \"Oui\") === \"Oui\" }}"
+            },
+            {
+              "id": "p-mrisk",
+              "name": "moduleRisques",
+              "type": "boolean",
+              "value": "={{ String($json.module_risques ?? $json[\"Module risques\"] ?? \"Oui\") === \"Oui\" }}"
+            },
+            {
+              "id": "p-mnews",
+              "name": "moduleActualites",
+              "type": "boolean",
+              "value": "={{ String($json.module_actualites ?? $json[\"Module actualités (5 appels EODHD par société)\"] ?? \"Non\") === \"Oui\" }}"
+            },
+            {
+              "id": "p-mscen",
+              "name": "moduleScenario",
+              "type": "boolean",
+              "value": "={{ String($json.module_scenario ?? $json[\"Module scénario\"] ?? \"Oui\") === \"Oui\" }}"
+            },
+            {
+              "id": "p-email",
+              "name": "email",
+              "type": "string",
+              "value": "={{ String($json.email ?? $json[\"E-mail pour recevoir le rapport (facultatif)\"] ?? \"\").trim() }}"
+            },
+            {
+              "id": "p-s-baisse",
+              "name": "seuilBaissePeriodePct",
+              "type": "number",
+              "value": -10
+            },
+            {
+              "id": "p-s-dd",
+              "name": "seuilBaisseMaxPct",
+              "type": "number",
+              "value": -15
+            },
+            {
+              "id": "p-s-vol",
+              "name": "seuilVolatilitePct",
+              "type": "number",
+              "value": 35
+            },
+            {
+              "id": "p-s-fresh",
+              "name": "seuilFraicheurJours",
+              "type": "number",
+              "value": 5
+            },
+            {
+              "id": "p-s-obs",
+              "name": "minObservations",
+              "type": "number",
+              "value": "={{ ({ \"1 jour (dernière séance)\": 2, \"1 semaine glissante\": 4, \"1 mois glissant\": 15, \"1 trimestre glissant\": 50, \"1 semestre glissant\": 110, \"1 an glissant\": 200 })[String($json.periode ?? $json[\"Période d’analyse\"] ?? \"1 mois glissant\")] ?? 15 }}"
+            },
+            {
+              "id": "p-pause",
+              "name": "pauseEntreAppelsSecondes",
+              "type": "number",
+              "value": 3
+            },
+            {
+              "id": "p-news",
+              "name": "articlesParSociete",
+              "type": "number",
+              "value": 3
+            },
+            {
+              "id": "p-jan",
+              "name": "joursBourseParAn",
+              "type": "number",
+              "value": 252
+            },
+            {
+              "id": "p-jmo",
+              "name": "horizonScenarioJours",
+              "type": "number",
+              "value": "={{ ({ \"1 jour (dernière séance)\": 1, \"1 semaine glissante\": 5, \"1 mois glissant\": 21, \"1 trimestre glissant\": 63, \"1 semestre glissant\": 126, \"1 an glissant\": 252 })[String($json.periode ?? $json[\"Période d’analyse\"] ?? \"1 mois glissant\")] ?? 21 }}"
+            },
+            {
+              "id": "p-kfav",
+              "name": "kFavorable",
+              "type": "number",
+              "value": 1
+            },
+            {
+              "id": "p-kcen",
+              "name": "kCentral",
+              "type": "number",
+              "value": 0
+            },
+            {
+              "id": "p-kdef",
+              "name": "kDefavorable",
+              "type": "number",
+              "value": -1
+            },
+            {
+              "id": "p-panier",
+              "name": "montantPanierEur",
+              "type": "number",
+              "value": 1000
+            },
+            {
+              "id": "p-tg",
+              "name": "telegramChatId",
+              "type": "string",
+              "value": ""
+            },
+            {
+              "id": "p-gs",
+              "name": "googleSheetId",
+              "type": "string",
+              "value": ""
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "af1c9776-fe7a-4cee-b2ff-24e60c4c1f29",
+      "name": "Liste de contrôle CAC 40",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        500,
+        300
+      ],
+      "parameters": {
+        "mode": "manual",
+        "includeOtherFields": false,
+        "assignments": {
+          "assignments": [
+            {
+              "id": "r-date",
+              "name": "dateReference",
+              "type": "string",
+              "value": "2026-10-22"
+            },
+            {
+              "id": "r-src",
+              "name": "sourceReference",
+              "type": "string",
+              "value": "Wikipédia en (révision 1381078418, tableau « constituents ») et Wikipédia fr (révision 240488739, « Composition actuelle »), concordantes, consultées le 22/10/2026"
+            },
+            {
+              "id": "r-cles",
+              "name": "societesCles",
+              "type": "array",
+              "value": "[\"AIR\",\"AI\",\"SAN\",\"SU\",\"MC\",\"OR\",\"TTE\",\"BNP\",\"CAP\",\"DG\"]"
+            },
+            {
+              "id": "r-list",
+              "name": "reference",
+              "type": "array",
+              "value": "[{\"nom\":\"Accor\",\"ticker\":\"AC.PA\"},{\"nom\":\"Air Liquide\",\"ticker\":\"AI.PA\"},{\"nom\":\"Airbus\",\"ticker\":\"AIR.PA\"},{\"nom\":\"ArcelorMittal\",\"ticker\":\"MT.AS\"},{\"nom\":\"Axa\",\"ticker\":\"CS.PA\"},{\"nom\":\"BNP Paribas\",\"ticker\":\"BNP.PA\"},{\"nom\":\"Bouygues\",\"ticker\":\"EN.PA\"},{\"nom\":\"Bureau Veritas\",\"ticker\":\"BVI.PA\"},{\"nom\":\"Capgemini\",\"ticker\":\"CAP.PA\"},{\"nom\":\"Carrefour\",\"ticker\":\"CA.PA\"},{\"nom\":\"Crédit Agricole\",\"ticker\":\"ACA.PA\"},{\"nom\":\"Danone\",\"ticker\":\"BN.PA\"},{\"nom\":\"Dassault Systèmes\",\"ticker\":\"DSY.PA\"},{\"nom\":\"Eiffage\",\"ticker\":\"FGR.PA\"},{\"nom\":\"Engie\",\"ticker\":\"ENGI.PA\"},{\"nom\":\"EssilorLuxottica\",\"ticker\":\"EL.PA\"},{\"nom\":\"Eurofins Scientific\",\"ticker\":\"ERF.PA\"},{\"nom\":\"Euronext\",\"ticker\":\"ENX.PA\"},{\"nom\":\"Hermès\",\"ticker\":\"RMS.PA\"},{\"nom\":\"Kering\",\"ticker\":\"KER.PA\"},{\"nom\":\"Legrand\",\"ticker\":\"LR.PA\"},{\"nom\":\"L’Oréal\",\"ticker\":\"OR.PA\"},{\"nom\":\"LVMH\",\"ticker\":\"MC.PA\"},{\"nom\":\"Michelin\",\"ticker\":\"ML.PA\"},{\"nom\":\"Orange\",\"ticker\":\"ORA.PA\"},{\"nom\":\"Pernod Ricard\",\"ticker\":\"RI.PA\"},{\"nom\":\"Publicis\",\"ticker\":\"PUB.PA\"},{\"nom\":\"Renault\",\"ticker\":\"RNO.PA\"},{\"nom\":\"Safran\",\"ticker\":\"SAF.PA\"},{\"nom\":\"Saint-Gobain\",\"ticker\":\"SGO.PA\"},{\"nom\":\"Sanofi\",\"ticker\":\"SAN.PA\"},{\"nom\":\"Schneider Electric\",\"ticker\":\"SU.PA\"},{\"nom\":\"Société Générale\",\"ticker\":\"GLE.PA\"},{\"nom\":\"Stellantis\",\"ticker\":\"STLAP.PA\"},{\"nom\":\"STMicroelectronics\",\"ticker\":\"STMPA.PA\"},{\"nom\":\"Thales\",\"ticker\":\"HO.PA\"},{\"nom\":\"TotalEnergies\",\"ticker\":\"TTE.PA\"},{\"nom\":\"Unibail-Rodamco-Westfield\",\"ticker\":\"URW.PA\"},{\"nom\":\"Veolia\",\"ticker\":\"VIE.PA\"},{\"nom\":\"Vinci\",\"ticker\":\"DG.PA\"}]"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "57293f8c-9488-46bb-8e7a-47b67a567b44",
+      "name": "Composition CAC 40 Wikipédia",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.5,
+      "position": [
+        700,
+        300
+      ],
+      "parameters": {
+        "method": "GET",
+        "url": "https://en.wikipedia.org/w/api.php",
+        "sendQuery": true,
+        "specifyQuery": "keypair",
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "action",
+              "value": "parse"
+            },
+            {
+              "name": "page",
+              "value": "CAC_40"
+            },
+            {
+              "name": "prop",
+              "value": "text|revid"
+            },
+            {
+              "name": "redirects",
+              "value": "1"
+            },
+            {
+              "name": "format",
+              "value": "json"
+            },
+            {
+              "name": "formatversion",
+              "value": "2"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "specifyHeaders": "keypair",
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "User-Agent",
+              "value": "CAC40InsightAI/1.0 (projet pedagogique; https://github.com/diffodjimeliluscenebleriot-lang/Luscene-Bleriot-Projets)"
+            }
+          ]
+        },
+        "options": {
+          "timeout": 30000
+        }
+      },
+      "executeOnce": true,
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 3000,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "id": "679cdc60-347e-45ef-a88a-916389bedfc2",
+      "name": "Préparer HTML composition",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        900,
+        300
+      ],
+      "parameters": {
+        "mode": "manual",
+        "includeOtherFields": false,
+        "options": {
+          "ignoreConversionErrors": true
+        },
+        "assignments": {
+          "assignments": [
+            {
+              "id": "h-html",
+              "name": "html",
+              "type": "string",
+              "value": "={{ $json.parse?.text ?? \"\" }}"
+            },
+            {
+              "id": "h-rev",
+              "name": "revisionWikipedia",
+              "type": "number",
+              "value": "={{ $json.parse?.revid ?? null }}"
+            },
+            {
+              "id": "h-err",
+              "name": "erreurSource",
+              "type": "string",
+              "value": "={{ $json.error ? \"API MediaWiki indisponible : \" + (typeof $json.error === \"string\" ? $json.error : String($json.error?.message ?? $json.error?.description ?? JSON.stringify($json.error))).slice(0, 300) : ($json.parse?.text ? \"\" : \"Réponse inattendue de l’API MediaWiki (aucun contenu de page).\") }}"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "9c7fd4c8-131a-4ef4-a36b-c62e57e0083d",
+      "name": "Extraire tableau composition",
+      "type": "n8n-nodes-base.html",
+      "typeVersion": 1.2,
+      "position": [
+        1100,
+        300
+      ],
+      "parameters": {
+        "operation": "extractHtmlContent",
+        "sourceData": "json",
+        "dataPropertyName": "html",
+        "extractionValues": {
+          "values": [
+            {
+              "key": "noms",
+              "cssSelector": "#constituents tr td:nth-of-type(1)",
+              "returnValue": "text",
+              "returnArray": true
+            },
+            {
+              "key": "secteurs",
+              "cssSelector": "#constituents tr td:nth-of-type(2)",
+              "returnValue": "text",
+              "returnArray": true
+            },
+            {
+              "key": "tickers",
+              "cssSelector": "#constituents tr td:nth-of-type(4)",
+              "returnValue": "text",
+              "returnArray": true
+            }
+          ]
+        },
+        "options": {
+          "trimValues": true,
+          "cleanUpText": true
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "id": "eaf8f158-35ee-4df9-9d79-9fc3e0aa7292",
+      "name": "Normaliser composition",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        1300,
+        300
+      ],
+      "parameters": {
+        "mode": "manual",
+        "includeOtherFields": false,
+        "options": {
+          "ignoreConversionErrors": true
+        },
+        "assignments": {
+          "assignments": [
+            {
+              "id": "n-ok",
+              "name": "sourceDisponible",
+              "type": "boolean",
+              "value": "={{ Array.isArray($json.tickers) && $json.tickers.filter(t => String(t).trim()).length > 0 }}"
+            },
+            {
+              "id": "n-orig",
+              "name": "origineComposition",
+              "type": "string",
+              "value": "={{ Array.isArray($json.tickers) && $json.tickers.filter(t => String(t).trim()).length > 0 ? \"Wikipédia (en), page CAC 40, tableau « constituents », via l’API MediaWiki\" : \"Liste de contrôle interne du \" + $(\"Liste de contrôle CAC 40\").first().json.dateReference + \" (source en ligne indisponible : composition NON actualisée)\" }}"
+            },
+            {
+              "id": "n-soc",
+              "name": "societesRetenues",
+              "type": "array",
+              "value": "={{ (Array.isArray($json.tickers) && $json.tickers.filter(t => String(t).trim()).length > 0 ? $json.tickers.map((t, i) => ({ nom: String(($json.noms || [])[i] || \"\").replace(/\\s*\\[[^\\]]*\\]/g, \"\").trim(), secteur: String(($json.secteurs || [])[i] || \"\").replace(/\\s*\\[[^\\]]*\\]/g, \"\").trim(), tickerSource: String(t).replace(/\\s*\\[[^\\]]*\\]/g, \"\").trim().toUpperCase() })) : $(\"Liste de contrôle CAC 40\").first().json.reference.map(r => ({ nom: r.nom, secteur: \"\", tickerSource: r.ticker }))).filter(s => s.tickerSource) }}"
+            },
+            {
+              "id": "n-rev",
+              "name": "revisionWikipedia",
+              "type": "number",
+              "value": "={{ $(\"Préparer HTML composition\").first().json.revisionWikipedia }}"
+            },
+            {
+              "id": "n-url",
+              "name": "urlSource",
+              "type": "string",
+              "value": "={{ $(\"Préparer HTML composition\").first().json.revisionWikipedia ? \"https://en.wikipedia.org/w/index.php?title=CAC_40&oldid=\" + $(\"Préparer HTML composition\").first().json.revisionWikipedia : \"\" }}"
+            },
+            {
+              "id": "n-err",
+              "name": "erreurSource",
+              "type": "string",
+              "value": "={{ $(\"Préparer HTML composition\").first().json.erreurSource || ($json.error ? \"Extraction HTML impossible : \" + (typeof $json.error === \"string\" ? $json.error : String($json.error?.message ?? $json.error?.description ?? JSON.stringify($json.error))).slice(0, 200) : \"\") }}"
+            },
+            {
+              "id": "n-date",
+              "name": "dateConsultation",
+              "type": "string",
+              "value": "={{ $now.setZone(\"Europe/Paris\").toFormat(\"dd/MM/yyyy HH:mm\") }}"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "3d6ef4b6-44c6-4c3a-8cc9-afcd411291fd",
+      "name": "Contrôler composition",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        1500,
+        300
+      ],
+      "parameters": {
+        "mode": "manual",
+        "includeOtherFields": true,
+        "include": "all",
+        "options": {
+          "ignoreConversionErrors": true
+        },
+        "assignments": {
+          "assignments": [
+            {
+              "id": "c-nb",
+              "name": "nbSocietesRetenues",
+              "type": "number",
+              "value": "={{ $json.societesRetenues.length }}"
+            },
+            {
+              "id": "c-dup",
+              "name": "doublons",
+              "type": "array",
+              "value": "={{ $json.societesRetenues.map(s => s.tickerSource).filter((t, i, a) => a.indexOf(t) !== i) }}"
+            },
+            {
+              "id": "c-abs",
+              "name": "absentsParRapportAuControle",
+              "type": "array",
+              "value": "={{ $(\"Liste de contrôle CAC 40\").first().json.reference.filter(r => !$json.societesRetenues.some(s => s.tickerSource === r.ticker)).map(r => r.nom + \" (\" + r.ticker + \")\") }}"
+            },
+            {
+              "id": "c-new",
+              "name": "nouveauxParRapportAuControle",
+              "type": "array",
+              "value": "={{ $json.societesRetenues.filter(s => !$(\"Liste de contrôle CAC 40\").first().json.reference.some(r => r.ticker === s.tickerSource)).map(s => s.nom + \" (\" + s.tickerSource + \")\") }}"
+            },
+            {
+              "id": "c-cles",
+              "name": "societesClesManquantes",
+              "type": "array",
+              "value": "={{ $(\"Liste de contrôle CAC 40\").first().json.societesCles.filter(m => !$json.societesRetenues.some(s => s.tickerSource.split(\".\")[0] === m)) }}"
+            },
+            {
+              "id": "c-inv",
+              "name": "symbolesInvalides",
+              "type": "array",
+              "value": "={{ $json.societesRetenues.filter(s => !/^[A-Z0-9]+\\.(PA|AS)$/.test(s.tickerSource)).map(s => s.nom + \" (\" + s.tickerSource + \")\") }}"
+            },
+            {
+              "id": "c-ok",
+              "name": "compositionVerifiee",
+              "type": "boolean",
+              "value": "={{ $json.sourceDisponible && $json.societesRetenues.length === 40 && new Set($json.societesRetenues.map(s => s.tickerSource)).size === 40 && $json.societesRetenues.every(s => /^[A-Z0-9]+\\.(PA|AS)$/.test(s.tickerSource)) }}"
+            },
+            {
+              "id": "c-chg",
+              "name": "changementDetecte",
+              "type": "boolean",
+              "value": "={{ $json.sourceDisponible && ($(\"Liste de contrôle CAC 40\").first().json.reference.some(r => !$json.societesRetenues.some(s => s.tickerSource === r.ticker)) || $json.societesRetenues.some(s => !$(\"Liste de contrôle CAC 40\").first().json.reference.some(r => r.ticker === s.tickerSource))) }}"
+            },
+            {
+              "id": "c-hors",
+              "name": "selectionHorsIndice",
+              "type": "array",
+              "value": "={{ $(\"Paramètres analyse\").first().json.analyseComplete ? [] : $(\"Paramètres analyse\").first().json.selectionMnemos.filter(m => !$json.societesRetenues.some(s => s.tickerSource.split(\".\")[0] === m)) }}"
+            },
+            {
+              "id": "c-soc",
+              "name": "societes",
+              "type": "array",
+              "value": "={{ $json.societesRetenues.map(s => ({ nom: s.nom, secteur: s.secteur, tickerSource: s.tickerSource, mnemo: s.tickerSource.split(\".\")[0], symbole: /^[A-Z0-9]+\\.(PA|AS)$/.test(s.tickerSource) ? s.tickerSource : \"\", symboleValide: /^[A-Z0-9]+\\.(PA|AS)$/.test(s.tickerSource), place: s.tickerSource.endsWith(\".AS\") ? \"Euronext Amsterdam (XAMS)\" : (s.tickerSource.endsWith(\".PA\") ? \"Euronext Paris (XPAR)\" : \"inconnue\") })) }}"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "91ae1e76-c49a-4c3e-8792-e1dea0f1a9c3",
+      "name": "Une ligne par société",
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1.1,
+      "position": [
+        1700,
+        300
+      ],
+      "parameters": {
+        "fieldToSplitOut": "societes",
+        "include": "noOtherFields"
+      }
+    },
+    {
+      "id": "9d40effe-c06b-4b02-abaa-2cd35e0df7e1",
+      "name": "Filtrer selon la sélection",
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2.4,
+      "position": [
+        1900,
+        300
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "leftValue": "={{ $json.symboleValide }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            },
+            {
+              "leftValue": "={{ $(\"Paramètres analyse\").first().json.analyseComplete || $(\"Paramètres analyse\").first().json.selectionMnemos.includes($json.mnemo) }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "95b8f34e-a86a-40d2-bd03-502ffef663be",
+      "name": "Supprimer les doublons",
+      "type": "n8n-nodes-base.removeDuplicates",
+      "typeVersion": 2,
+      "position": [
+        2100,
+        300
+      ],
+      "parameters": {
+        "operation": "removeDuplicateInputItems",
+        "compare": "selectedFields",
+        "fieldsToCompare": "symbole"
+      }
+    },
+    {
+      "id": "223a9a5e-80e9-4299-b78e-d7fd21fe00fc",
+      "name": "Classer par rendement",
+      "type": "n8n-nodes-base.sort",
+      "typeVersion": 1,
+      "position": [
+        2500,
+        300
+      ],
+      "parameters": {
+        "type": "simple",
+        "sortFieldsUi": {
+          "sortField": [
+            {
+              "fieldName": "societe.cleTri",
+              "order": "descending"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "f2556d19-7450-4dcd-85f3-24080b2c4c2c",
+      "name": "Pause limite de débit",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        2500,
+        450
+      ],
+      "parameters": {
+        "resume": "timeInterval",
+        "amount": "={{ $(\"Paramètres analyse\").first().json.pauseEntreAppelsSecondes }}",
+        "unit": "seconds"
+      }
+    },
+    {
+      "id": "b8efceca-01eb-4793-be4e-80230857f0e2",
+      "name": "Cours historiques EODHD",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.5,
+      "position": [
+        2700,
+        450
+      ],
+      "parameters": {
+        "method": "GET",
+        "url": "=https://eodhd.com/api/eod/{{ $(\"Boucle par société\").item.json.symbole }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpQueryAuth",
+        "sendQuery": true,
+        "specifyQuery": "keypair",
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "from",
+              "value": "={{ $(\"Paramètres analyse\").first().json.dateDebut }}"
+            },
+            {
+              "name": "to",
+              "value": "={{ $(\"Paramètres analyse\").first().json.dateFin }}"
+            },
+            {
+              "name": "period",
+              "value": "d"
+            },
+            {
+              "name": "order",
+              "value": "a"
+            },
+            {
+              "name": "fmt",
+              "value": "json"
+            }
+          ]
+        },
+        "options": {
+          "timeout": 30000,
+          "response": {
+            "response": {
+              "fullResponse": true,
+              "responseFormat": "json"
+            }
+          }
+        }
+      },
+      "credentials": {},
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "id": "48e7dea7-3ddd-4e26-945a-387b3e96abc1",
+      "name": "Contrôler données de cours",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        2900,
+        450
+      ],
+      "parameters": {
+        "mode": "manual",
+        "includeOtherFields": false,
+        "options": {
+          "ignoreConversionErrors": true
+        },
+        "assignments": {
+          "assignments": [
+            {
+              "id": "k-nom",
+              "name": "nom",
+              "type": "string",
+              "value": "={{ $(\"Boucle par société\").item.json.nom }}"
+            },
+            {
+              "id": "k-mnemo",
+              "name": "mnemo",
+              "type": "string",
+              "value": "={{ $(\"Boucle par société\").item.json.mnemo }}"
+            },
+            {
+              "id": "k-sym",
+              "name": "symbole",
+              "type": "string",
+              "value": "={{ $(\"Boucle par société\").item.json.symbole }}"
+            },
+            {
+              "id": "k-place",
+              "name": "place",
+              "type": "string",
+              "value": "={{ $(\"Boucle par société\").item.json.place }}"
+            },
+            {
+              "id": "k-sect",
+              "name": "secteur",
+              "type": "string",
+              "value": "={{ $(\"Boucle par société\").item.json.secteur }}"
+            },
+            {
+              "id": "k-http",
+              "name": "statutHttp",
+              "type": "string",
+              "value": "={{ $json.error ? String((typeof $json.error === \"object\" && ($json.error.httpCode ?? $json.error.status)) || ((typeof $json.error === \"string\" ? $json.error : String($json.error?.message ?? $json.error?.description ?? JSON.stringify($json.error))).match(/\\b([1-5][0-9]{2})\\b/) || [])[1] || \"erreur\") : String($json.statusCode ?? \"\") }}"
+            },
+            {
+              "id": "k-err",
+              "name": "erreur",
+              "type": "string",
+              "value": "={{ $json.error ? (typeof $json.error === \"string\" ? $json.error : String($json.error?.message ?? $json.error?.description ?? JSON.stringify($json.error))).slice(0, 300) : (Array.isArray($json.body) ? \"\" : \"réponse non conforme (tableau attendu)\") }}"
+            },
+            {
+              "id": "k-type",
+              "name": "typeErreur",
+              "type": "string",
+              "value": "={{ !$json.error ? \"\" : (/credential/i.test((typeof $json.error === \"string\" ? $json.error : String($json.error?.message ?? $json.error?.description ?? JSON.stringify($json.error)))) ? \"identifiant EODHD non configuré dans n8n\" : (String((typeof $json.error === \"object\" && ($json.error.httpCode ?? $json.error.status)) || ((typeof $json.error === \"string\" ? $json.error : String($json.error?.message ?? $json.error?.description ?? JSON.stringify($json.error))).match(/\\b([1-5][0-9]{2})\\b/) || [])[1] || \"erreur\") === \"402\" ? \"quota journalier EODHD dépassé (HTTP 402)\" : (String((typeof $json.error === \"object\" && ($json.error.httpCode ?? $json.error.status)) || ((typeof $json.error === \"string\" ? $json.error : String($json.error?.message ?? $json.error?.description ?? JSON.stringify($json.error))).match(/\\b([1-5][0-9]{2})\\b/) || [])[1] || \"erreur\") === \"429\" ? \"limite de débit EODHD atteinte (HTTP 429)\" : (String((typeof $json.error === \"object\" && ($json.error.httpCode ?? $json.error.status)) || ((typeof $json.error === \"string\" ? $json.error : String($json.error?.message ?? $json.error?.description ?? JSON.stringify($json.error))).match(/\\b([1-5][0-9]{2})\\b/) || [])[1] || \"erreur\") === \"404\" ? \"symbole introuvable chez EODHD (HTTP 404)\" : ((String((typeof $json.error === \"object\" && ($json.error.httpCode ?? $json.error.status)) || ((typeof $json.error === \"string\" ? $json.error : String($json.error?.message ?? $json.error?.description ?? JSON.stringify($json.error))).match(/\\b([1-5][0-9]{2})\\b/) || [])[1] || \"erreur\") === \"401\" || String((typeof $json.error === \"object\" && ($json.error.httpCode ?? $json.error.status)) || ((typeof $json.error === \"string\" ? $json.error : String($json.error?.message ?? $json.error?.description ?? JSON.stringify($json.error))).match(/\\b([1-5][0-9]{2})\\b/) || [])[1] || \"erreur\") === \"403\") ? \"clé API refusée ou marché non couvert par le forfait (HTTP 401/403)\" : \"erreur HTTP ou réseau\"))))) }}"
+            },
+            {
+              "id": "k-recu",
+              "name": "nbLignesRecues",
+              "type": "number",
+              "value": "={{ Array.isArray($json.body) ? $json.body.length : 0 }}"
+            },
+            {
+              "id": "k-cours",
+              "name": "cours",
+              "type": "array",
+              "value": "={{ (Array.isArray($json.body) ? $json.body : []).filter(c => c && typeof c.date === \"string\" && Number.isFinite(Number(c.adjusted_close)) && Number(c.adjusted_close) > 0 && Number.isFinite(Number(c.close))).map(c => ({ date: c.date, cloture: Number(c.close), clotureAjustee: Number(c.adjusted_close) })).sort((a, b) => a.date.localeCompare(b.date)).slice(-(String($(\"Paramètres analyse\").first().json.periodeLibelle).startsWith(\"1 jour\") ? 2 : 1e9)) }}"
+            },
+            {
+              "id": "k-src",
+              "name": "sourceCours",
+              "type": "string",
+              "value": "EODHD End-of-Day API (/api/eod) : clôtures quotidiennes ajustées des dividendes et divisions, données de fin de journée (non temps réel)"
+            },
+            {
+              "id": "k-req",
+              "name": "requeteCours",
+              "type": "string",
+              "value": "={{ \"https://eodhd.com/api/eod/\" + $(\"Boucle par société\").item.json.symbole + \"?from=\" + $(\"Paramètres analyse\").first().json.dateDebut + \"&to=\" + $(\"Paramètres analyse\").first().json.dateFin + \"&period=d&order=a\" }}"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "3f85ba84-23a5-4a7c-b541-d02516c9bdf8",
+      "name": "Calculer rendement et extrêmes",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        3100,
+        450
+      ],
+      "parameters": {
+        "mode": "manual",
+        "includeOtherFields": true,
+        "include": "all",
+        "options": {
+          "ignoreConversionErrors": true
+        },
+        "assignments": {
+          "assignments": [
+            {
+              "id": "i-nb",
+              "name": "nbObservations",
+              "type": "number",
+              "value": "={{ $json.cours.length }}"
+            },
+            {
+              "id": "i-d0",
+              "name": "dateInitiale",
+              "type": "string",
+              "value": "={{ $json.cours.length ? $json.cours[0].date : \"\" }}"
+            },
+            {
+              "id": "i-p0",
+              "name": "coursInitial",
+              "type": "number",
+              "value": "={{ $json.cours.length ? $json.cours[0].clotureAjustee : null }}"
+            },
+            {
+              "id": "i-d1",
+              "name": "dateFinale",
+              "type": "string",
+              "value": "={{ $json.cours.length ? $json.cours[$json.cours.length - 1].date : \"\" }}"
+            },
+            {
+              "id": "i-p1",
+              "name": "coursFinal",
+              "type": "number",
+              "value": "={{ $json.cours.length ? $json.cours[$json.cours.length - 1].clotureAjustee : null }}"
+            },
+            {
+              "id": "i-ret",
+              "name": "rendementPct",
+              "type": "number",
+              "value": "={{ $json.cours.length >= 2 && Number($json.cours[0].clotureAjustee) > 0 ? Math.round((($json.cours[$json.cours.length - 1].clotureAjustee / $json.cours[0].clotureAjustee) - 1) * 10000) / 100 : null }}"
+            },
+            {
+              "id": "i-max",
+              "name": "plusHaut",
+              "type": "number",
+              "value": "={{ $json.cours.length ? Math.max(...$json.cours.map(c => c.clotureAjustee)) : null }}"
+            },
+            {
+              "id": "i-min",
+              "name": "plusBas",
+              "type": "number",
+              "value": "={{ $json.cours.length ? Math.min(...$json.cours.map(c => c.clotureAjustee)) : null }}"
+            },
+            {
+              "id": "i-dd",
+              "name": "baisseMaxPct",
+              "type": "number",
+              "value": "={{ $json.cours.length >= 2 ? Math.round(Math.min(...$json.cours.map((c, i) => c.clotureAjustee / Math.max(...$json.cours.slice(0, i + 1).map(x => x.clotureAjustee)) - 1)) * 10000) / 100 : null }}"
+            },
+            {
+              "id": "i-gap",
+              "name": "ecartAuPlusHautPct",
+              "type": "number",
+              "value": "={{ $json.cours.length ? Math.round(($json.cours[$json.cours.length - 1].clotureAjustee / Math.max(...$json.cours.map(c => c.clotureAjustee)) - 1) * 10000) / 100 : null }}"
+            },
+            {
+              "id": "i-log",
+              "name": "rendementsLog",
+              "type": "array",
+              "value": "={{ $json.cours.slice(1).map((c, i) => Math.log(c.clotureAjustee / $json.cours[i].clotureAjustee)) }}"
+            },
+            {
+              "id": "i-fresh",
+              "name": "fraicheurJours",
+              "type": "number",
+              "value": "={{ $json.cours.length ? Math.floor($today.diff(DateTime.fromISO($json.cours[$json.cours.length - 1].date), \"days\").days) : null }}"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "2adfcff2-14ba-4dba-8f91-063b85d2e448",
+      "name": "Calculer volatilité",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        3300,
+        450
+      ],
+      "parameters": {
+        "mode": "manual",
+        "includeOtherFields": true,
+        "include": "all",
+        "options": {
+          "ignoreConversionErrors": true
+        },
+        "assignments": {
+          "assignments": [
+            {
+              "id": "v-moy",
+              "name": "rendementLogMoyen",
+              "type": "number",
+              "value": "={{ $json.rendementsLog.length ? $json.rendementsLog.reduce((a, b) => a + b, 0) / $json.rendementsLog.length : null }}"
+            },
+            {
+              "id": "v-vol",
+              "name": "volatiliteAnnualiseePct",
+              "type": "number",
+              "value": "={{ $json.rendementsLog.length >= 2 ? Math.round(Math.sqrt($json.rendementsLog.reduce((s, r) => s + Math.pow(r - $json.rendementsLog.reduce((a, b) => a + b, 0) / $json.rendementsLog.length, 2), 0) / ($json.rendementsLog.length - 1)) * Math.sqrt($(\"Paramètres analyse\").first().json.joursBourseParAn) * 10000) / 100 : null }}"
+            },
+            {
+              "id": "v-meth",
+              "name": "methodeVolatilite",
+              "type": "string",
+              "value": "Écart-type échantillon des rendements logarithmiques quotidiens de la période × √(jours de bourse par an), exprimé en %"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "b267e820-5f26-476c-9da9-2efd271eb0a0",
+      "name": "Calculer cours du jour",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        3500,
+        450
+      ],
+      "parameters": {
+        "mode": "manual",
+        "includeOtherFields": true,
+        "include": "all",
+        "options": {
+          "ignoreConversionErrors": true
+        },
+        "assignments": {
+          "assignments": [
+            {
+              "id": "j-cj",
+              "name": "coursDuJour",
+              "type": "number",
+              "value": "={{ $json.cours.length ? $json.cours[$json.cours.length - 1].cloture : null }}"
+            },
+            {
+              "id": "j-cv",
+              "name": "coursVeille",
+              "type": "number",
+              "value": "={{ $json.cours.length >= 2 ? $json.cours[$json.cours.length - 2].cloture : null }}"
+            },
+            {
+              "id": "j-vj",
+              "name": "variationJourPct",
+              "type": "number",
+              "value": "={{ $json.cours.length >= 2 && Number($json.cours[$json.cours.length - 2].cloture) > 0 ? Math.round((($json.cours[$json.cours.length - 1].cloture / $json.cours[$json.cours.length - 2].cloture) - 1) * 10000) / 100 : null }}"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "df81111f-4730-4d12-80b2-33703ed60fa9",
+      "name": "Qualifier et alerter",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        3700,
+        450
+      ],
+      "parameters": {
+        "mode": "manual",
+        "includeOtherFields": true,
+        "include": "except",
+        "excludeFields": "cours,rendementsLog",
+        "options": {
+          "ignoreConversionErrors": true
+        },
+        "assignments": {
+          "assignments": [
+            {
+              "id": "q-q",
+              "name": "qualite",
+              "type": "string",
+              "value": "={{ $json.statutHttp !== \"200\" || $json.erreur ? \"ERREUR\" : ($json.nbObservations === 0 ? \"AUCUNE_DONNEE\" : (($json.nbObservations < $(\"Paramètres analyse\").first().json.minObservations || $json.rendementPct === null) ? \"INSUFFISANT\" : ($json.fraicheurJours > $(\"Paramètres analyse\").first().json.seuilFraicheurJours ? \"ANCIEN\" : \"OK\"))) }}"
+            },
+            {
+              "id": "q-m",
+              "name": "motifQualite",
+              "type": "string",
+              "value": "={{ $json.statutHttp !== \"200\" || $json.erreur ? ($json.typeErreur || \"erreur\") + \" — \" + $json.erreur : ($json.nbObservations === 0 ? \"aucune cotation renvoyée sur la période\" : (($json.nbObservations < $(\"Paramètres analyse\").first().json.minObservations || $json.rendementPct === null) ? \"historique incomplet : \" + $json.nbObservations + \" cotations (minimum \" + $(\"Paramètres analyse\").first().json.minObservations + \")\" : ($json.fraicheurJours > $(\"Paramètres analyse\").first().json.seuilFraicheurJours ? \"dernière cotation datée du \" + $json.dateFinale + \" (\" + $json.fraicheurJours + \" jours)\" : \"données complètes\"))) }}"
+            },
+            {
+              "id": "q-a",
+              "name": "alertes",
+              "type": "array",
+              "value": "={{ [ ($json.rendementPct !== null && $json.rendementPct <= $(\"Paramètres analyse\").first().json.seuilBaissePeriodePct) ? \"rendement sur la période ≤ \" + $(\"Paramètres analyse\").first().json.seuilBaissePeriodePct + \" %\" : null, ($json.baisseMaxPct !== null && $json.baisseMaxPct <= $(\"Paramètres analyse\").first().json.seuilBaisseMaxPct) ? \"baisse maximale depuis un plus haut ≤ \" + $(\"Paramètres analyse\").first().json.seuilBaisseMaxPct + \" %\" : null, ($json.volatiliteAnnualiseePct !== null && $json.volatiliteAnnualiseePct >= $(\"Paramètres analyse\").first().json.seuilVolatilitePct) ? \"volatilité annualisée ≥ \" + $(\"Paramètres analyse\").first().json.seuilVolatilitePct + \" %\" : null, ($json.fraicheurJours !== null && $json.fraicheurJours > $(\"Paramètres analyse\").first().json.seuilFraicheurJours) ? \"données de plus de \" + $(\"Paramètres analyse\").first().json.seuilFraicheurJours + \" jours\" : null ].filter(Boolean) }}"
+            },
+            {
+              "id": "q-k",
+              "name": "cleTri",
+              "type": "number",
+              "value": "={{ $json.rendementPct === null ? -1000000 : $json.rendementPct }}"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "d4b26138-d665-4170-b1e4-55a1a867b3cb",
+      "name": "Actualités activées ?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        3900,
+        450
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "leftValue": "={{ $(\"Paramètres analyse\").first().json.moduleActualites }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "982e71b1-1c26-4c33-8988-ec8a0e2fdb73",
+      "name": "Actualités EODHD",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.5,
+      "position": [
+        4100,
+        450
+      ],
+      "parameters": {
+        "method": "GET",
+        "url": "https://eodhd.com/api/news",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpQueryAuth",
+        "sendQuery": true,
+        "specifyQuery": "keypair",
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "s",
+              "value": "={{ $json.symbole }}"
+            },
+            {
+              "name": "from",
+              "value": "={{ $(\"Paramètres analyse\").first().json.dateDebut }}"
+            },
+            {
+              "name": "to",
+              "value": "={{ $(\"Paramètres analyse\").first().json.dateFin }}"
+            },
+            {
+              "name": "limit",
+              "value": "={{ $(\"Paramètres analyse\").first().json.articlesParSociete }}"
+            },
+            {
+              "name": "offset",
+              "value": "0"
+            },
+            {
+              "name": "fmt",
+              "value": "json"
+            }
+          ]
+        },
+        "options": {
+          "timeout": 30000,
+          "response": {
+            "response": {
+              "fullResponse": true,
+              "responseFormat": "json"
+            }
+          }
+        }
+      },
+      "credentials": {},
+      "retryOnFail": true,
+      "maxTries": 2,
+      "waitBetweenTries": 5000,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "id": "424b3049-45b0-49da-bf78-56a29fc2adf1",
+      "name": "Joindre les actualités",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        4300,
+        450
+      ],
+      "parameters": {
+        "mode": "manual",
+        "includeOtherFields": false,
+        "assignments": {
+          "assignments": [
+            {
+              "id": "a-soc",
+              "name": "societe",
+              "type": "object",
+              "value": "={{ $(\"Qualifier et alerter\").item.json }}"
+            },
+            {
+              "id": "a-art",
+              "name": "actualites",
+              "type": "array",
+              "value": "={{ (Array.isArray($json.body) ? $json.body : []).filter(a => a && a.title && a.link).map(a => ({ titre: String(a.title), date: String(a.date ?? \"\"), url: String(a.link), source: (String(a.link).match(/^https?:\\/\\/([^\\/]+)/) || [])[1] || \"inconnue\", resume: String(a.content ?? \"\").replace(/\\s+/g, \" \").slice(0, 400), polariteFournisseur: a.sentiment?.polarity ?? null, fournisseur: \"EODHD Financial News API\" })) }}"
+            },
+            {
+              "id": "a-stat",
+              "name": "statutActualites",
+              "type": "string",
+              "value": "={{ $json.error ? \"indisponible : \" + (typeof $json.error === \"string\" ? $json.error : String($json.error?.message ?? $json.error?.description ?? JSON.stringify($json.error))).slice(0, 200) : (Array.isArray($json.body) && $json.body.length ? \"ok\" : \"aucun article trouvé sur la période\") }}"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "aec72db9-b3c0-4e38-a6c7-10953fe37146",
+      "name": "Boucle par société",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        2300,
+        300
+      ],
+      "parameters": {
+        "batchSize": 1
+      }
+    },
+    {
+      "id": "4a4b4992-2100-45ca-bdba-30f90c531bd0",
+      "name": "Sans actualités",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        4100,
+        600
+      ],
+      "parameters": {
+        "mode": "manual",
+        "includeOtherFields": false,
+        "assignments": {
+          "assignments": [
+            {
+              "id": "z-soc",
+              "name": "societe",
+              "type": "object",
+              "value": "={{ $json }}"
+            },
+            {
+              "id": "z-art",
+              "name": "actualites",
+              "type": "array",
+              "value": "={{ [] }}"
+            },
+            {
+              "id": "z-stat",
+              "name": "statutActualites",
+              "type": "string",
+              "value": "module désactivé"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "b1758b36-4f99-4a1e-9695-0e4377a3bd40",
+      "name": "Consolider les résultats",
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        2700,
+        300
+      ],
+      "parameters": {
+        "aggregate": "aggregateAllItemData",
+        "destinationFieldName": "resultats"
+      }
+    },
+    {
+      "id": "a207c945-16b5-498c-9540-2ecfa0c1537f",
+      "name": "Fusionner sociétés et secteurs",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        2900,
+        300
+      ],
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition"
+      }
+    },
+    {
+      "id": "8c60370b-8d7c-4949-baa7-696193a00977",
+      "name": "Sociétés avec rendement",
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2.4,
+      "position": [
+        2700,
+        450
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "leftValue": "={{ typeof $json.societe?.rendementPct === \"number\" }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ]
+        }
+      },
+      "alwaysOutputData": true
+    },
+    {
+      "id": "5bbfcc9a-a986-4e28-861e-bb26bb9dac44",
+      "name": "Préparer les lignes secteur",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        2900,
+        450
+      ],
+      "parameters": {
+        "mode": "manual",
+        "includeOtherFields": false,
+        "options": {
+          "ignoreConversionErrors": true
+        },
+        "assignments": {
+          "assignments": [
+            {
+              "id": "ls-sec",
+              "name": "secteur",
+              "type": "string",
+              "value": "={{ $json.societe?.secteur || ($json.societe ? \"Secteur non renseigné\" : \"\") }}"
+            },
+            {
+              "id": "ls-nom",
+              "name": "nom",
+              "type": "string",
+              "value": "={{ $json.societe?.nom ?? \"\" }}"
+            },
+            {
+              "id": "ls-ret",
+              "name": "rendementPct",
+              "type": "number",
+              "value": "={{ $json.societe?.rendementPct ?? null }}"
+            },
+            {
+              "id": "ls-vol",
+              "name": "volatilite",
+              "type": "number",
+              "value": "={{ $json.societe?.volatiliteAnnualiseePct ?? null }}"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "486b0ae6-b071-4193-b65b-f733aea6504d",
+      "name": "Statistiques par secteur",
+      "type": "n8n-nodes-base.summarize",
+      "typeVersion": 1.1,
+      "position": [
+        3100,
+        450
+      ],
+      "parameters": {
+        "fieldsToSummarize": {
+          "values": [
+            {
+              "aggregation": "count",
+              "field": "nom"
+            },
+            {
+              "aggregation": "average",
+              "field": "rendementPct"
+            },
+            {
+              "aggregation": "max",
+              "field": "rendementPct"
+            },
+            {
+              "aggregation": "min",
+              "field": "rendementPct"
+            },
+            {
+              "aggregation": "average",
+              "field": "volatilite"
+            },
+            {
+              "aggregation": "concatenate",
+              "field": "nom",
+              "separateBy": ", "
+            }
+          ]
+        },
+        "fieldsToSplitBy": "secteur",
+        "options": {
+          "skipEmptySplitFields": true
+        }
+      },
+      "alwaysOutputData": true
+    },
+    {
+      "id": "aa046578-9cb4-43a4-ac65-9298f2669dcd",
+      "name": "Classer les secteurs",
+      "type": "n8n-nodes-base.sort",
+      "typeVersion": 1,
+      "position": [
+        3300,
+        450
+      ],
+      "parameters": {
+        "type": "simple",
+        "sortFieldsUi": {
+          "sortField": [
+            {
+              "fieldName": "average_rendementPct",
+              "order": "descending"
+            }
+          ]
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "id": "5e45aa32-4ab7-469f-b76c-1f47cc3cb640",
+      "name": "Regrouper les secteurs",
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        3500,
+        450
+      ],
+      "parameters": {
+        "aggregate": "aggregateAllItemData",
+        "destinationFieldName": "secteursBruts"
+      },
+      "alwaysOutputData": true
+    },
+    {
+      "id": "3ed4ed94-6fd5-4354-a720-ff600c509d65",
+      "name": "Préparer la ligne d’historique",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        2700,
+        120
+      ],
+      "parameters": {
+        "mode": "manual",
+        "includeOtherFields": false,
+        "options": {
+          "ignoreConversionErrors": true
+        },
+        "assignments": {
+          "assignments": [
+            {
+              "id": "hi-date",
+              "name": "date_execution",
+              "type": "string",
+              "value": "={{ $(\"Paramètres analyse\").first().json.dateExecution }}"
+            },
+            {
+              "id": "hi-exec",
+              "name": "execution_id",
+              "type": "string",
+              "value": "={{ $execution.id }}"
+            },
+            {
+              "id": "hi-per",
+              "name": "perimetre",
+              "type": "string",
+              "value": "={{ $(\"Paramètres analyse\").first().json.analyseComplete ? \"CAC 40 complet\" : \"Sélection personnalisée\" }}"
+            },
+            {
+              "id": "hi-d0",
+              "name": "periode_debut",
+              "type": "string",
+              "value": "={{ $(\"Paramètres analyse\").first().json.dateDebut }}"
+            },
+            {
+              "id": "hi-d1",
+              "name": "periode_fin",
+              "type": "string",
+              "value": "={{ $(\"Paramètres analyse\").first().json.dateFin }}"
+            },
+            {
+              "id": "hi-soc",
+              "name": "societe",
+              "type": "string",
+              "value": "={{ $json.societe.nom }}"
+            },
+            {
+              "id": "hi-sym",
+              "name": "symbole",
+              "type": "string",
+              "value": "={{ $json.societe.symbole }}"
+            },
+            {
+              "id": "hi-sec",
+              "name": "secteur",
+              "type": "string",
+              "value": "={{ $json.societe.secteur || \"\" }}"
+            },
+            {
+              "id": "hi-rang",
+              "name": "rang",
+              "type": "string",
+              "value": "={{ $json.societe.qualite === \"OK\" ? String($itemIndex + 1) : \"\" }}"
+            },
+            {
+              "id": "hi-ret",
+              "name": "rendement_pct",
+              "type": "string",
+              "value": "={{ $json.societe.rendementPct ?? \"\" }}"
+            },
+            {
+              "id": "hi-vol",
+              "name": "volatilite_pct",
+              "type": "string",
+              "value": "={{ $json.societe.volatiliteAnnualiseePct ?? \"\" }}"
+            },
+            {
+              "id": "hi-dd",
+              "name": "baisse_max_pct",
+              "type": "string",
+              "value": "={{ $json.societe.baisseMaxPct ?? \"\" }}"
+            },
+            {
+              "id": "hi-dl",
+              "name": "date_derniere_cotation",
+              "type": "string",
+              "value": "={{ $json.societe.dateFinale || \"\" }}"
+            },
+            {
+              "id": "hi-q",
+              "name": "qualite",
+              "type": "string",
+              "value": "={{ $json.societe.qualite }}"
+            },
+            {
+              "id": "hi-src",
+              "name": "source",
+              "type": "string",
+              "value": "EODHD (clôtures ajustées de fin de journée)"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "3c3d28c3-6a59-48a0-aca7-17c9e48c1f26",
+      "name": "Ajouter à l’historique Google Sheets",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        2900,
+        120
+      ],
+      "parameters": {
+        "resource": "sheet",
+        "operation": "append",
+        "authentication": "oAuth2",
+        "documentId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "={{ $(\"Paramètres analyse\").first().json.googleSheetId }}"
+        },
+        "sheetName": {
+          "__rl": true,
+          "mode": "name",
+          "value": "Untitled"
+        },
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "value": {},
+          "schema": [
+            {
+              "id": "date_execution",
+              "displayName": "date_execution",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "execution_id",
+              "displayName": "execution_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "perimetre",
+              "displayName": "perimetre",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "periode_debut",
+              "displayName": "periode_debut",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "periode_fin",
+              "displayName": "periode_fin",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "societe",
+              "displayName": "societe",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "symbole",
+              "displayName": "symbole",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "secteur",
+              "displayName": "secteur",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "rang",
+              "displayName": "rang",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "rendement_pct",
+              "displayName": "rendement_pct",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "volatilite_pct",
+              "displayName": "volatilite_pct",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "baisse_max_pct",
+              "displayName": "baisse_max_pct",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "date_derniere_cotation",
+              "displayName": "date_derniere_cotation",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "qualite",
+              "displayName": "qualite",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "source",
+              "displayName": "source",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ]
+        },
+        "options": {
+          "cellFormat": "USER_ENTERED",
+          "handlingExtraData": "ignoreIt"
+        }
+      },
+      "credentials": {},
+      "onError": "continueRegularOutput"
+    },
+    {
+      "id": "22643cf4-7abd-4809-a0d6-df91895c6a14",
+      "name": "Dates de référence",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        3100,
+        300
+      ],
+      "parameters": {
+        "mode": "manual",
+        "includeOtherFields": true,
+        "include": "all",
+        "assignments": {
+          "assignments": [
+            {
+              "id": "d-fin",
+              "name": "dateFinaleReference",
+              "type": "string",
+              "value": "={{ Object.entries($json.resultats.map(r => r.societe).filter(s => s.qualite === \"OK\" && s.dateFinale).reduce((acc, s) => ({ ...acc, [s.dateFinale]: (acc[s.dateFinale] || 0) + 1 }), {})).sort((a, b) => b[1] - a[1] || b[0].localeCompare(a[0]))[0]?.[0] ?? \"\" }}"
+            },
+            {
+              "id": "d-deb",
+              "name": "dateInitialeReference",
+              "type": "string",
+              "value": "={{ Object.entries($json.resultats.map(r => r.societe).filter(s => s.qualite === \"OK\" && s.dateInitiale).reduce((acc, s) => ({ ...acc, [s.dateInitiale]: (acc[s.dateInitiale] || 0) + 1 }), {})).sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))[0]?.[0] ?? \"\" }}"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "2014d7a2-cb08-4897-a6b4-05373fb03fcf",
+      "name": "Synthèse et scénarios",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        3300,
+        300
+      ],
+      "parameters": {
+        "mode": "manual",
+        "includeOtherFields": true,
+        "include": "all",
+        "options": {
+          "ignoreConversionErrors": true
+        },
+        "assignments": {
+          "assignments": [
+            {
+              "id": "s-per",
+              "name": "perimetre",
+              "type": "string",
+              "value": "={{ $(\"Paramètres analyse\").first().json.analyseComplete ? \"Analyse complète du CAC 40 (objectif : 40 sociétés)\" : \"Analyse partielle : sélection personnalisée de \" + $(\"Paramètres analyse\").first().json.selectionMnemos.length + \" société(s)\" }}"
+            },
+            {
+              "id": "s-att",
+              "name": "societesAttendues",
+              "type": "number",
+              "value": "={{ $(\"Paramètres analyse\").first().json.analyseComplete ? $(\"Contrôler composition\").first().json.nbSocietesRetenues : $(\"Paramètres analyse\").first().json.selectionMnemos.length }}"
+            },
+            {
+              "id": "s-trt",
+              "name": "societesTraitees",
+              "type": "number",
+              "value": "={{ $json.resultats.length }}"
+            },
+            {
+              "id": "s-ok",
+              "name": "societesAnalyseesAvecSucces",
+              "type": "number",
+              "value": "={{ $json.resultats.map(r => r.societe).filter(s => s.rendementPct !== null).length }}"
+            },
+            {
+              "id": "s-ech",
+              "name": "societesEnEchec",
+              "type": "array",
+              "value": "={{ $json.resultats.map(r => r.societe).filter(s => s.qualite !== \"OK\").map(s => ({ nom: s.nom, symbole: s.symbole, qualite: s.qualite, motif: s.motifQualite })) }}"
+            },
+            {
+              "id": "s-cls",
+              "name": "classement",
+              "type": "array",
+              "value": "={{ $json.resultats.map(r => r.societe).filter((s => s.qualite === \"OK\" && s.dateFinale === $json.dateFinaleReference && s.dateInitiale === $json.dateInitialeReference)).map((s, i) => ({ rang: i + 1, nom: s.nom, mnemo: s.mnemo, rendementPct: s.rendementPct })) }}"
+            },
+            {
+              "id": "s-ncmp",
+              "name": "nonComparables",
+              "type": "array",
+              "value": "={{ $json.resultats.map(r => r.societe).filter(s => s.rendementPct !== null && !(s => s.qualite === \"OK\" && s.dateFinale === $json.dateFinaleReference && s.dateInitiale === $json.dateInitialeReference)(s)).map(s => ({ nom: s.nom, rendementPct: s.rendementPct, dateInitiale: s.dateInitiale, dateFinale: s.dateFinale, qualite: s.qualite })) }}"
+            },
+            {
+              "id": "s-moy",
+              "name": "rendementMoyenEquipondere",
+              "type": "number",
+              "value": "={{ $json.resultats.map(r => r.societe).filter((s => s.qualite === \"OK\" && s.dateFinale === $json.dateFinaleReference && s.dateInitiale === $json.dateInitialeReference)).length ? Math.round($json.resultats.map(r => r.societe).filter((s => s.qualite === \"OK\" && s.dateFinale === $json.dateFinaleReference && s.dateInitiale === $json.dateInitialeReference)).reduce((a, s) => a + s.rendementPct, 0) / $json.resultats.map(r => r.societe).filter((s => s.qualite === \"OK\" && s.dateFinale === $json.dateFinaleReference && s.dateInitiale === $json.dateInitialeReference)).length * 100) / 100 : null }}"
+            },
+            {
+              "id": "s-med",
+              "name": "rendementMedian",
+              "type": "number",
+              "value": "={{ $json.resultats.map(r => r.societe).filter((s => s.qualite === \"OK\" && s.dateFinale === $json.dateFinaleReference && s.dateInitiale === $json.dateInitialeReference)).length ? $json.resultats.map(r => r.societe).filter((s => s.qualite === \"OK\" && s.dateFinale === $json.dateFinaleReference && s.dateInitiale === $json.dateInitialeReference)).map(s => s.rendementPct).sort((a, b) => a - b).map((v, i, a) => a.length % 2 ? a[(a.length - 1) / 2] : Math.round((a[a.length / 2 - 1] + a[a.length / 2]) / 2 * 100) / 100)[0] : null }}"
+            },
+            {
+              "id": "s-hb",
+              "name": "repartition",
+              "type": "object",
+              "value": "={{ ({ hausse: $json.resultats.map(r => r.societe).filter((s => s.qualite === \"OK\" && s.dateFinale === $json.dateFinaleReference && s.dateInitiale === $json.dateInitialeReference)).filter(s => s.rendementPct > 0).length, baisse: $json.resultats.map(r => r.societe).filter((s => s.qualite === \"OK\" && s.dateFinale === $json.dateFinaleReference && s.dateInitiale === $json.dateInitialeReference)).filter(s => s.rendementPct < 0).length, stable: $json.resultats.map(r => r.societe).filter((s => s.qualite === \"OK\" && s.dateFinale === $json.dateFinaleReference && s.dateInitiale === $json.dateInitialeReference)).filter(s => s.rendementPct === 0).length }) }}"
+            },
+            {
+              "id": "s-vol",
+              "name": "volatiliteMoyennePct",
+              "type": "number",
+              "value": "={{ $json.resultats.map(r => r.societe).filter((s => s.qualite === \"OK\" && s.dateFinale === $json.dateFinaleReference && s.dateInitiale === $json.dateInitialeReference)).filter(s => s.volatiliteAnnualiseePct !== null).length ? Math.round($json.resultats.map(r => r.societe).filter((s => s.qualite === \"OK\" && s.dateFinale === $json.dateFinaleReference && s.dateInitiale === $json.dateInitialeReference)).filter(s => s.volatiliteAnnualiseePct !== null).reduce((a, s) => a + s.volatiliteAnnualiseePct, 0) / $json.resultats.map(r => r.societe).filter((s => s.qualite === \"OK\" && s.dateFinale === $json.dateFinaleReference && s.dateInitiale === $json.dateInitialeReference)).filter(s => s.volatiliteAnnualiseePct !== null).length * 100) / 100 : null }}"
+            },
+            {
+              "id": "s-risk",
+              "name": "risques",
+              "type": "array",
+              "value": "={{ $json.resultats.map(r => r.societe).filter(s => s.alertes && s.alertes.length).map(s => ({ nom: s.nom, alertes: s.alertes, rendementPct: s.rendementPct, baisseMaxPct: s.baisseMaxPct, volatiliteAnnualiseePct: s.volatiliteAnnualiseePct, fraicheurJours: s.fraicheurJours })) }}"
+            },
+            {
+              "id": "s-news",
+              "name": "actualites",
+              "type": "array",
+              "value": "={{ $json.resultats.flatMap(r => (r.actualites || []).map(a => ({ ...a, societe: r.societe.nom }))).map((a, i, arr) => ({ ...a, societe: [...new Set(arr.filter(b => b.url === a.url).map(b => b.societe))].join(\", \") })).filter((a, i, arr) => arr.findIndex(b => b.url === a.url) === i) }}"
+            },
+            {
+              "id": "s-nstat",
+              "name": "statutModuleActualites",
+              "type": "string",
+              "value": "={{ !$(\"Paramètres analyse\").first().json.moduleActualites ? \"désactivé\" : ($json.resultats.every(r => r.statutActualites === \"ok\") ? \"complet\" : ($json.resultats.some(r => r.statutActualites === \"ok\") ? \"incomplet : \" + $json.resultats.filter(r => r.statutActualites !== \"ok\").length + \" société(s) sans actualités ou en erreur\" : \"indisponible ou sans article sur la période\")) }}"
+            },
+            {
+              "id": "s-sig",
+              "name": "sigmaMensuellePct",
+              "type": "number",
+              "value": "={{ $json.resultats.map(r => r.societe).filter((s => s.qualite === \"OK\" && s.dateFinale === $json.dateFinaleReference && s.dateInitiale === $json.dateInitialeReference)).filter(s => s.volatiliteAnnualiseePct !== null).length ? Math.round($json.resultats.map(r => r.societe).filter((s => s.qualite === \"OK\" && s.dateFinale === $json.dateFinaleReference && s.dateInitiale === $json.dateInitialeReference)).filter(s => s.volatiliteAnnualiseePct !== null).reduce((a, s) => a + s.volatiliteAnnualiseePct, 0) / $json.resultats.map(r => r.societe).filter((s => s.qualite === \"OK\" && s.dateFinale === $json.dateFinaleReference && s.dateInitiale === $json.dateInitialeReference)).filter(s => s.volatiliteAnnualiseePct !== null).length * Math.sqrt($(\"Paramètres analyse\").first().json.horizonScenarioJours / $(\"Paramètres analyse\").first().json.joursBourseParAn) * 100) / 100 : null }}"
+            },
+            {
+              "id": "s-sect",
+              "name": "secteurs",
+              "type": "array",
+              "value": "={{ ($json.secteursBruts || []).filter(s => s && s.secteur).map(s => ({ secteur: s.secteur, nbSocietes: s.count_nom ?? null, societes: s.concatenated_nom ?? \"\", rendementMoyenPct: Number.isFinite(s.average_rendementPct) ? Math.round(s.average_rendementPct * 100) / 100 : null, meilleurRendementPct: s.max_rendementPct ?? null, pireRendementPct: s.min_rendementPct ?? null, volatiliteMoyennePct: Number.isFinite(s.average_volatilite) ? Math.round(s.average_volatilite * 100) / 100 : null })) }}"
+            },
+            {
+              "id": "s-tab",
+              "name": "tableau",
+              "type": "array",
+              "value": "={{ $json.resultats.map(r => r.societe).map(s => ({ nom: s.nom, mnemo: s.mnemo, symbole: s.symbole, place: s.place, secteur: s.secteur, dateInitiale: s.dateInitiale, coursInitial: s.coursInitial, dateFinale: s.dateFinale, coursFinal: s.coursFinal, rendementPct: s.rendementPct, nbObservations: s.nbObservations, volatiliteAnnualiseePct: s.volatiliteAnnualiseePct, baisseMaxPct: s.baisseMaxPct, ecartAuPlusHautPct: s.ecartAuPlusHautPct, fraicheurJours: s.fraicheurJours, qualite: s.qualite, comparable: (s => s.qualite === \"OK\" && s.dateFinale === $json.dateFinaleReference && s.dateInitiale === $json.dateInitialeReference)(s) })) }}"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "32322f9f-97e5-4d3b-87a3-c1ab5dabb488",
+      "name": "Construire les scénarios",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        3500,
+        300
+      ],
+      "parameters": {
+        "mode": "manual",
+        "includeOtherFields": true,
+        "include": "all",
+        "options": {
+          "ignoreConversionErrors": true
+        },
+        "assignments": {
+          "assignments": [
+            {
+              "id": "sc-f",
+              "name": "formuleScenario",
+              "type": "string",
+              "value": "={{ \"Variation hypothétique du panier équipondéré sur la période choisie = k × σ, avec σ = volatilité annualisée moyenne × √(\" + $(\"Paramètres analyse\").first().json.horizonScenarioJours + \"/\" + $(\"Paramètres analyse\").first().json.joursBourseParAn + \"). Valeur hypothétique = \" + $(\"Paramètres analyse\").first().json.montantPanierEur + \" € × (1 + variation / 100). Paramètres k : favorable = \" + $(\"Paramètres analyse\").first().json.kFavorable + \", central = \" + $(\"Paramètres analyse\").first().json.kCentral + \", défavorable = \" + $(\"Paramètres analyse\").first().json.kDefavorable + \".\" }}"
+            },
+            {
+              "id": "sc-l",
+              "name": "scenarios",
+              "type": "array",
+              "value": "={{ !$(\"Paramètres analyse\").first().json.moduleScenario || $json.sigmaMensuellePct === null ? [] : [[\"Favorable\", $(\"Paramètres analyse\").first().json.kFavorable, \"les sociétés du panier évoluent collectivement d’un écart-type de la période à la hausse, au rythme de la volatilité observée sur la période\"], [\"Central\", $(\"Paramètres analyse\").first().json.kCentral, \"le panier reste globalement stable : aucune variation n’est supposée\"], [\"Défavorable\", $(\"Paramètres analyse\").first().json.kDefavorable, \"les sociétés du panier évoluent collectivement d’un écart-type de la période à la baisse\"]].map(x => ({ scenario: x[0], k: x[1], hypothese: x[2], variationHypothetiquePct: Math.round(x[1] * $json.sigmaMensuellePct * 100) / 100, valeurHypothetiquePanierEur: Math.round($(\"Paramètres analyse\").first().json.montantPanierEur * (1 + x[1] * $json.sigmaMensuellePct / 100) * 100) / 100 })) }}"
+            },
+            {
+              "id": "sc-cpt",
+              "name": "compteurs",
+              "type": "object",
+              "value": "={{ ({ base: \"sociétés classées (rendement calculé, dates communes)\", nbSocietesClassees: $json.classement.length, nbHausse: $json.classement.filter(c => c.rendementPct > 0).length, nbBaisse: $json.classement.filter(c => c.rendementPct < 0).length, nbRendementInferieurOuEgalMoins10Pct: $json.classement.filter(c => c.rendementPct <= -10).length, nbRendementSuperieurOuEgal10Pct: $json.classement.filter(c => c.rendementPct >= 10).length, nbVolatiliteSuperieureOuEgale35Pct: $json.tableau.filter(s => s.comparable && s.volatiliteAnnualiseePct >= 35).length, nbVolatiliteSuperieureOuEgale50Pct: $json.tableau.filter(s => s.comparable && s.volatiliteAnnualiseePct >= 50).length, nbSocietesAvecAlerte: $json.risques.length, nbAlerteRendementPeriode: $json.tableau.filter(s => s.rendementPct !== null && s.rendementPct <= $(\"Paramètres analyse\").first().json.seuilBaissePeriodePct).length, nbAlerteBaisseMax: $json.tableau.filter(s => s.baisseMaxPct !== null && s.baisseMaxPct <= $(\"Paramètres analyse\").first().json.seuilBaisseMaxPct).length, nbAlerteVolatilite: $json.tableau.filter(s => s.volatiliteAnnualiseePct !== null && s.volatiliteAnnualiseePct >= $(\"Paramètres analyse\").first().json.seuilVolatilitePct).length, nbAlerteFraicheur: $json.tableau.filter(s => s.fraicheurJours !== null && s.fraicheurJours > $(\"Paramètres analyse\").first().json.seuilFraicheurJours).length, periodeTexte: $json.dateInitialeReference ? \"du \" + $json.dateInitialeReference.split(\"-\").reverse().join(\"/\") + \" au \" + $json.dateFinaleReference.split(\"-\").reverse().join(\"/\") : \"non disponible\", parSecteur: [...new Set($json.tableau.filter(s => s.comparable).map(s => s.secteur))].map(sec => ({ secteur: sec, nbSocietes: $json.tableau.filter(s => s.comparable && s.secteur === sec).length, nbHausse: $json.tableau.filter(s => s.comparable && s.secteur === sec && s.rendementPct > 0).length, nbBaisse: $json.tableau.filter(s => s.comparable && s.secteur === sec && s.rendementPct < 0).length, nbBaisseDeuxChiffres: $json.tableau.filter(s => s.comparable && s.secteur === sec && s.rendementPct <= -10).length, nbHausseDeuxChiffres: $json.tableau.filter(s => s.comparable && s.secteur === sec && s.rendementPct >= 10).length })) }) }}"
+            },
+            {
+              "id": "sc-lim",
+              "name": "limitesScenario",
+              "type": "string",
+              "value": "Simulation illustrative, sans probabilité associée ni cours cible : elle suppose des variations normales, une volatilité future égale à la volatilité passée sur la période et une corrélation parfaite entre sociétés, ce qui n’est pas réaliste. Ce n’est pas une prévision."
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "c0476a49-32d9-4a23-b5ef-c75fb696c8f5",
+      "name": "Préparer le bilan du jour",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        3700,
+        300
+      ],
+      "parameters": {
+        "mode": "manual",
+        "includeOtherFields": true,
+        "include": "all",
+        "options": {
+          "ignoreConversionErrors": true
+        },
+        "assignments": {
+          "assignments": [
+            {
+              "id": "bj-bil",
+              "name": "coursDuJourBilan",
+              "type": "object",
+              "value": "={{ (() => { const v = $json.resultats.map(r => r.societe).filter(s => s.variationJourPct !== null && s.variationJourPct !== undefined); const dates = $json.resultats.map(r => r.societe.dateFinale).filter(Boolean).sort(); const haus = v.filter(s => s.variationJourPct > 0).sort((a, b) => b.variationJourPct - a.variationJourPct); const baisses = v.filter(s => s.variationJourPct < 0).sort((a, b) => a.variationJourPct - b.variationJourPct); const extrait = s => ({ nom: s.nom, mnemo: s.mnemo, variationJourPct: s.variationJourPct }); return { date: dates.length ? dates[dates.length - 1] : null, nbCalculees: v.length, hausse: haus.length, baisse: baisses.length, inchange: v.filter(s => s.variationJourPct === 0).length, plusFortesHausses: haus.slice(0, 3).map(extrait), plusFortesBaisses: baisses.slice(0, 3).map(extrait) }; })() }}"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "cfb5e6a9-6624-4266-aa29-d52c682028b5",
+      "name": "Mettre en forme les tableaux",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        3900,
+        300
+      ],
+      "parameters": {
+        "mode": "manual",
+        "includeOtherFields": true,
+        "include": "all",
+        "assignments": {
+          "assignments": [
+            {
+              "id": "t-tab",
+              "name": "mdTableau",
+              "type": "string",
+              "value": "={{ !$(\"Paramètres analyse\").first().json.moduleComparaison ? \"_Module comparaison désactivé._\" : (() => { const pc = x => (x === null || x === undefined) ? \"n/d\" : (x > 0 ? \"+\" : \"\") + Number(x).toFixed(2).replace(\".\", \",\") + \" %\"; const b = $json.coursDuJourBilan; const lignes = $json.resultats.map(r => r.societe).sort((p, q) => (q.variationJourPct ?? -1e9) - (p.variationJourPct ?? -1e9)).map(s => \"| \" + s.nom + \" | \" + s.symbole + \" | \" + (s.coursDuJour === null || s.coursDuJour === undefined ? \"n/d\" : String(s.coursDuJour).replace(\".\", \",\") + \" €\") + \" | \" + (s.dateFinale || \"n/d\") + \" | \" + pc(s.variationJourPct) + \" | \" + pc(s.rendementPct) + \" |\"); return [\"| Société | Symbole | Cours du jour | Date du cours | Variation du jour | Variation sur la période |\", \"|---|---|---|---|---|---|\"].concat(lignes).join(\"\\n\") + \"\\n\\n**Dernière séance : \" + (b.date || \"n/d\") + \"** — \" + b.hausse + \" hausse(s), \" + b.baisse + \" baisse(s), \" + b.inchange + \" inchangée(s) sur \" + b.nbCalculees + \" société(s) calculée(s).\" + (b.plusFortesHausses.length ? \"\\n\\nPlus fortes hausses : \" + b.plusFortesHausses.map(s => s.nom + \" (\" + pc(s.variationJourPct) + \")\").join(\" ; \") + \".\" : \"\") + (b.plusFortesBaisses.length ? \"\\n\\nPlus fortes baisses : \" + b.plusFortesBaisses.map(s => s.nom + \" (\" + pc(s.variationJourPct) + \")\").join(\" ; \") + \".\" : \"\") + \"\\n\\n_Cours de clôture en euros de la dernière séance disponible (EODHD, données de fin de journée)._\"; })() + \"\\n\\n\" + [\"| Société | Symbole | Date initiale | Cours initial (€) | Date finale | Cours final (€) | Rendement | Obs. | Qualité |\", \"|---|---|---|---|---|---|---|---|---|\"].concat($json.tableau.map(s => \"| \" + s.nom + \" | \" + s.symbole + \" | \" + (s.dateInitiale || \"n/d\") + \" | \" + String(s.coursInitial ?? \"n/d\").replace(\".\", \",\") + \" | \" + (s.dateFinale || \"n/d\") + \" | \" + String(s.coursFinal ?? \"n/d\").replace(\".\", \",\") + \" | \" + (s.rendementPct === null ? \"n/d\" : (x => (x > 0 ? \"+\" : \"\") + Number(x).toFixed(2).replace(\".\", \",\") + \" %\")(s.rendementPct)) + \" | \" + s.nbObservations + \" | \" + s.qualite + (s.comparable || s.rendementPct === null ? \"\" : \" (dates différentes)\") + \" |\")).join(\"\\n\") }}"
+            },
+            {
+              "id": "t-cls",
+              "name": "mdClassement",
+              "type": "string",
+              "value": "={{ !$(\"Paramètres analyse\").first().json.moduleComparaison ? \"_Module comparaison désactivé._\" : ($json.classement.length ? [\"| Rang | Société | Rendement |\", \"|---|---|---|\"].concat($json.classement.map(c => \"| \" + c.rang + \" | \" + c.nom + \" (\" + c.mnemo + \") | \" + (x => (x > 0 ? \"+\" : \"\") + Number(x).toFixed(2).replace(\".\", \",\") + \" %\")(c.rendementPct) + \" |\")).join(\"\\n\") + \"\\n\\nPériode commune : du \" + $json.dateInitialeReference + \" au \" + $json.dateFinaleReference + \". Rendement moyen équipondéré : \" + String($json.rendementMoyenEquipondere).replace(\".\", \",\") + \" % ; médiane : \" + String($json.rendementMedian).replace(\".\", \",\") + \" % ; \" + $json.repartition.hausse + \" hausse(s), \" + $json.repartition.baisse + \" baisse(s).\" + ($json.nonComparables.length ? \"\\n\\nNon classées faute de dates communes : \" + $json.nonComparables.map(n => n.nom + \" (\" + n.dateInitiale + \" → \" + n.dateFinale + \")\").join(\", \") + \".\" : \"\") : \"_Aucune société ne dispose de données suffisamment comparables pour établir un classement._\") }}"
+            },
+            {
+              "id": "t-risk",
+              "name": "mdRisques",
+              "type": "string",
+              "value": "={{ !$(\"Paramètres analyse\").first().json.moduleRisques ? \"_Module risques désactivé._\" : [\"| Société | Volatilité annualisée (%) | Baisse max. (%) | Écart au plus haut (%) | Alertes |\", \"|---|---|---|---|---|\"].concat($json.tableau.filter(s => s.rendementPct !== null).map(s => \"| \" + s.nom + \" | \" + String(s.volatiliteAnnualiseePct ?? \"n/d\").replace(\".\", \",\") + \" | \" + String(s.baisseMaxPct ?? \"n/d\").replace(\".\", \",\") + \" | \" + String(s.ecartAuPlusHautPct ?? \"n/d\").replace(\".\", \",\") + \" | \" + (($json.risques.find(r => r.nom === s.nom) || {}).alertes || []).join(\" ; \") + \" |\")).join(\"\\n\") + \"\\n\\nRègles de surveillance de la maquette (configurables, pas des recommandations) : rendement ≤ \" + $(\"Paramètres analyse\").first().json.seuilBaissePeriodePct + \" %, baisse maximale ≤ \" + $(\"Paramètres analyse\").first().json.seuilBaisseMaxPct + \" %, volatilité ≥ \" + $(\"Paramètres analyse\").first().json.seuilVolatilitePct + \" %, données de plus de \" + $(\"Paramètres analyse\").first().json.seuilFraicheurJours + \" jours.\" }}"
+            },
+            {
+              "id": "t-news",
+              "name": "mdActualites",
+              "type": "string",
+              "value": "={{ !$(\"Paramètres analyse\").first().json.moduleActualites ? \"_Module actualités désactivé._\" : ($json.actualites.length ? $json.actualites.map(a => \"- **\" + a.societe + \"** — [\" + a.titre.replace(/[\\[\\]]/g, \"\") + \"](\" + a.url + \") — \" + a.source + \", \" + String(a.date).slice(0, 10)).join(\"\\n\") : \"_Aucun article disponible (\" + $json.statutModuleActualites + \")._\") }}"
+            },
+            {
+              "id": "t-scen",
+              "name": "mdScenarios",
+              "type": "string",
+              "value": "={{ !$(\"Paramètres analyse\").first().json.moduleScenario ? \"_Module scénario désactivé._\" : ($json.scenarios.length ? [\"| Scénario | k | Variation hypothétique (%) | Valeur hypothétique d’un panier de \" + $(\"Paramètres analyse\").first().json.montantPanierEur + \" € |\", \"|---|---|---|---|\"].concat($json.scenarios.map(s => \"| \" + s.scenario + \" | \" + s.k + \" | \" + String(s.variationHypothetiquePct).replace(\".\", \",\") + \" | \" + String(s.valeurHypothetiquePanierEur).replace(\".\", \",\") + \" € |\")).join(\"\\n\") + \"\\n\\n\" + $json.formuleScenario + \"\\n\\n\" + $json.limitesScenario : \"_Scénarios non calculables : volatilité indisponible._\") }}"
+            },
+            {
+              "id": "t-err",
+              "name": "mdErreurs",
+              "type": "string",
+              "value": "={{ $json.societesEnEchec.length ? $json.societesEnEchec.map(e => \"- \" + e.nom + \" (\" + e.symbole + \") : \" + e.qualite + \" — \" + e.motif).join(\"\\n\") : \"Aucune société en erreur ou avec des données insuffisantes.\" }}"
+            },
+            {
+              "id": "t-comp",
+              "name": "mdComposition",
+              "type": "string",
+              "value": "={{ \"- Source : \" + $(\"Contrôler composition\").first().json.origineComposition + ($(\"Contrôler composition\").first().json.urlSource ? \" ([révision \" + $(\"Contrôler composition\").first().json.revisionWikipedia + \"](\" + $(\"Contrôler composition\").first().json.urlSource + \"))\" : \"\") + \", consultée le \" + $(\"Contrôler composition\").first().json.dateConsultation + \"\\n- Sociétés trouvées : \" + $(\"Contrôler composition\").first().json.nbSocietesRetenues + \" / 40 attendues — composition \" + ($(\"Contrôler composition\").first().json.compositionVerifiee ? \"vérifiée (40 symboles uniques et valides)\" : \"NON vérifiée\") + \"\\n- Changements par rapport à la liste de contrôle du \" + $(\"Liste de contrôle CAC 40\").first().json.dateReference + \" : \" + ($(\"Contrôler composition\").first().json.changementDetecte ? \"entrées \" + ($(\"Contrôler composition\").first().json.nouveauxParRapportAuControle.join(\", \") || \"aucune\") + \" ; sorties \" + ($(\"Contrôler composition\").first().json.absentsParRapportAuControle.join(\", \") || \"aucune\") : \"aucun\") + \"\\n- Doublons : \" + ($(\"Contrôler composition\").first().json.doublons.join(\", \") || \"aucun\") + \" ; symboles invalides : \" + ($(\"Contrôler composition\").first().json.symbolesInvalides.join(\", \") || \"aucun\") + \" ; sociétés clés manquantes : \" + ($(\"Contrôler composition\").first().json.societesClesManquantes.join(\", \") || \"aucune\") + ($(\"Contrôler composition\").first().json.erreurSource ? \"\\n- Incident source : \" + $(\"Contrôler composition\").first().json.erreurSource : \"\") + ($(\"Contrôler composition\").first().json.selectionHorsIndice.length ? \"\\n- Sociétés sélectionnées absentes de la composition actuelle : \" + $(\"Contrôler composition\").first().json.selectionHorsIndice.join(\", \") : \"\") + ($(\"Paramètres analyse\").first().json.avertissementSelection ? \"\\n- \" + $(\"Paramètres analyse\").first().json.avertissementSelection : \"\") }}"
+            },
+            {
+              "id": "t-sect",
+              "name": "mdSecteurs",
+              "type": "string",
+              "value": "={{ $json.secteurs.length ? [\"| Secteur | Sociétés | Rendement moyen (%) | Meilleur (%) | Plus faible (%) | Volatilité moyenne (%) |\", \"|---|---|---|---|---|---|\"].concat($json.secteurs.map(s => \"| \" + s.secteur + \" | \" + s.nbSocietes + \" (\" + s.societes + \") | \" + String(s.rendementMoyenPct ?? \"n/d\").replace(\".\", \",\") + \" | \" + String(s.meilleurRendementPct ?? \"n/d\").replace(\".\", \",\") + \" | \" + String(s.pireRendementPct ?? \"n/d\").replace(\".\", \",\") + \" | \" + String(s.volatiliteMoyennePct ?? \"n/d\").replace(\".\", \",\") + \" |\")).join(\"\\n\") + \"\\n\\nMoyennes simples (équipondérées) des sociétés disposant d’un rendement calculé ; secteurs tels que publiés par la source de composition (Wikipédia).\" : \"_Aucune statistique sectorielle disponible._\" }}"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "558d8eaa-2abf-4b9b-a44d-0ba595e345b3",
+      "name": "Construire les graphiques QuickChart",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        4100,
+        300
+      ],
+      "parameters": {
+        "mode": "manual",
+        "includeOtherFields": true,
+        "include": "all",
+        "assignments": {
+          "assignments": [
+            {
+              "id": "gr-ret",
+              "name": "urlGraphiqueRendements",
+              "type": "string",
+              "value": "={{ $json.classement.length ? \"https://quickchart.io/chart?w=900&h=\" + Math.max(320, $json.classement.length * 22 + 110) + \"&bkg=white&c=\" + encodeURIComponent(JSON.stringify({ type: \"horizontalBar\", data: { labels: $json.classement.map(c => c.rang + \". \" + c.nom + \" : \" + (x => (x > 0 ? \"+\" : \"\") + Number(x).toFixed(2).replace(\".\", \",\") + \" %\")(c.rendementPct)), datasets: [{ label: \"Rendement (%)\", data: $json.classement.map(c => c.rendementPct), backgroundColor: $json.classement.map(c => c.rendementPct >= 0 ? \"#1f9d55\" : \"#d64545\") }] }, options: { legend: { display: false }, title: { display: true, text: \"Rendement de chaque société, en %, du \" + $json.dateInitialeReference.split(\"-\").reverse().join(\"/\") + \" au \" + $json.dateFinaleReference.split(\"-\").reverse().join(\"/\") }, scales: { xAxes: [{ scaleLabel: { display: true, labelString: \"Rendement sur la période (%)\" } }] } } })) : \"\" }}"
+            },
+            {
+              "id": "gr-sec",
+              "name": "urlGraphiqueSecteurs",
+              "type": "string",
+              "value": "={{ $json.secteurs.length ? \"https://quickchart.io/chart?w=900&h=\" + Math.max(300, $json.secteurs.length * 34 + 110) + \"&bkg=white&c=\" + encodeURIComponent(JSON.stringify({ type: \"horizontalBar\", data: { labels: $json.secteurs.map(s => s.secteur + \" (\" + s.nbSocietes + \" sté) : \" + (x => (x > 0 ? \"+\" : \"\") + Number(x).toFixed(2).replace(\".\", \",\") + \" %\")(s.rendementMoyenPct)), datasets: [{ label: \"Rendement moyen (%)\", data: $json.secteurs.map(s => s.rendementMoyenPct), backgroundColor: $json.secteurs.map(s => s.rendementMoyenPct >= 0 ? \"#1a3cff\" : \"#d64545\") }] }, options: { legend: { display: false }, title: { display: true, text: \"Rendement moyen par secteur, en %\" }, scales: { xAxes: [{ scaleLabel: { display: true, labelString: \"Rendement moyen sur la période (%)\" } }] } } })) : \"\" }}"
+            },
+            {
+              "id": "gr-eur",
+              "name": "urlGraphiqueCours",
+              "type": "string",
+              "value": "={{ $json.classement.length ? \"https://quickchart.io/chart?w=900&h=\" + Math.max(360, $json.classement.length * 30 + 140) + \"&bkg=white&c=\" + encodeURIComponent(JSON.stringify({ type: \"horizontalBar\", data: { labels: $json.classement.map(c => $json.tableau.find(s => s.nom === c.nom)).map(s => s.nom + \" : \" + (x => Number(x).toFixed(2).replace(\".\", \",\") + \" €\")(s.coursInitial) + \" → \" + (x => Number(x).toFixed(2).replace(\".\", \",\") + \" €\")(s.coursFinal)), datasets: [{ label: \"Cours au \" + $json.dateInitialeReference.split(\"-\").reverse().join(\"/\") + \" (€)\", data: $json.classement.map(c => $json.tableau.find(s => s.nom === c.nom).coursInitial), backgroundColor: \"#a9b4c6\" }, { label: \"Cours au \" + $json.dateFinaleReference.split(\"-\").reverse().join(\"/\") + \" (€)\", data: $json.classement.map(c => $json.tableau.find(s => s.nom === c.nom).coursFinal), backgroundColor: \"#1a3cff\" }] }, options: { legend: { display: true, position: \"top\" }, title: { display: true, text: \"Cours de clôture ajusté en euros, début et fin de période\" }, scales: { xAxes: [{ type: \"logarithmic\", ticks: { display: false }, scaleLabel: { display: true, labelString: \"Longueur des barres en échelle logarithmique : les cours exacts sont indiqués à gauche\" } }] } } })) : \"\" }}"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "43e929f0-c00c-44b3-9438-f7b9c6d1cfc5",
+      "name": "Agent IA analyste",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        300,
+        450
+      ],
+      "parameters": {
+        "promptType": "define",
+        "text": "=Analyse les données suivantes (période du {{ $(\"Mettre en forme les tableaux\").first().json.dateInitialeReference || $(\"Paramètres analyse\").first().json.dateDebut }} au {{ $(\"Mettre en forme les tableaux\").first().json.dateFinaleReference || $(\"Paramètres analyse\").first().json.dateFin }}) et renvoie le JSON demandé.\n\nDONNÉES :\n{{ JSON.stringify({ perimetre: $(\"Mettre en forme les tableaux\").first().json.perimetre, comptage: { attendues: $(\"Mettre en forme les tableaux\").first().json.societesAttendues, analyseesAvecSucces: $(\"Mettre en forme les tableaux\").first().json.societesAnalyseesAvecSucces, enEchec: $(\"Mettre en forme les tableaux\").first().json.societesEnEchec.map(e => e.nom + \" : \" + e.qualite) }, statistiques: { rendementMoyenEquipondere: $(\"Mettre en forme les tableaux\").first().json.rendementMoyenEquipondere, rendementMedian: $(\"Mettre en forme les tableaux\").first().json.rendementMedian, repartition: $(\"Mettre en forme les tableaux\").first().json.repartition, volatiliteMoyennePct: $(\"Mettre en forme les tableaux\").first().json.volatiliteMoyennePct }, compteurs: $(\"Mettre en forme les tableaux\").first().json.compteurs, societes: $(\"Mettre en forme les tableaux\").first().json.tableau.filter(s => s.rendementPct !== null).map(s => ({ nom: s.nom, secteur: s.secteur, rendementPct: s.rendementPct, volatiliteAnnualiseePct: s.volatiliteAnnualiseePct, baisseMaxPct: s.baisseMaxPct, ecartAuPlusHautPct: s.ecartAuPlusHautPct, qualite: s.qualite, comparable: s.comparable })), secteurs: $(\"Mettre en forme les tableaux\").first().json.secteurs, alertesRisque: $(\"Mettre en forme les tableaux\").first().json.risques, actualites: $(\"Mettre en forme les tableaux\").first().json.actualites.map(a => ({ societe: a.societe, titre: a.titre, source: a.source, date: a.date, polariteFournisseur: a.polariteFournisseur })) }) }}",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "<role>\nTu es un analyste actions senior, spécialisé sur le marché français et les sociétés du CAC 40. Tu produis des analyses factuelles, prudentes et rédigées en français, destinées à des étudiants.\n</role>\n\n<instructions>\n<goal>\nÀ partir des indicateurs déjà calculés par le workflow, produire une analyse structurée : tonalité globale, 3 à 5 points clés chiffrés, lecture sectorielle, sociétés remarquables, qualité des données et avertissements.\n</goal>\n\n<context>\n- Utilise uniquement les données fournies dans le message. Tu n’as aucune connaissance extérieure sur les cours, les entreprises ou l’actualité.\n- N’invente jamais un chiffre, une date, une société, un article ou une cause. Recopie les valeurs telles quelles, avec leur signe et leur unité.\n- Pour tout nombre de sociétés (hausses, baisses, dépassements de seuils, comptes par secteur), recopie uniquement les valeurs de l’objet « compteurs ». Ne compte jamais toi-même.\n- Distingue les faits (chiffres fournis) des interprétations, et reste prudent : « semble », « suggère ».\n- N’affirme jamais qu’une actualité a causé un mouvement de cours.\n- Aucune recommandation d’achat ou de vente, aucun cours cible, aucune probabilité, aucune garantie de rendement. « À surveiller » signifie « remarquable dans les données », pas un conseil.\n- Signale explicitement les données manquantes, anciennes ou non comparables.\n- Outils disponibles : la Calculatrice, pour vérifier un écart ou une moyenne que tu veux citer (jamais pour compter des sociétés) ; la Réflexion, pour organiser ton raisonnement avant de répondre.\n- Les exemples ci-dessous servent uniquement à illustrer le style et le format attendus. Leurs noms, leurs chiffres et leurs marchés sont inventés : ne les réutilise jamais dans ton analyse.\n</context>\n\n<examples>\n<example_1>\nCas : sélection personnalisée de 3 sociétés, période d’un mois. Données : Société Alpha +3,21 %, Société Beta -0,12 %, Société Gamma -2,75 % ; compteurs : 1 hausse, 2 baisses.\nSortie attendue : tonalité « mitigée » ; pointsCles : le rendement moyen équipondéré est de +0,11 %, la médiane de -0,12 %, et seule une société sur trois progresse ; lectureSectorielle : un commentaire par secteur présent ; societesASurveiller : Société Gamma, pour sa baisse la plus forte de la période ; qualiteDonnees : 3 sociétés analysées sur 3 ; avertissements : échantillon de trois sociétés, trop petit pour une conclusion générale.\n</example_1>\n\n<example_2>\nCas : analyse complète de 40 sociétés, avec 2 sociétés en échec d’extraction. Données : moyenne équipondérée de +1,40 % sur 38 sociétés valides ; compteurs : 24 hausses, 14 baisses.\nSortie attendue : tonalité « plutôt positive » ; pointsCles : 24 hausses et 14 baisses recopiées des compteurs, et les 2 sociétés en échec signalées nommément ; qualiteDonnees : 38 sociétés analysées sur 40 attendues ; avertissements : deux sociétés exclues du calcul, leurs rendements ne sont pas comparés.\n</example_2>\n\n<example_3>\nCas : période agitée avec beaucoup d’alertes de volatilité. Données : compteurs : 9 sociétés avec une alerte de volatilité ; un secteur ne contient qu’une seule société.\nSortie attendue : tonalité « prudente » ; pointsCles : 9 sociétés dépassent le seuil de volatilité, nombre recopié des compteurs ; lectureSectorielle : le secteur à une seule société est signalé comme non comparable ; avertissements : la volatilité est annualisée à partir d’une seule période d’un mois, elle ne donne pas une mesure long terme.\n</example_3>\n\n<example_4>\nCas fantaisie : la Bourse imaginaire des Îles Vertes, sociétés fictives Verdeau et Brumelac. Données : Verdeau +12,00 %, Brumelac -8,00 %.\nSortie attendue : tonalité « contrastée » ; pointsCles : Verdeau progresse de +12,00 %, Brumelac recule de -8,00 % ; societesASurveiller : Brumelac, pour sa baisse ; avertissements : marché fictif, valeurs illustratives uniquement.\n</example_4>\n\n<example_5>\nCas fantaisie : la planète imaginaire Zéphyra, où les cours sont exprimés en pièces d’or. Données : aucune société calculable, toutes les cotations sont manquantes.\nSortie attendue : tonalité « non déterminable » ; pointsCles : aucun rendement n’est calculable, faute de cotations ; qualiteDonnees : 0 société analysée ; avertissements : analyse impossible, à signaler sans rien extrapoler.\n</example_5>\n</examples>\n\n<output_format>\nRéponds uniquement avec un objet structuré contenant les champs suivants :\n- tonaliteGlobale : un court texte ;\n- pointsCles : une liste de 3 à 5 constats chiffrés ;\n- lectureSectorielle : une liste d’éléments, chacun avec le champ secteur et le champ commentaire ;\n- societesASurveiller : une liste d’éléments, chacun avec le champ societe et le champ raison ;\n- qualiteDonnees : un court texte ;\n- avertissements : une liste de textes.\nLe format technique est imposé par le sous-nœud de sortie : ne l’ajoute pas toi-même.\n</output_format>\n</instructions>\n\n<inputs>\nLe message utilisateur contient les données JSON calculées par le workflow : périmètre, comptage, statistiques, compteurs, secteurs, alertes de risque et actualités fournies.\n</inputs>",
+          "maxIterations": 6
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 5,
+      "waitBetweenTries": 5000,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "id": "c0dc7a27-2ed2-4f41-97d0-0b6273c788d3",
+      "name": "Modèle Google Gemini (analyste)",
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1.2,
+      "position": [
+        100,
+        450
+      ],
+      "parameters": {
+        "modelName": "models/gemini-3-flash-preview",
+        "options": {
+          "temperature": 0.1,
+          "maxOutputTokens": 4096
+        }
+      },
+      "credentials": {}
+    },
+    {
+      "id": "199159c6-03c6-428c-813d-987fa61743ee",
+      "name": "Calculatrice",
+      "type": "@n8n/n8n-nodes-langchain.toolCalculator",
+      "typeVersion": 1,
+      "position": [
+        100,
+        600
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "0732bf3d-3f82-4ded-bdfa-334efe9d3701",
+      "name": "Réflexion",
+      "type": "@n8n/n8n-nodes-langchain.toolThink",
+      "typeVersion": 1.1,
+      "position": [
+        100,
+        750
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "dd994a0b-2641-4696-bf9f-e9d2a29d4047",
+      "name": "Format JSON de l’analyse",
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        100,
+        900
+      ],
+      "parameters": {
+        "schemaType": "fromJson",
+        "jsonSchemaExample": "{ \"tonaliteGlobale\": \"mitigée\", \"pointsCles\": [\"Le rendement moyen équipondéré est de -1,87 %.\"], \"lectureSectorielle\": [{ \"secteur\": \"Healthcare\", \"commentaire\": \"Secteur le plus performant.\" }], \"societesASurveiller\": [{ \"societe\": \"Capgemini\", \"raison\": \"Plus forte hausse (+19,51 %).\" }], \"qualiteDonnees\": \"40 sociétés analysées sur 40.\", \"avertissements\": [\"Période courte d’un mois.\"] }"
+      }
+    },
+    {
+      "id": "bae28c69-90db-4911-a1c8-810d9f5f8fd5",
+      "name": "Analyse Gemini structurée",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        500,
+        450
+      ],
+      "parameters": {
+        "mode": "manual",
+        "includeOtherFields": false,
+        "assignments": {
+          "assignments": [
+            {
+              "id": "as-json",
+              "name": "analyse",
+              "type": "object",
+              "value": "={{ $json.output && typeof $json.output === \"object\" ? $json.output : {} }}"
+            },
+            {
+              "id": "as-stat",
+              "name": "statutAnalyse",
+              "type": "string",
+              "value": "={{ $json.error ? \"Agent IA analyste indisponible : \" + (typeof $json.error === \"string\" ? $json.error : String($json.error?.message ?? $json.error?.description ?? JSON.stringify($json.error))) : ($json.output ? \"ok\" : \"réponse vide\") }}"
+            }
+          ]
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "id": "4418972d-cdfc-45e2-9adf-e37ab8777815",
+      "name": "Agent IA rédacteur",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        300,
+        1050
+      ],
+      "parameters": {
+        "promptType": "define",
+        "text": "=Rédige le rapport « CAC 40 Insight AI » à partir des seules données JSON ci-dessous. Les calculs ont été faits par le workflow et une analyse structurée a été produite en amont par Gemini analyste : ne recalcule rien et ne modifie aucun chiffre.\n\nStructure obligatoire (titres Markdown de niveau 2, dans cet ordre) :\n## 1. Synthèse exécutive\n## 2. Composition et périmètre analysés\n## 3. Période\n## 4. Tableau comparatif\n## 5. Classement des performances\n## 6. Analyse sectorielle\n## 7. Risques\n## 8. Actualités\n## 9. Trois scénarios hypothétiques\n## 10. Limites des données\n## 11. Conclusion\n\nMarqueurs à recopier tels quels, seuls sur leur ligne, chacun une seule fois : [[POINTS_CLES]] dans la section 1, [[COMPOSITION]] dans la section 2, [[GRAPHIQUE_RENDEMENTS]] puis [[TABLEAU_COMPARATIF]] dans la section 4, [[CLASSEMENT]] dans la section 5, [[SECTEURS]] dans la section 6, [[RISQUES]] dans la section 7, [[ACTUALITES]] dans la section 8, [[SCENARIOS]] dans la section 9, [[ERREURS]] dans la section 10. Le workflow les remplace par des tableaux et des graphiques générés automatiquement : ne les recopie pas, commente-les.\n\nIndique explicitement : le nombre de sociétés attendues ({{ $(\"Mettre en forme les tableaux\").first().json.societesAttendues }}), le nombre analysées avec succès ({{ $(\"Mettre en forme les tableaux\").first().json.societesAnalyseesAvecSucces }}) et la liste des sociétés en erreur ou aux données insuffisantes. {{ $(\"Paramètres analyse\").first().json.analyseComplete ? \"L’utilisateur a demandé l’analyse complète du CAC 40 : rappelle que l’objectif est de couvrir les 40 sociétés.\" : \"L’utilisateur a demandé une sélection personnalisée : précise clairement qu’il s’agit d’une analyse partielle.\" }}\nPour chaque module désactivé, écris simplement que le module n’a pas été demandé.\n\nDONNÉES :\n```json\n{{ JSON.stringify({ projet: \"CAC 40 Insight AI\", dateExecution: $(\"Paramètres analyse\").first().json.dateExecution, perimetre: $(\"Mettre en forme les tableaux\").first().json.perimetre, periode: { libelle: $(\"Paramètres analyse\").first().json.periodeLibelle, debutDemande: $(\"Paramètres analyse\").first().json.dateDebut, finDemandee: $(\"Paramètres analyse\").first().json.dateFin, premiereCotationCommune: $(\"Mettre en forme les tableaux\").first().json.dateInitialeReference, derniereCotationCommune: $(\"Mettre en forme les tableaux\").first().json.dateFinaleReference }, modules: { comparaison: $(\"Paramètres analyse\").first().json.moduleComparaison, risques: $(\"Paramètres analyse\").first().json.moduleRisques, actualites: $(\"Paramètres analyse\").first().json.moduleActualites, scenario: $(\"Paramètres analyse\").first().json.moduleScenario }, composition: { source: $(\"Contrôler composition\").first().json.origineComposition, revision: $(\"Contrôler composition\").first().json.revisionWikipedia, verifiee: $(\"Contrôler composition\").first().json.compositionVerifiee, societesTrouvees: $(\"Contrôler composition\").first().json.nbSocietesRetenues, changementDetecte: $(\"Contrôler composition\").first().json.changementDetecte, entrees: $(\"Contrôler composition\").first().json.nouveauxParRapportAuControle, sorties: $(\"Contrôler composition\").first().json.absentsParRapportAuControle, incident: $(\"Contrôler composition\").first().json.erreurSource, selectionHorsIndice: $(\"Contrôler composition\").first().json.selectionHorsIndice }, nature: \"Clôtures quotidiennes ajustées (dividendes et divisions) fournies par EODHD, données de fin de journée et non temps réel\", comptage: { attendues: $(\"Mettre en forme les tableaux\").first().json.societesAttendues, traitees: $(\"Mettre en forme les tableaux\").first().json.societesTraitees, analyseesAvecSucces: $(\"Mettre en forme les tableaux\").first().json.societesAnalyseesAvecSucces, enEchec: $(\"Mettre en forme les tableaux\").first().json.societesEnEchec }, tableau: $(\"Mettre en forme les tableaux\").first().json.tableau, classement: $(\"Mettre en forme les tableaux\").first().json.classement, nonComparables: $(\"Mettre en forme les tableaux\").first().json.nonComparables, statistiques: { rendementMoyenEquipondere: $(\"Mettre en forme les tableaux\").first().json.rendementMoyenEquipondere, rendementMedian: $(\"Mettre en forme les tableaux\").first().json.rendementMedian, repartition: $(\"Mettre en forme les tableaux\").first().json.repartition, volatiliteMoyennePct: $(\"Mettre en forme les tableaux\").first().json.volatiliteMoyennePct }, compteurs: $(\"Mettre en forme les tableaux\").first().json.compteurs, secteurs: $(\"Mettre en forme les tableaux\").first().json.secteurs, analyseStructureeGemini: $json.analyse || \"indisponible\", risques: $(\"Paramètres analyse\").first().json.moduleRisques ? { alertes: $(\"Mettre en forme les tableaux\").first().json.risques, seuils: { rendementPeriodePct: $(\"Paramètres analyse\").first().json.seuilBaissePeriodePct, baisseMaxPct: $(\"Paramètres analyse\").first().json.seuilBaisseMaxPct, volatilitePct: $(\"Paramètres analyse\").first().json.seuilVolatilitePct, fraicheurJours: $(\"Paramètres analyse\").first().json.seuilFraicheurJours }, methodeVolatilite: \"écart-type échantillon des rendements logarithmiques quotidiens × √252\" } : \"module non demandé\", actualites: $(\"Paramètres analyse\").first().json.moduleActualites ? { statut: $(\"Mettre en forme les tableaux\").first().json.statutModuleActualites, articles: $(\"Mettre en forme les tableaux\").first().json.actualites } : \"module non demandé\", scenarios: $(\"Paramètres analyse\").first().json.moduleScenario ? { formule: $(\"Mettre en forme les tableaux\").first().json.formuleScenario, resultats: $(\"Mettre en forme les tableaux\").first().json.scenarios, limites: $(\"Mettre en forme les tableaux\").first().json.limitesScenario } : \"module non demandé\" }, null, 2) }}\n```",
+        "hasOutputParser": false,
+        "options": {
+          "systemMessage": "<role>\nTu es analyste financier senior. Tu rédiges en français des rapports de marché professionnels, sobres et factuels, destinés à un public étudiant.\n</role>\n\n<instructions>\n<goal>\nRédiger le rapport « CAC 40 Insight AI » en Markdown, à partir des seules données JSON du message et de l’analyse structurée produite en amont par l’agent analyste. Les calculs ont déjà été faits par le workflow : tu ne recalcules rien et tu ne modifies aucun chiffre.\n</goal>\n\n<context>\n- Utilise uniquement les données fournies dans le message, y compris l’analyse structurée de l’agent analyste. Tu n’as aucune connaissance extérieure sur les cours, les entreprises ou l’actualité.\n- N’invente jamais une valeur, une date, un rendement, un cours, un article, une source ou une citation. Recopie les chiffres à l’identique. Si une donnée manque, écris « non disponible ».\n- Pour tout nombre de sociétés (hausses, baisses, dépassements de seuils, comptes par secteur), recopie uniquement les valeurs de l’objet « compteurs ». Ne compte jamais toi-même.\n- Pour la période, recopie exactement « compteurs.periodeTexte ». Pour les alertes, utilise les compteurs par type (nbAlerteRendementPeriode, nbAlerteBaisseMax, nbAlerteVolatilite, nbAlerteFraicheur) ; nbSocietesAvecAlerte est le total des sociétés ayant au moins une alerte.\n- Distingue les faits des interprétations : introduis toujours une interprétation par « Interprétation : ».\n- Pour les actualités, ne cite que les articles fournis, avec leur source et leur date. N’affirme jamais qu’une actualité a causé un mouvement de cours : au mieux, signale une concomitance.\n- Signale explicitement les données manquantes, incomplètes, anciennes ou non comparables, ainsi que toute incertitude sur la composition de l’indice.\n- Ne garantis aucun rendement. Aucune recommandation d’achat ou de vente, aucun cours cible, aucune probabilité. Les scénarios sont des hypothèses illustratives, pas des prévisions.\n- Les marqueurs [[…]] sont remplacés plus tard par des tableaux et des points clés déjà rédigés : ne recopie pas leur contenu, commente-le en une ou deux phrases.\n- Outil disponible : la Réflexion, pour organiser ton plan avant d’écrire. Elle n’apporte aucune donnée nouvelle.\n- Les exemples ci-dessous illustrent uniquement la structure et le ton. Leurs noms, chiffres et marchés sont inventés : ne les réutilise jamais.\n</context>\n\n<examples>\n<example_1>\nCas : sélection personnalisée de 3 sociétés. Section 2 attendue : « L’analyse porte sur une sélection personnalisée de 3 sociétés sur 3 attendues ; il s’agit donc d’une analyse partielle. » suivi du marqueur [[COMPOSITION]] seul sur sa ligne.\n</example_1>\n\n<example_2>\nCas : analyse complète, 2 sociétés en échec. Section 10 attendue : une phrase qui précise que 38 sociétés sur 40 ont été analysées, puis le nom des 2 sociétés en échec, puis le marqueur [[ERREURS]] seul sur sa ligne.\n</example_2>\n\n<example_3>\nCas : comptage d’alertes. Section 7 attendue : « 9 sociétés ont au moins une alerte. » Ce nombre est recopié de compteurs, jamais recalculé, puis le marqueur [[RISQUES]] seul sur sa ligne.\n</example_3>\n\n<example_4>\nCas fantaisie : marché imaginaire des Îles Vertes, sociétés Verdeau et Brumelac. Section 6 attendue : « Interprétation : le secteur fictif des Forges semble porter la séance, mais il ne compte qu’une seule société. » suivi du marqueur [[SECTEURS]].\n</example_4>\n\n<example_5>\nCas fantaisie : planète Zéphyra, aucune cotation disponible. Section 3 attendue : « Période : non disponible, aucune cotation n’a pu être recueillie. » suivi d’un avertissement en section 10 expliquant que l’analyse est impossible.\n</example_5>\n</examples>\n\n<output_format>\nRéponds uniquement en Markdown, sans bloc de code englobant, avec des titres de niveau 2 dans cet ordre :\n## 1. Synthèse exécutive\n## 2. Composition et périmètre analysés\n## 3. Période\n## 4. Tableau comparatif\n## 5. Classement des performances\n## 6. Analyse sectorielle\n## 7. Risques\n## 8. Actualités\n## 9. Trois scénarios hypothétiques\n## 10. Limites des données\n## 11. Conclusion\n\nMarqueurs, chacun seul sur sa ligne et une seule fois : [[POINTS_CLES]] en section 1 ; [[COMPOSITION]] en section 2 ; [[GRAPHIQUE_RENDEMENTS]] puis [[TABLEAU_COMPARATIF]] en section 4 ; [[CLASSEMENT]] en section 5 ; [[SECTEURS]] en section 6 ; [[RISQUES]] en section 7 ; [[ACTUALITES]] en section 8 ; [[SCENARIOS]] en section 9 ; [[ERREURS]] en section 10.\n\nEn section 1, indique le nombre de sociétés attendues, le nombre analysées avec succès et la liste des sociétés en erreur ou aux données insuffisantes. Indique si l’analyse est complète ou partielle. Pour chaque module désactivé, écris simplement que le module n’a pas été demandé.\n</output_format>\n</instructions>\n\n<inputs>\nLe message utilisateur contient les données JSON du workflow (période, composition, tableau des sociétés, classement, statistiques, compteurs, secteurs, alertes, actualités, scénarios) et l’analyse structurée de l’agent analyste.\n</inputs>",
+          "maxIterations": 4
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 5,
+      "waitBetweenTries": 5000,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "id": "75450502-1d6d-46d9-bfa2-7b3e15882578",
+      "name": "Modèle Google Gemini (rédacteur)",
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1.2,
+      "position": [
+        100,
+        1050
+      ],
+      "parameters": {
+        "modelName": "models/gemini-3-flash-preview",
+        "options": {
+          "temperature": 0.2,
+          "maxOutputTokens": 8192
+        }
+      },
+      "credentials": {}
+    },
+    {
+      "id": "eec0c4c1-382c-41bb-880d-8f4945f9a90b",
+      "name": "Réflexion du rédacteur",
+      "type": "@n8n/n8n-nodes-langchain.toolThink",
+      "typeVersion": 1.1,
+      "position": [
+        100,
+        1200
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "17acb449-ed8e-4a2c-a907-3b7355c1abdf",
+      "name": "Extraire le texte Gemini",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        500,
+        1050
+      ],
+      "parameters": {
+        "mode": "manual",
+        "includeOtherFields": false,
+        "assignments": {
+          "assignments": [
+            {
+              "id": "x-txt",
+              "name": "texteGemini",
+              "type": "string",
+              "value": "={{ ((typeof $json.output === \"string\" ? $json.output : \"\") || ($json.content?.parts || []).map(p => p.text || \"\").join(\"\") || $json.text || \"\").replace(/^```(?:markdown)?\\s*/i, \"\").replace(/```\\s*$/, \"\").trim() || \"## Rapport narratif indisponible\\n\\nGemini n’a pas renvoyé de texte\" + ($json.error ? \" (\" + (typeof $json.error === \"string\" ? $json.error : String($json.error?.message ?? $json.error?.description ?? JSON.stringify($json.error))).slice(0, 200) + \")\" : \"\") + \". Les tableaux ci-dessous, calculés par le workflow, restent valables.\" }}"
+            },
+            {
+              "id": "x-ok",
+              "name": "texteGeminiDisponible",
+              "type": "boolean",
+              "value": "={{ !!((typeof $json.output === \"string\" && $json.output.trim()) || ($json.content?.parts || []).map(p => p.text || \"\").join(\"\") || $json.text) }}"
+            },
+            {
+              "id": "x-titre",
+              "name": "titre",
+              "type": "string",
+              "value": "={{ \"CAC 40 Insight AI — rapport du \" + $(\"Paramètres analyse\").first().json.dateExecution }}"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "4aa7d84f-0c1e-4273-a478-51fe631697f4",
+      "name": "Assembler le rapport",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        700,
+        1050
+      ],
+      "parameters": {
+        "mode": "manual",
+        "includeOtherFields": true,
+        "include": "all",
+        "assignments": {
+          "assignments": [
+            {
+              "id": "r-md",
+              "name": "rapportMarkdown",
+              "type": "string",
+              "value": "={{ Object.entries(({ \"[[POINTS_CLES]]\": ((($(\"Analyse Gemini structurée\").first().json.analyse || {}).pointsCles || []).length ? \"**Points clés — Gemini analyste (tonalité : \" + (($(\"Analyse Gemini structurée\").first().json.analyse || {}).tonaliteGlobale || \"indéterminée\") + \")**\\n\\n\" + ($(\"Analyse Gemini structurée\").first().json.analyse || {}).pointsCles.map(x => \"- \" + x).join(\"\\n\") + ((($(\"Analyse Gemini structurée\").first().json.analyse || {}).societesASurveiller || []).length ? \"\\n\\n**Remarquables dans les données :** \" + ($(\"Analyse Gemini structurée\").first().json.analyse || {}).societesASurveiller.map(x => x.societe + \" (\" + x.raison + \")\").join(\" ; \") : \"\") + (($(\"Analyse Gemini structurée\").first().json.analyse || {}).qualiteDonnees ? \"\\n\\n_Qualité des données selon l’analyse : \" + ($(\"Analyse Gemini structurée\").first().json.analyse || {}).qualiteDonnees + \"_\" : \"\") : \"_Analyse structurée Gemini indisponible._\"), \"[[COMPOSITION]]\": $(\"Mettre en forme les tableaux\").first().json.mdComposition, \"[[GRAPHIQUE_RENDEMENTS]]\": ($(\"Construire les graphiques QuickChart\").first().json.urlGraphiqueRendements ? \"<img src=\\\"\" + $(\"Construire les graphiques QuickChart\").first().json.urlGraphiqueRendements + \"\\\" alt=\\\"Rendement par société\\\" style=\\\"max-width:100%\\\">\" : \"_Graphique indisponible : aucune société comparable._\"), \"[[TABLEAU_COMPARATIF]]\": ($(\"Construire les graphiques QuickChart\").first().json.urlGraphiqueCours ? \"<img src=\\\"\" + $(\"Construire les graphiques QuickChart\").first().json.urlGraphiqueCours + \"\\\" alt=\\\"Cours en euros\\\" style=\\\"max-width:100%\\\">\\n\\n\" : \"\") + $(\"Mettre en forme les tableaux\").first().json.mdTableau, \"[[CLASSEMENT]]\": $(\"Mettre en forme les tableaux\").first().json.mdClassement, \"[[SECTEURS]]\": ($(\"Construire les graphiques QuickChart\").first().json.urlGraphiqueSecteurs ? \"<img src=\\\"\" + $(\"Construire les graphiques QuickChart\").first().json.urlGraphiqueSecteurs + \"\\\" alt=\\\"Rendement moyen par secteur\\\" style=\\\"max-width:100%\\\">\\n\\n\" : \"\") + $(\"Mettre en forme les tableaux\").first().json.mdSecteurs + ((($(\"Analyse Gemini structurée\").first().json.analyse || {}).lectureSectorielle || []).length ? \"\\n\\n**Lecture sectorielle (Gemini analyste)**\\n\\n\" + ($(\"Analyse Gemini structurée\").first().json.analyse || {}).lectureSectorielle.map(l => \"- **\" + l.secteur + \"** : \" + l.commentaire).join(\"\\n\") : \"\"), \"[[RISQUES]]\": $(\"Mettre en forme les tableaux\").first().json.mdRisques, \"[[ACTUALITES]]\": $(\"Mettre en forme les tableaux\").first().json.mdActualites, \"[[SCENARIOS]]\": $(\"Mettre en forme les tableaux\").first().json.mdScenarios, \"[[ERREURS]]\": $(\"Mettre en forme les tableaux\").first().json.mdErreurs + ((($(\"Analyse Gemini structurée\").first().json.analyse || {}).avertissements || []).length ? \"\\n\\n**Avertissements de l’analyse IA :**\\n\" + ($(\"Analyse Gemini structurée\").first().json.analyse || {}).avertissements.map(x => \"- \" + x).join(\"\\n\") : \"\") })).reduce((acc, e) => acc.split(e[0]).join(e[1]), $json.texteGemini) + Object.entries(({ \"[[POINTS_CLES]]\": ((($(\"Analyse Gemini structurée\").first().json.analyse || {}).pointsCles || []).length ? \"**Points clés — Gemini analyste (tonalité : \" + (($(\"Analyse Gemini structurée\").first().json.analyse || {}).tonaliteGlobale || \"indéterminée\") + \")**\\n\\n\" + ($(\"Analyse Gemini structurée\").first().json.analyse || {}).pointsCles.map(x => \"- \" + x).join(\"\\n\") + ((($(\"Analyse Gemini structurée\").first().json.analyse || {}).societesASurveiller || []).length ? \"\\n\\n**Remarquables dans les données :** \" + ($(\"Analyse Gemini structurée\").first().json.analyse || {}).societesASurveiller.map(x => x.societe + \" (\" + x.raison + \")\").join(\" ; \") : \"\") + (($(\"Analyse Gemini structurée\").first().json.analyse || {}).qualiteDonnees ? \"\\n\\n_Qualité des données selon l’analyse : \" + ($(\"Analyse Gemini structurée\").first().json.analyse || {}).qualiteDonnees + \"_\" : \"\") : \"_Analyse structurée Gemini indisponible._\"), \"[[COMPOSITION]]\": $(\"Mettre en forme les tableaux\").first().json.mdComposition, \"[[GRAPHIQUE_RENDEMENTS]]\": ($(\"Construire les graphiques QuickChart\").first().json.urlGraphiqueRendements ? \"<img src=\\\"\" + $(\"Construire les graphiques QuickChart\").first().json.urlGraphiqueRendements + \"\\\" alt=\\\"Rendement par société\\\" style=\\\"max-width:100%\\\">\" : \"_Graphique indisponible : aucune société comparable._\"), \"[[TABLEAU_COMPARATIF]]\": ($(\"Construire les graphiques QuickChart\").first().json.urlGraphiqueCours ? \"<img src=\\\"\" + $(\"Construire les graphiques QuickChart\").first().json.urlGraphiqueCours + \"\\\" alt=\\\"Cours en euros\\\" style=\\\"max-width:100%\\\">\\n\\n\" : \"\") + $(\"Mettre en forme les tableaux\").first().json.mdTableau, \"[[CLASSEMENT]]\": $(\"Mettre en forme les tableaux\").first().json.mdClassement, \"[[SECTEURS]]\": ($(\"Construire les graphiques QuickChart\").first().json.urlGraphiqueSecteurs ? \"<img src=\\\"\" + $(\"Construire les graphiques QuickChart\").first().json.urlGraphiqueSecteurs + \"\\\" alt=\\\"Rendement moyen par secteur\\\" style=\\\"max-width:100%\\\">\\n\\n\" : \"\") + $(\"Mettre en forme les tableaux\").first().json.mdSecteurs + ((($(\"Analyse Gemini structurée\").first().json.analyse || {}).lectureSectorielle || []).length ? \"\\n\\n**Lecture sectorielle (Gemini analyste)**\\n\\n\" + ($(\"Analyse Gemini structurée\").first().json.analyse || {}).lectureSectorielle.map(l => \"- **\" + l.secteur + \"** : \" + l.commentaire).join(\"\\n\") : \"\"), \"[[RISQUES]]\": $(\"Mettre en forme les tableaux\").first().json.mdRisques, \"[[ACTUALITES]]\": $(\"Mettre en forme les tableaux\").first().json.mdActualites, \"[[SCENARIOS]]\": $(\"Mettre en forme les tableaux\").first().json.mdScenarios, \"[[ERREURS]]\": $(\"Mettre en forme les tableaux\").first().json.mdErreurs + ((($(\"Analyse Gemini structurée\").first().json.analyse || {}).avertissements || []).length ? \"\\n\\n**Avertissements de l’analyse IA :**\\n\" + ($(\"Analyse Gemini structurée\").first().json.analyse || {}).avertissements.map(x => \"- \" + x).join(\"\\n\") : \"\") })).filter(e => !$json.texteGemini.includes(e[0])).map(e => \"\\n\\n### Annexe automatique : \" + e[0].replace(/[\\[\\]]/g, \"\") + \"\\n\\n\" + e[1]).join(\"\") }}"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "e051a999-62de-426f-b849-4412f54576c4",
+      "name": "Convertir le rapport en HTML",
+      "type": "n8n-nodes-base.markdown",
+      "typeVersion": 1,
+      "position": [
+        900,
+        1050
+      ],
+      "parameters": {
+        "mode": "markdownToHtml",
+        "markdown": "={{ \"# \" + $json.titre + \"\\n\\n\" + $json.rapportMarkdown + \"\\n\\n---\\n\\n_Sources : composition — \" + $(\"Contrôler composition\").first().json.origineComposition + \" ; cours et actualités — EODHD (End-of-Day API, Financial News API), clôtures de fin de journée. Rédaction assistée par Gemini à partir des seules données calculées par le workflow. Document pédagogique : ce n’est pas un conseil en investissement._\" }}",
+        "destinationKey": "rapportHtml",
+        "options": {
+          "tables": true,
+          "openLinksInNewWindow": true,
+          "simplifiedAutoLink": true,
+          "strikethrough": true
+        }
+      }
+    },
+    {
+      "id": "e6e35ff9-e330-471e-af5d-5055c26735a5",
+      "name": "Construire la page du rapport",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        1100,
+        1050
+      ],
+      "parameters": {
+        "mode": "manual",
+        "includeOtherFields": true,
+        "include": "all",
+        "assignments": {
+          "assignments": [
+            {
+              "id": "g-html",
+              "name": "pageHtml",
+              "type": "string",
+              "value": "={{ \"<div style=\\\"font-family:Arial,Helvetica,sans-serif;max-width:1000px;margin:0 auto;color:#1d2433;line-height:1.5\\\">\" + $json.rapportHtml.replace(/<table>/g, \"<table style=\\\"border-collapse:collapse;width:100%;font-size:13px\\\">\").replace(/<th>/g, \"<th style=\\\"border:1px solid #d0d4dc;padding:4px 6px;background:#f1f3f7;text-align:left\\\">\").replace(/<td>/g, \"<td style=\\\"border:1px solid #d0d4dc;padding:4px 6px\\\">\") + \"</div>\" }}"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "cf63d03b-9728-4a8d-8238-a3f9f56bc29e",
+      "name": "E-mail demandé ?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1300,
+        1050
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "leftValue": "={{ $(\"Paramètres analyse\").first().json.email }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "7427fbaf-386c-4023-a22b-c20fed7c95dd",
+      "name": "Envoyer le rapport par e-mail",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        1500,
+        1050
+      ],
+      "parameters": {
+        "resource": "message",
+        "operation": "send",
+        "sendTo": "={{ $(\"Paramètres analyse\").first().json.email }}",
+        "subject": "={{ $json.titre }}",
+        "emailType": "html",
+        "message": "={{ $json.pageHtml }}",
+        "options": {
+          "appendAttribution": false,
+          "senderName": "CAC 40 Insight AI"
+        }
+      },
+      "credentials": {},
+      "onError": "continueRegularOutput"
+    },
+    {
+      "id": "850cb51b-10ee-4e59-b849-09b8d7b43515",
+      "name": "Telegram configuré ?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1300,
+        1200
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "leftValue": "={{ $(\"Paramètres analyse\").first().json.telegramChatId }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "f0a5dcaa-73cf-4449-9e8c-fcbbb10b0a61",
+      "name": "Préparer le message Telegram",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        1500,
+        1200
+      ],
+      "parameters": {
+        "mode": "manual",
+        "includeOtherFields": false,
+        "assignments": {
+          "assignments": [
+            {
+              "id": "tg-txt",
+              "name": "texte",
+              "type": "string",
+              "value": "={{ (\"<b>📊 CAC 40 Insight AI</b>\\n\" + $(\"Paramètres analyse\").first().json.dateExecution + \"\\n\" + String($(\"Mettre en forme les tableaux\").first().json.perimetre).replace(/&/g, \"&amp;\").replace(/</g, \"&lt;\").replace(/>/g, \"&gt;\") + ($(\"Mettre en forme les tableaux\").first().json.coursDuJourBilan && $(\"Mettre en forme les tableaux\").first().json.coursDuJourBilan.date ? \"\\nDernière séance : \" + $(\"Mettre en forme les tableaux\").first().json.coursDuJourBilan.date + \" — \" + $(\"Mettre en forme les tableaux\").first().json.coursDuJourBilan.hausse + \" hausse(s), \" + $(\"Mettre en forme les tableaux\").first().json.coursDuJourBilan.baisse + \" baisse(s)\" : \"\") + \"\\nSociétés analysées : \" + $(\"Mettre en forme les tableaux\").first().json.societesAnalyseesAvecSucces + \" / \" + $(\"Mettre en forme les tableaux\").first().json.societesAttendues + ($(\"Mettre en forme les tableaux\").first().json.classement.length ? \"\\nPériode : \" + $(\"Mettre en forme les tableaux\").first().json.dateInitialeReference + \" → \" + $(\"Mettre en forme les tableaux\").first().json.dateFinaleReference + \"\\nRendement moyen : \" + ($(\"Mettre en forme les tableaux\").first().json.rendementMoyenEquipondere === null ? \"n/d\" : (x => (x > 0 ? \"+\" : \"\") + Number(x).toFixed(2).replace(\".\", \",\") + \" %\")($(\"Mettre en forme les tableaux\").first().json.rendementMoyenEquipondere)) + \"\\n\\n\" + ($(\"Mettre en forme les tableaux\").first().json.classement.length <= 6 ? \"📈 <b>Classement</b>\\n\" + $(\"Mettre en forme les tableaux\").first().json.classement.map(c => c.rang + \". \" + String(c.nom).replace(/&/g, \"&amp;\").replace(/</g, \"&lt;\").replace(/>/g, \"&gt;\") + \" : \" + (x => (x > 0 ? \"+\" : \"\") + Number(x).toFixed(2).replace(\".\", \",\") + \" %\")(c.rendementPct)).join(\"\\n\") : \"🔼 <b>Meilleures performances</b>\\n\" + $(\"Mettre en forme les tableaux\").first().json.classement.slice(0, 3).map(c => c.rang + \". \" + String(c.nom).replace(/&/g, \"&amp;\").replace(/</g, \"&lt;\").replace(/>/g, \"&gt;\") + \" : \" + (x => (x > 0 ? \"+\" : \"\") + Number(x).toFixed(2).replace(\".\", \",\") + \" %\")(c.rendementPct)).join(\"\\n\") + \"\\n\\n🔽 <b>Plus faibles performances</b>\\n\" + $(\"Mettre en forme les tableaux\").first().json.classement.slice(-3).reverse().map(c => c.rang + \". \" + String(c.nom).replace(/&/g, \"&amp;\").replace(/</g, \"&lt;\").replace(/>/g, \"&gt;\") + \" : \" + (x => (x > 0 ? \"+\" : \"\") + Number(x).toFixed(2).replace(\".\", \",\") + \" %\")(c.rendementPct)).join(\"\\n\")) : \"\\nAucun classement disponible : données insuffisantes.\") + ((($(\"Analyse Gemini structurée\").first().json.analyse || {}).pointsCles || []).length ? \"\\n\\n🤖 <b>Points clés (Gemini)</b>\\n\" + ($(\"Analyse Gemini structurée\").first().json.analyse || {}).pointsCles.slice(0, 3).map(x => \"• \" + String(x).replace(/&/g, \"&amp;\").replace(/</g, \"&lt;\").replace(/>/g, \"&gt;\")).join(\"\\n\") : \"\") + ($(\"Mettre en forme les tableaux\").first().json.societesEnEchec.length ? \"\\n\\n⚠️ \" + $(\"Mettre en forme les tableaux\").first().json.societesEnEchec.length + \" société(s) en erreur ou incomplète(s), détail dans le rapport.\" : \"\") + \"\\n\\n<i>Clôtures EODHD de fin de journée. Document pédagogique, pas un conseil en investissement.</i>\").slice(0, 4000) }}"
+            },
+            {
+              "id": "tg-img",
+              "name": "urlGraphique",
+              "type": "string",
+              "value": "={{ $(\"Construire les graphiques QuickChart\").first().json.urlGraphiqueRendements }}"
+            },
+            {
+              "id": "tg-chat",
+              "name": "chatId",
+              "type": "string",
+              "value": "={{ $(\"Paramètres analyse\").first().json.telegramChatId }}"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "849fd10c-42e0-40e4-952d-2007688221ef",
+      "name": "Envoyer le résumé Telegram",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1700,
+        1200
+      ],
+      "parameters": {
+        "resource": "message",
+        "operation": "sendMessage",
+        "chatId": "={{ $json.chatId }}",
+        "text": "={{ $json.texte }}",
+        "additionalFields": {
+          "parse_mode": "HTML",
+          "appendAttribution": false,
+          "disable_web_page_preview": true
+        }
+      },
+      "credentials": {},
+      "onError": "continueRegularOutput"
+    },
+    {
+      "id": "f6ec2cb9-1137-4f6c-b3da-dd8d832e55b8",
+      "name": "Graphique disponible ?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1900,
+        1200
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "leftValue": "={{ $(\"Préparer le message Telegram\").first().json.urlGraphique }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "3ea48857-0b28-4ed0-ad92-3efe3664216e",
+      "name": "Envoyer le graphique Telegram",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        2100,
+        1200
+      ],
+      "parameters": {
+        "resource": "message",
+        "operation": "sendPhoto",
+        "chatId": "={{ $(\"Préparer le message Telegram\").first().json.chatId }}",
+        "binaryData": false,
+        "file": "={{ $(\"Préparer le message Telegram\").first().json.urlGraphique }}",
+        "additionalFields": {
+          "caption": "Rendement des sociétés du CAC 40 sur la période (QuickChart)"
+        }
+      },
+      "credentials": {},
+      "onError": "continueRegularOutput"
+    },
+    {
+      "id": "7408b5ba-95b7-46d0-9de4-c5e47c61854f",
+      "name": "Afficher le rapport",
+      "type": "n8n-nodes-base.form",
+      "typeVersion": 2.5,
+      "position": [
+        1300,
+        1350
+      ],
+      "parameters": {
+        "operation": "completion",
+        "respondWith": "showText",
+        "responseText": "={{ $json.pageHtml }}"
+      }
+    },
+    {
+      "id": "3593d7d0-9550-4c93-b0c4-4b46cb35356a",
+      "name": "Sticky Note 3593d7d0",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        64,
+        208
+      ],
+      "parameters": {
+        "content": "## 1. Formulaire et paramètres\nWorkflow unique, sans nœud Code.\nLe formulaire choisit le périmètre (40 sociétés par défaut), la période et les modules. Le nœud « Paramètres analyse » contient tous les seuils, l’ID Telegram et l’ID de la feuille Google Sheets.",
+        "color": 7,
+        "width": 560,
+        "height": 224
+      }
+    },
+    {
+      "id": "9f640687-b5dc-4108-86f5-d8e862a9ea76",
+      "name": "Sticky Note 9f640687",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        672,
+        208
+      ],
+      "parameters": {
+        "content": "## 2. Composition du CAC 40\nActualisée à chaque exécution via l’API MediaWiki (Wikipédia, tableau « constituents »), puis contrôlée : 40 sociétés, doublons, symboles, 10 sociétés clés, entrées et sorties de l’indice.",
+        "color": 6,
+        "width": 1568,
+        "height": 224
+      }
+    },
+    {
+      "id": "7fad368a-72ca-4e4b-9382-49bf86c52ccc",
+      "name": "Sticky Note 7fad368a",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        2464,
+        352
+      ],
+      "parameters": {
+        "content": "## 3. Analyse société par société\nBoucle sur les sociétés : cours EODHD sur un mois, rendement, plus haut et plus bas, baisse maximale, volatilité, qualité des données, alertes et actualités facultatives. Une erreur n’arrête jamais la boucle.",
+        "color": 5,
+        "width": 1968,
+        "height": 368
+      }
+    },
+    {
+      "id": "866c41ce-1c95-490e-8a61-760a07229a8d",
+      "name": "Sticky Note 866c41ce",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        2464,
+        32
+      ],
+      "parameters": {
+        "content": "## 4. Consolidation, secteurs et historique\nClassement par rendement, statistiques par secteur (Summarize), fusion des résultats, et ajout d’une ligne par société dans la feuille Google Sheets « CAC 40 Insight AI – Historique ».",
+        "color": 4,
+        "width": 1168,
+        "height": 560
+      }
+    },
+    {
+      "id": "de050b6b-5359-4cb3-82ec-f803d1b03e96",
+      "name": "Sticky Note de050b6b",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        3072,
+        208
+      ],
+      "parameters": {
+        "content": "## 5. Synthèse, scénarios et graphiques\nDates communes, statistiques du panier, trois scénarios hypothétiques (formule explicite), tableaux Markdown et graphiques QuickChart (rendements par société, rendement moyen par secteur).",
+        "color": 3,
+        "width": 1168,
+        "height": 224
+      }
+    },
+    {
+      "id": "3dc2e329-1e0e-4ea4-9d51-148faecf214e",
+      "name": "Sticky Note 3dc2e329",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        272,
+        352
+      ],
+      "parameters": {
+        "content": "## 🤖 Agent IA n° 1 : analyste\nNœud **AI Agent** relié à un **modèle Google Gemini**, à deux outils (**Calculatrice**, **Réflexion**) et à un **format de sortie JSON**.\n**Prompt système** (visible dans le nœud « Agent IA analyste », Options → System Message) : analyste actions senior ; uniquement les données fournies ; aucun chiffre inventé ; comptages recopiés depuis « compteurs » ; faits ≠ interprétations ; aucune recommandation ni probabilité.\n**Prompt utilisateur** (champ « Prompt ») : toutes les données calculées (sociétés, secteurs, statistiques, compteurs, risques, actualités).\nSortie : tonalité, points clés, lecture sectorielle, sociétés remarquables, qualité des données, avertissements.",
+        "color": 2,
+        "width": 368,
+        "height": 224
+      }
+    },
+    {
+      "id": "9adf1518-6d63-4a33-b001-011897bc4157",
+      "name": "Sticky Note 9adf1518",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        272,
+        960
+      ],
+      "parameters": {
+        "content": "## 🤖 Agent IA n° 2 : rédacteur\nNœud **AI Agent** relié à un **modèle Google Gemini** et à l’outil **Réflexion**.\n**Prompt système** (Options → System Message) : analyste financier senior, rapport professionnel en français ; uniquement les données et l’analyse de l’agent n° 1 ; aucun chiffre inventé ; période et comptages recopiés tels quels ; « Interprétation : » pour toute interprétation ; aucune recommandation.\n**Prompt utilisateur** (champ « Prompt ») : structure imposée en 11 sections, marqueurs [[…]] remplacés ensuite par les tableaux et graphiques calculés.",
+        "color": 2,
+        "width": 368,
+        "height": 224
+      }
+    },
+    {
+      "id": "2f2bbfbe-9799-4fe1-85dc-f098c18a277e",
+      "name": "Sticky Note 2f2bbfbe",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        672,
+        960
+      ],
+      "parameters": {
+        "content": "## 6. Diffusion\nRapport HTML affiché à la fin du formulaire, envoyé par Gmail si une adresse est saisie, et résumé + graphique envoyés sur Telegram si `telegramChatId` est renseigné dans « Paramètres analyse ».",
+        "color": 6,
+        "width": 1568,
+        "height": 528
+      }
+    },
+    {
+      "id": "2a775b7a-3c25-41aa-9fb3-b99f6259f859",
+      "name": "Sticky Note 2a775b7a",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        100,
+        2550
+      ],
+      "parameters": {
+        "content": "## Identifiants à configurer\n- **EODHD API (api_token)** : « Query Auth », nom `api_token`, valeur = votre clé EODHD.\n- **Google Gemini (PaLM) API** : clé Google AI Studio.\n- **Google Sheets**, **Telegram**, **Gmail** : comptes déjà connectés à n8n.\nAucune clé n’est stockée dans le workflow.",
+        "color": 3
+      }
+    }
+  ],
+  "connections": {
+    "Formulaire CAC 40 Insight": {
+      "main": [
+        [
+          {
+            "node": "Paramètres analyse",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Paramètres analyse": {
+      "main": [
+        [
+          {
+            "node": "Liste de contrôle CAC 40",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Liste de contrôle CAC 40": {
+      "main": [
+        [
+          {
+            "node": "Composition CAC 40 Wikipédia",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Composition CAC 40 Wikipédia": {
+      "main": [
+        [
+          {
+            "node": "Préparer HTML composition",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Préparer HTML composition": {
+      "main": [
+        [
+          {
+            "node": "Extraire tableau composition",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extraire tableau composition": {
+      "main": [
+        [
+          {
+            "node": "Normaliser composition",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Normaliser composition": {
+      "main": [
+        [
+          {
+            "node": "Contrôler composition",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Contrôler composition": {
+      "main": [
+        [
+          {
+            "node": "Une ligne par société",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Une ligne par société": {
+      "main": [
+        [
+          {
+            "node": "Filtrer selon la sélection",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filtrer selon la sélection": {
+      "main": [
+        [
+          {
+            "node": "Supprimer les doublons",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supprimer les doublons": {
+      "main": [
+        [
+          {
+            "node": "Boucle par société",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Classer par rendement": {
+      "main": [
+        [
+          {
+            "node": "Consolider les résultats",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Sociétés avec rendement",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Préparer la ligne d’historique",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Pause limite de débit": {
+      "main": [
+        [
+          {
+            "node": "Cours historiques EODHD",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Cours historiques EODHD": {
+      "main": [
+        [
+          {
+            "node": "Contrôler données de cours",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Contrôler données de cours": {
+      "main": [
+        [
+          {
+            "node": "Calculer rendement et extrêmes",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Calculer rendement et extrêmes": {
+      "main": [
+        [
+          {
+            "node": "Calculer volatilité",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Calculer volatilité": {
+      "main": [
+        [
+          {
+            "node": "Calculer cours du jour",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Calculer cours du jour": {
+      "main": [
+        [
+          {
+            "node": "Qualifier et alerter",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Qualifier et alerter": {
+      "main": [
+        [
+          {
+            "node": "Actualités activées ?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Actualités activées ?": {
+      "main": [
+        [
+          {
+            "node": "Actualités EODHD",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Sans actualités",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Actualités EODHD": {
+      "main": [
+        [
+          {
+            "node": "Joindre les actualités",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Joindre les actualités": {
+      "main": [
+        [
+          {
+            "node": "Boucle par société",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Boucle par société": {
+      "main": [
+        [
+          {
+            "node": "Classer par rendement",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Pause limite de débit",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sans actualités": {
+      "main": [
+        [
+          {
+            "node": "Boucle par société",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Consolider les résultats": {
+      "main": [
+        [
+          {
+            "node": "Fusionner sociétés et secteurs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fusionner sociétés et secteurs": {
+      "main": [
+        [
+          {
+            "node": "Dates de référence",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sociétés avec rendement": {
+      "main": [
+        [
+          {
+            "node": "Préparer les lignes secteur",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Préparer les lignes secteur": {
+      "main": [
+        [
+          {
+            "node": "Statistiques par secteur",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Statistiques par secteur": {
+      "main": [
+        [
+          {
+            "node": "Classer les secteurs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Classer les secteurs": {
+      "main": [
+        [
+          {
+            "node": "Regrouper les secteurs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Regrouper les secteurs": {
+      "main": [
+        [
+          {
+            "node": "Fusionner sociétés et secteurs",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Préparer la ligne d’historique": {
+      "main": [
+        [
+          {
+            "node": "Ajouter à l’historique Google Sheets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Dates de référence": {
+      "main": [
+        [
+          {
+            "node": "Synthèse et scénarios",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Synthèse et scénarios": {
+      "main": [
+        [
+          {
+            "node": "Construire les scénarios",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Construire les scénarios": {
+      "main": [
+        [
+          {
+            "node": "Préparer le bilan du jour",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Préparer le bilan du jour": {
+      "main": [
+        [
+          {
+            "node": "Mettre en forme les tableaux",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Mettre en forme les tableaux": {
+      "main": [
+        [
+          {
+            "node": "Construire les graphiques QuickChart",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Construire les graphiques QuickChart": {
+      "main": [
+        [
+          {
+            "node": "Agent IA analyste",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Agent IA analyste": {
+      "main": [
+        [
+          {
+            "node": "Analyse Gemini structurée",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Modèle Google Gemini (analyste)": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Agent IA analyste",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Calculatrice": {
+      "ai_tool": [
+        [
+          {
+            "node": "Agent IA analyste",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Réflexion": {
+      "ai_tool": [
+        [
+          {
+            "node": "Agent IA analyste",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Format JSON de l’analyse": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Agent IA analyste",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Analyse Gemini structurée": {
+      "main": [
+        [
+          {
+            "node": "Agent IA rédacteur",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Agent IA rédacteur": {
+      "main": [
+        [
+          {
+            "node": "Extraire le texte Gemini",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Modèle Google Gemini (rédacteur)": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Agent IA rédacteur",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Réflexion du rédacteur": {
+      "ai_tool": [
+        [
+          {
+            "node": "Agent IA rédacteur",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extraire le texte Gemini": {
+      "main": [
+        [
+          {
+            "node": "Assembler le rapport",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Assembler le rapport": {
+      "main": [
+        [
+          {
+            "node": "Convertir le rapport en HTML",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Convertir le rapport en HTML": {
+      "main": [
+        [
+          {
+            "node": "Construire la page du rapport",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Construire la page du rapport": {
+      "main": [
+        [
+          {
+            "node": "E-mail demandé ?",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Telegram configuré ?",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Afficher le rapport",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "E-mail demandé ?": {
+      "main": [
+        [
+          {
+            "node": "Envoyer le rapport par e-mail",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Telegram configuré ?": {
+      "main": [
+        [
+          {
+            "node": "Préparer le message Telegram",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Préparer le message Telegram": {
+      "main": [
+        [
+          {
+            "node": "Envoyer le résumé Telegram",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Envoyer le résumé Telegram": {
+      "main": [
+        [
+          {
+            "node": "Graphique disponible ?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Graphique disponible ?": {
+      "main": [
+        [
+          {
+            "node": "Envoyer le graphique Telegram",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "timezone": "Europe/Paris",
+    "executionOrder": "v1",
+    "saveManualExecutions": true
+  }
+}
