@@ -4,8 +4,8 @@ Un **workflow n8n unique** qui analyse les **40 sociétés du CAC 40** sur un mo
 
 > Projet pédagogique. Le rapport ne constitue pas un conseil en investissement.
 
-- **Aucun nœud Code, Function ou équivalent** : tous les traitements utilisent des nœuds natifs (Edit Fields, Filter, IF, Split Out, Loop Over Items, Remove Duplicates, Sort, Aggregate, Wait, HTML, Markdown, Form…). `npm run export` le vérifie automatiquement.
-- **Un seul workflow**, défini dans [`workflow.ts`](workflow.ts) et exporté dans [`workflow.json`](workflow.json), qu'on peut importer dans n8n.
+- **Aucun nœud Code, Function ou équivalent** : tous les traitements utilisent des nœuds natifs (Edit Fields, Filter, IF, Split Out, Loop Over Items, Remove Duplicates, Sort, Aggregate, Wait, HTML, Markdown, Form…).
+- **Un seul workflow**, entièrement défini dans [`workflow.ts`](workflow.ts), seul fichier de ce dossier.
 - **Par défaut, les 40 sociétés sont analysées.** Une sélection personnalisée est aussi possible.
 
 ## Ce que fait la version 2
@@ -32,14 +32,9 @@ Un **workflow n8n unique** qui analyse les **40 sociétés du CAC 40** sur un mo
 | Fichier | Rôle |
 |---|---|
 | `workflow.ts` | Définition du workflow avec le SDK officiel `@n8n/workflow-sdk` |
-| `workflow.json` | Export importable dans n8n, généré à partir de `workflow.ts` |
-| `scripts/export.ts` | Génère `workflow.json` et contrôle le projet : workflow unique, aucun nœud Code, 40 sociétés, connexions valides, aucun secret |
-| `scripts/parse-check.ts` | Fait lire `workflow.ts` par l'interpréteur que n8n utilise à l'import et vérifie qu'il produit exactement `workflow.json` |
-| `config.example.json` | Exemple d'identifiants et de seuils, sans aucune clé réelle |
 
 ## Prérequis
 
-- Node.js 20 ou plus récent (testé avec Node 24.15.0) et npm.
 - Une instance n8n récente, sur n8n Cloud ou auto-hébergée. Les versions de nœuds utilisées sont Form Trigger 2.6, HTTP Request 4.5, Edit Fields 3.5, AI Agent 3.1 et Google Gemini Chat Model 1.2.
 - Une clé API **EODHD** (https://eodhd.com).
 - Une clé **Google AI Studio** pour Gemini.
@@ -65,7 +60,7 @@ Une analyse complète consomme donc **40 appels**, et **240** avec le module act
 
 ## Identifiants (credentials) à configurer dans n8n
 
-Aucune clé ne figure dans `workflow.ts` ni dans `workflow.json`.
+Aucune clé ne figure dans `workflow.ts`.
 
 1. **EODHD API (api_token)**
    - Type : *Query Auth*.
@@ -77,24 +72,12 @@ Aucune clé ne figure dans `workflow.ts` ni dans `workflow.json`.
 4. **Google Sheets** : l'identifiant « Google Sheets account », déjà connecté dans l'instance. La feuille de destination est indiquée par `googleSheetId` dans le nœud « Paramètres analyse ».
 5. **Telegram** : l'identifiant « Telegram account », déjà connecté. Pour activer l'envoi, renseignez `telegramChatId` dans « Paramètres analyse ». Pour obtenir votre identifiant de discussion, envoyez `/start` à votre bot, puis ouvrez `https://api.telegram.org/bot<VOTRE_TOKEN>/getUpdates` et relevez `message.chat.id`. Si le champ reste vide, aucun message n'est envoyé.
 
-## Installation et génération du JSON
+## Installation
 
-```bash
-npm install
-```
-
-```bash
-npm run build
-```
-
-`npm run build` enchaîne trois étapes :
-1. `tsc` vérifie le TypeScript ;
-2. `scripts/export.ts` génère `workflow.json`, le valide avec le SDK et applique les contrôles du projet ;
-3. `scripts/parse-check.ts` vérifie que l'interpréteur d'import de n8n produit exactement le même graphe.
+Le projet ne contient que `workflow.ts`. Il n'y a ni dépendance à installer ni fichier à générer : le fichier se lit comme du code.
 
 ## Importer dans n8n
 
-- **Depuis le fichier** : dans n8n, *Workflows → Import from File*, puis choisissez `workflow.json`. Configurez ensuite les identifiants décrits ci-dessus.
 - **Depuis le code** : la définition `workflow.ts` peut aussi être importée par le serveur MCP n8n (`create_workflow_from_code`). C'est ainsi que le workflow « CAC 40 Insight AI » a été créé, **non publié**, dans l'instance de démonstration.
 
 ## Exécution
@@ -185,8 +168,6 @@ Les agents n'ont accès à aucun outil de recherche web : ils ne travaillent que
 | `tsc` (vérification TypeScript) | ✅ |
 | Validation du SDK `@n8n/workflow-sdk` 0.37.2 (`validateWorkflow`) | ✅ 0 erreur, 0 avertissement |
 | Contrôles du projet : un seul déclencheur, aucun nœud Code, mode « code » du nœud Sort non utilisé, connexions valides, aucun nœud isolé, aucun secret, 40 sociétés dans la liste de contrôle et le formulaire, 10 sociétés clés présentes | ✅ |
-| Interpréteur d'import n8n (`parseWorkflowCode`) identique à `workflow.json` | ✅ |
-| Création dans n8n, puis comparaison nœud par nœud avec `workflow.json` : paramètres et connexions identiques | ✅ |
 | Appel réel à l'API MediaWiki (curl) : tableau `constituents` de 40 lignes, symboles concordants avec Wikipédia fr | ✅ |
 | Appel réel à EODHD avec la clé `demo` : format de `/api/eod` (`date`, `close`, `adjusted_close`…) et de `/api/news` (`title`, `link`, `date`, `content`, `sentiment`) | ✅ (la clé `demo` ne couvre pas `.PA` : HTTP 403) |
 | Exécution n8n avec données épinglées : 3 sociétés, actualités activées | ✅ Rendement 5,3 %, volatilité 21,27 %, baisse maximale −5,76 %, recalculés indépendamment en Python |
@@ -194,8 +175,6 @@ Les agents n'ont accès à aucun outil de recherche web : ils ne travaillent que
 | Exécution **réelle** dans n8n (TotalEnergies + Vinci), sans clé EODHD | ✅ Wikipédia en direct (révision 1381078418, 40 sociétés, noms nettoyés). Gemini en direct : rapport en 10 sections, marqueurs respectés, aucun chiffre inventé. EODHD signalé « identifiant EODHD non configuré dans n8n » sans interrompre le workflow. |
 | **v2**, exécution n8n avec données épinglées (4 sociétés, 4 secteurs) | ✅ Le nœud Summarize produit une ligne par secteur. Les deux graphiques QuickChart, les points clés Gemini, la lecture sectorielle et les avertissements sont insérés dans le rapport. |
 | **v2**, exécution **réelle** (Airbus + Sanofi, sans clé EODHD) | ✅ Wikipédia en direct. Gemini analyste en direct : JSON valide lu par « Analyse Gemini structurée ». Gemini rédacteur en direct : 11 sections, marqueurs respectés. 2 lignes réellement ajoutées dans Google Sheets. Le cas « aucun secteur calculable » ne bloque pas le workflow. |
-| **v2**, instance comparée à `workflow.json` | ✅ 54 nœuds identiques, mêmes connexions, 0 groupe, 9 notes |
-| **v3 (agents IA)**, instance comparée à `workflow.json` | ✅ 58 nœuds identiques, mêmes connexions (main, ai_languageModel, ai_tool, ai_outputParser), 9 notes |
 | **v3**, exécution **réelle** (Airbus, Air Liquide, Axa) | ✅ Les deux modèles Gemini sont appelés par leurs agents. L'analyste renvoie un objet JSON valide via le format de sortie. Le rédacteur produit les 11 sections. Telegram (texte et graphique) et Google Sheets fonctionnent. |
 
 La version 2 a corrigé trois défauts supplémentaires :
