@@ -1,6 +1,6 @@
 # CAC 40 Insight AI
 
-Un **workflow n8n unique** qui analyse les **40 sociétés du CAC 40** sur un mois glissant, à partir de **cours de clôture réels** et d'une **composition de l'indice actualisée à chaque exécution**. Le rapport final est rédigé en français par **Gemini**, qui ne reçoit que des données déjà calculées.
+Un **workflow n8n unique** qui analyse les **40 sociétés du CAC 40** sur la période choisie (de un jour à un an glissants), à partir de **cours de clôture réels** et d'une **composition de l'indice actualisée à chaque exécution**. Le rapport final est rédigé en français par **Gemini**, qui ne reçoit que des données déjà calculées.
 
 > Projet pédagogique. Le rapport ne constitue pas un conseil en investissement.
 
@@ -72,20 +72,30 @@ Aucune clé ne figure dans `workflow.ts`.
 4. **Google Sheets** : l'identifiant « Google Sheets account », déjà connecté dans l'instance. La feuille de destination est indiquée par `googleSheetId` dans le nœud « Paramètres analyse ».
 5. **Telegram** : l'identifiant « Telegram account », déjà connecté. Pour activer l'envoi, renseignez `telegramChatId` dans « Paramètres analyse ». Pour obtenir votre identifiant de discussion, envoyez `/start` à votre bot, puis ouvrez `https://api.telegram.org/bot<VOTRE_TOKEN>/getUpdates` et relevez `message.chat.id`. Si le champ reste vide, aucun message n'est envoyé.
 
-## Installation
+## Lire le projet
 
-Le projet ne contient que `workflow.ts`. Il n'y a ni dépendance à installer ni fichier à générer : le fichier se lit comme du code.
+Le projet tient dans un seul fichier, [`workflow.ts`](workflow.ts). Il se lit comme du code : chaque bloc `node(...)` est un nœud n8n, et les lignes `.to(...)` décrivent l'enchaînement. Les noms des nœuds sont en français et correspondent exactement à ceux affichés dans n8n.
+
+Pour une lecture rapide, commencez par les schémas et tableaux de ce README, puis par le bas du fichier `workflow.ts`, où le chaînage complet est écrit.
+
+## Installation et utilisation
+
+Aucune installation n'est nécessaire pour lire le projet. Pour l'utiliser, il faut une instance n8n avec les identifiants décrits ci-dessous.
 
 ## Importer dans n8n
 
-- **Depuis le code** : la définition `workflow.ts` peut aussi être importée par le serveur MCP n8n (`create_workflow_from_code`). C'est ainsi que le workflow « CAC 40 Insight AI » a été créé, **non publié**, dans l'instance de démonstration.
+Le workflow est défini dans `workflow.ts`. Il peut être créé dans n8n à partir de ce code grâce au serveur MCP n8n (`create_workflow_from_code`). Le workflow « CAC 40 Insight AI » a été créé de cette façon dans l'instance de démonstration, **sans être publié**.
+
+## Exemple de configuration
+
+La section « Identifiants » ci-dessus sert d'exemple de configuration : elle liste les identifiants à créer et les valeurs à renseigner, sans aucune clé réelle.
 
 ## Exécution
 
 1. Ouvrez le workflow, puis cliquez sur **Execute workflow**. Pour une URL de formulaire permanente, publiez-le.
 2. Remplissez le formulaire :
    - **Périmètre** : « Tout le CAC 40 (40 sociétés) » (valeur par défaut) ou « Sélection personnalisée », avec les sociétés à cocher.
-   - **Période** : 1 mois glissant.
+   - **Période** : 1 jour (dernière séance), 1 semaine, 1 mois (par défaut), 1 trimestre, 1 semestre ou 1 an glissants. Le nombre minimal de cotations et l'horizon des scénarios s'adaptent à la période.
    - **Modules** : comparaison, risques, actualités et scénario, activables séparément. Les actualités sont désactivées par défaut à cause de leur coût en appels.
    - **E-mail** : facultatif.
 3. Le rapport s'affiche à la fin du formulaire et, si une adresse a été saisie, il est aussi envoyé par Gmail. Une analyse complète dure environ 2 à 3 minutes, à cause de la pause entre deux appels.
@@ -130,7 +140,7 @@ Les seuils se règlent dans le nœud **« Paramètres analyse »**. Ce sont des 
    - tableaux Markdown ;
    - URL des graphiques QuickChart.
 6. **Deux agents IA Gemini, sur l'ensemble consolidé** (jamais un appel par société) :
-   - analyste : sortie JSON imposée par le format de sortie structuré, lue par le nœud « Analyse Gemini structurée » ;
+   - analyste : sortie structurée imposée par le sous-nœud de format de sortie, lue par le nœud « Analyse Gemini structurée » ;
    - rédacteur : rapport en 11 sections. Les tableaux et graphiques calculés par le workflow remplacent les marqueurs `[[…]]` ; un marqueur oublié est ajouté en annexe ;
    - conversion du rapport en HTML.
 7. **Diffusion** : page de fin du formulaire, envoi Gmail si une adresse est fournie, et résumé avec graphique sur Telegram si `telegramChatId` est renseigné.
@@ -157,7 +167,7 @@ Les prompts sont lisibles dans les nœuds « Agent IA analyste » et « Agent IA
 - signaler les données manquantes ou anciennes ;
 - ne garantir aucun rendement et ne donner aucune recommandation.
 
-L'analyste doit répondre au format JSON imposé par le sous-nœud « Format JSON de l’analyse ». Il peut vérifier un calcul avec la Calculatrice, mais jamais compter les sociétés. Le rédacteur doit suivre une structure en 11 sections : synthèse exécutive, composition et périmètre, période, tableau comparatif, classement, analyse sectorielle, risques, actualités, trois scénarios, limites et conclusion. Il impose aussi d'indiquer le nombre de sociétés attendues, le nombre analysées avec succès et les sociétés en erreur, et de préciser s'il s'agit d'une analyse complète ou partielle.
+L'analyste doit répondre dans le format structuré imposé par le sous-nœud « Format JSON de l’analyse » (nom du nœud conservé dans n8n). Il peut vérifier un calcul avec la Calculatrice, mais jamais compter les sociétés. Le rédacteur doit suivre une structure en 11 sections : synthèse exécutive, composition et périmètre, période, tableau comparatif, classement, analyse sectorielle, risques, actualités, trois scénarios, limites et conclusion. Il impose aussi d'indiquer le nombre de sociétés attendues, le nombre analysées avec succès et les sociétés en erreur, et de préciser s'il s'agit d'une analyse complète ou partielle.
 
 Les agents n'ont accès à aucun outil de recherche web : ils ne travaillent que sur les données fournies.
 
@@ -174,8 +184,8 @@ Les agents n'ont accès à aucun outil de recherche web : ils ne travaillent que
 | Exécution n8n, cas d'erreur : 40 sociétés, Wikipédia hors ligne, EODHD en HTTP 402 puis 404, Gemini en erreur | ✅ Aucune interruption, 40 sociétés signalées en erreur, liste de contrôle utilisée et signalée, rapport produit avec les tableaux en annexe |
 | Exécution **réelle** dans n8n (TotalEnergies + Vinci), sans clé EODHD | ✅ Wikipédia en direct (révision 1381078418, 40 sociétés, noms nettoyés). Gemini en direct : rapport en 10 sections, marqueurs respectés, aucun chiffre inventé. EODHD signalé « identifiant EODHD non configuré dans n8n » sans interrompre le workflow. |
 | **v2**, exécution n8n avec données épinglées (4 sociétés, 4 secteurs) | ✅ Le nœud Summarize produit une ligne par secteur. Les deux graphiques QuickChart, les points clés Gemini, la lecture sectorielle et les avertissements sont insérés dans le rapport. |
-| **v2**, exécution **réelle** (Airbus + Sanofi, sans clé EODHD) | ✅ Wikipédia en direct. Gemini analyste en direct : JSON valide lu par « Analyse Gemini structurée ». Gemini rédacteur en direct : 11 sections, marqueurs respectés. 2 lignes réellement ajoutées dans Google Sheets. Le cas « aucun secteur calculable » ne bloque pas le workflow. |
-| **v3**, exécution **réelle** (Airbus, Air Liquide, Axa) | ✅ Les deux modèles Gemini sont appelés par leurs agents. L'analyste renvoie un objet JSON valide via le format de sortie. Le rédacteur produit les 11 sections. Telegram (texte et graphique) et Google Sheets fonctionnent. |
+| **v2**, exécution **réelle** (Airbus + Sanofi, sans clé EODHD) | ✅ Wikipédia en direct. Gemini analyste en direct : sortie structurée valide lue par « Analyse Gemini structurée ». Gemini rédacteur en direct : 11 sections, marqueurs respectés. 2 lignes réellement ajoutées dans Google Sheets. Le cas « aucun secteur calculable » ne bloque pas le workflow. |
+| **v3**, exécution **réelle** (Airbus, Air Liquide, Axa) | ✅ Les deux modèles Gemini sont appelés par leurs agents. L'analyste renvoie un objet structuré valide via le format de sortie. Le rédacteur produit les 11 sections. Telegram (texte et graphique) et Google Sheets fonctionnent. |
 
 La version 2 a corrigé trois défauts supplémentaires :
 - la branche Google Sheets ne s'exécutait pas avant la page finale du formulaire ; elle est désormais placée en haut du canevas ;

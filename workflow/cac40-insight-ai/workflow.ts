@@ -1,5 +1,29 @@
+// =============================================================================
+// CAC 40 Insight AI : un seul workflow n8n qui analyse les 40 sociétés du CAC 40.
+//
+// Ce fichier décrit le workflow avec le SDK officiel @n8n/workflow-sdk.
+// Chaque « node(...) » est un nœud n8n ; les lignes « .to(...) » plus bas
+// décrivent les connexions. Les noms des nœuds sont ceux affichés dans n8n.
+//
+// Déroulement :
+//   1. Formulaire : périmètre, période (1 jour à 1 an), modules, e-mail.
+//   2. Paramètres : seuils, périodes, identifiants de feuille et de discussion.
+//   3. Composition : constituants du CAC 40 lus sur Wikipédia, contrôlés.
+//   4. Boucle par société : cours EODHD, rendement, volatilité, cours du jour.
+//   5. Consolidation : classement, statistiques par secteur, historique.
+//   6. Synthèse : dates communes, scénarios hypothétiques, graphiques.
+//   7. Mise en forme : tableaux Markdown (dont les cours du jour).
+//   8. Agents IA : un agent analyste (sortie structurée), puis un agent rédacteur.
+//   9. Rapport : assemblage, page HTML, e-mail facultatif.
+//  10. Diffusion : Telegram et Google Sheets.
+//
+// Aucun identifiant ni clé n'est écrit ici : ils sont créés dans n8n
+// (identifiants nommés « Requête EODHD », « Google Gemini », etc.).
+// =============================================================================
+
 import { workflow, node, trigger, sticky, newCredential, ifElse, merge, splitInBatches, nextBatch, languageModel, tool, outputParser, expr } from '@n8n/workflow-sdk';
 
+// Raccourcis vers les données des nœuds précédents, réutilisés dans les expressions.
 const P = '$("Paramètres analyse").first().json';
 const REF = '$("Liste de contrôle CAC 40").first().json';
 const COMPO = '$("Contrôler composition").first().json';
@@ -16,6 +40,7 @@ const CLEAN = '.replace(/\\s*\\[[^\\]]*\\]/g, "").trim()';
 
 const conditionOptions = { caseSensitive: true, leftValue: '', typeValidation: 'strict', version: 2 };
 
+// 1. Formulaire : déclenchement manuel, choix du périmètre, de la période et des modules.
 const formulaire = trigger({
   type: 'n8n-nodes-base.formTrigger',
   version: 2.6,
@@ -58,6 +83,7 @@ const formulaire = trigger({
 const DUREE_PERIODE = '({ "1 jour (dernière séance)": { days: 10 }, "1 semaine glissante": { days: 7 }, "1 mois glissant": { months: 1 }, "1 trimestre glissant": { months: 3 }, "1 semestre glissant": { months: 6 }, "1 an glissant": { months: 12 } })[String($json.periode ?? $json["Période d’analyse"] ?? "1 mois glissant")] || { months: 1 }';
 const OBSERVATIONS_PERIODE = '({ "1 jour (dernière séance)": 2, "1 semaine glissante": 4, "1 mois glissant": 15, "1 trimestre glissant": 50, "1 semestre glissant": 110, "1 an glissant": 200 })[String($json.periode ?? $json["Période d’analyse"] ?? "1 mois glissant")] ?? 15';
 
+// 2. Paramètres : toutes les constantes du projet (dates, seuils, périodes, identifiants).
 const parametres = node({
   type: 'n8n-nodes-base.set',
   version: 3.5,
@@ -103,6 +129,7 @@ const parametres = node({
   output: [{ perimetreDemande: 'Tout le CAC 40 (40 sociétés)', selectionMnemos: [], analyseComplete: true, avertissementSelection: '', periodeLibelle: '1 mois glissant (clôtures quotidiennes)', dateFin: '2026-10-22', dateDebut: '2026-09-22', dateExecution: '22/10/2026 20:00', moduleComparaison: true, moduleRisques: true, moduleActualites: false, moduleScenario: true, email: '', seuilBaissePeriodePct: -10, seuilBaisseMaxPct: -15, seuilVolatilitePct: 35, seuilFraicheurJours: 5, minObservations: 15, pauseEntreAppelsSecondes: 3, articlesParSociete: 3, joursBourseParAn: 252, horizonScenarioJours: 21, kFavorable: 1, kCentral: 0, kDefavorable: -1, montantPanierEur: 1000 }]
 });
 
+// 3. Composition : liste de contrôle locale, puis lecture de Wikipédia et comparaison.
 const listeControle = node({
   type: 'n8n-nodes-base.set',
   version: 3.5,
@@ -304,6 +331,7 @@ const boucle = splitInBatches({
   config: { name: 'Boucle par société', parameters: { batchSize: 1 } }
 });
 
+// 4. Boucle par société : une itération par société (pause, cours, indicateurs, alertes).
 const pause = node({
   type: 'n8n-nodes-base.wait',
   version: 1.1,
@@ -376,6 +404,7 @@ const controlerCours = node({
   output: [{ nom: 'Accor', mnemo: 'AC', symbole: 'AC.PA', place: 'Euronext Paris (XPAR)', secteur: 'Consumer Services', statutHttp: '200', erreur: '', typeErreur: '', nbLignesRecues: 22, cours: [{ date: '2026-09-22', cloture: 40.1, clotureAjustee: 40.1 }], sourceCours: 'EODHD', requeteCours: 'https://eodhd.com/api/eod/AC.PA' }]
 });
 
+// Rendement, extrêmes et baisse maximale, calculés sur les cours ajustés.
 const calculerRendement = node({
   type: 'n8n-nodes-base.set',
   version: 3.5,
@@ -429,6 +458,7 @@ const calculerVolatilite = node({
   output: [{ nom: 'Accor', mnemo: 'AC', rendementPct: 2.74, rendementLogMoyen: 0.001, volatiliteAnnualiseePct: 22.4, methodeVolatilite: 'écart-type' }]
 });
 
+// Cours de la dernière séance (brut, en euros) et sa variation par rapport à la séance précédente.
 const calculerCoursJour = node({
   type: 'n8n-nodes-base.set',
   version: 3.5,
@@ -564,6 +594,7 @@ const sansActualites = node({
   output: [{ societe: { nom: 'Accor', symbole: 'AC.PA', qualite: 'OK', rendementPct: 2.74, cleTri: 2.74 }, actualites: [], statutActualites: 'module désactivé' }]
 });
 
+// 5. Consolidation : classement par rendement, statistiques par secteur, ligne d'historique.
 const classer = node({
   type: 'n8n-nodes-base.sort',
   version: 1,
@@ -751,6 +782,7 @@ const historiqueSheets = node({
   output: [{ date_execution: '22/10/2026 20:00', societe: 'Accor' }]
 });
 
+// 6. Synthèse : dates communes, statistiques du panier, scénarios hypothétiques.
 const datesReference = node({
   type: 'n8n-nodes-base.set',
   version: 3.5,
@@ -832,6 +864,7 @@ const scenarios = node({
 
 const BILAN_JOUR_JS = '(() => { const v = $json.resultats.map(r => r.societe).filter(s => s.variationJourPct !== null && s.variationJourPct !== undefined); const dates = $json.resultats.map(r => r.societe.dateFinale).filter(Boolean).sort(); const haus = v.filter(s => s.variationJourPct > 0).sort((a, b) => b.variationJourPct - a.variationJourPct); const baisses = v.filter(s => s.variationJourPct < 0).sort((a, b) => a.variationJourPct - b.variationJourPct); const extrait = s => ({ nom: s.nom, mnemo: s.mnemo, variationJourPct: s.variationJourPct }); return { date: dates.length ? dates[dates.length - 1] : null, nbCalculees: v.length, hausse: haus.length, baisse: baisses.length, inchange: v.filter(s => s.variationJourPct === 0).length, plusFortesHausses: haus.slice(0, 3).map(extrait), plusFortesBaisses: baisses.slice(0, 3).map(extrait) }; })()';
 
+// Bilan du jour : nombre de hausses, de baisses et d'inchangées, avec les plus fortes variations.
 const bilanJour = node({
   type: 'n8n-nodes-base.set',
   version: 3.5,
@@ -854,6 +887,7 @@ const bilanJour = node({
 
 const TABLEAU_JOUR_JS = '(() => { const pc = x => (x === null || x === undefined) ? "n/d" : (x > 0 ? "+" : "") + Number(x).toFixed(2).replace(".", ",") + " %"; const b = $json.coursDuJourBilan; const lignes = $json.resultats.map(r => r.societe).sort((p, q) => (q.variationJourPct ?? -1e9) - (p.variationJourPct ?? -1e9)).map(s => "| " + s.nom + " | " + s.symbole + " | " + (s.coursDuJour === null || s.coursDuJour === undefined ? "n/d" : String(s.coursDuJour).replace(".", ",") + " €") + " | " + (s.dateFinale || "n/d") + " | " + pc(s.variationJourPct) + " | " + pc(s.rendementPct) + " |"); return ["| Société | Symbole | Cours du jour | Date du cours | Variation du jour | Variation sur la période |", "|---|---|---|---|---|---|"].concat(lignes).join("\\n") + "\\n\\n**Dernière séance : " + (b.date || "n/d") + "** — " + b.hausse + " hausse(s), " + b.baisse + " baisse(s), " + b.inchange + " inchangée(s) sur " + b.nbCalculees + " société(s) calculée(s)." + (b.plusFortesHausses.length ? "\\n\\nPlus fortes hausses : " + b.plusFortesHausses.map(s => s.nom + " (" + pc(s.variationJourPct) + ")").join(" ; ") + "." : "") + (b.plusFortesBaisses.length ? "\\n\\nPlus fortes baisses : " + b.plusFortesBaisses.map(s => s.nom + " (" + pc(s.variationJourPct) + ")").join(" ; ") + "." : "") + "\\n\\n_Cours de clôture en euros de la dernière séance disponible (EODHD, données de fin de journée)._"; })()';
 
+// 7. Mise en forme : tableaux Markdown, classement, risques, actualités, scénarios.
 const tableaux = node({
   type: 'n8n-nodes-base.set',
   version: 3.5,
@@ -901,6 +935,7 @@ const graphiques = node({
   output: [{ urlGraphiqueRendements: 'https://quickchart.io/chart?c=...', urlGraphiqueSecteurs: 'https://quickchart.io/chart?c=...' }]
 });
 
+// 8. Agents IA : modèle Gemini, outils et format de sortie de l'agent analyste.
 const modeleAnalyste = languageModel({
   type: '@n8n/n8n-nodes-langchain.lmChatGoogleGemini',
   version: 1.2,
@@ -1020,6 +1055,7 @@ const gemini = node({
   output: [{ output: '## 1. Synthèse exécutive\n...' }]
 });
 
+// Récupération du texte rédigé par l'agent rédacteur.
 const texteGemini = node({
   type: 'n8n-nodes-base.set',
   version: 3.5,
@@ -1043,6 +1079,7 @@ const texteGemini = node({
 const G = '$("Construire les graphiques QuickChart").first().json';
 const MARQUEURS = '({ "[[POINTS_CLES]]": ((' + A + '.pointsCles || []).length ? "**Points clés — Gemini analyste (tonalité : " + (' + A + '.tonaliteGlobale || "indéterminée") + ")**\n\n" + ' + A + '.pointsCles.map(x => "- " + x).join("\n") + ((' + A + '.societesASurveiller || []).length ? "\n\n**Remarquables dans les données :** " + ' + A + '.societesASurveiller.map(x => x.societe + " (" + x.raison + ")").join(" ; ") : "") + (' + A + '.qualiteDonnees ? "\n\n_Qualité des données selon l’analyse : " + ' + A + '.qualiteDonnees + "_" : "") : "_Analyse structurée Gemini indisponible._"), "[[COMPOSITION]]": ' + T + '.mdComposition, "[[GRAPHIQUE_RENDEMENTS]]": (' + G + '.urlGraphiqueRendements ? "<img src=\\"" + ' + G + '.urlGraphiqueRendements + "\\" alt=\\"Rendement par société\\" style=\\"max-width:100%\\">" : "_Graphique indisponible : aucune société comparable._"), "[[TABLEAU_COMPARATIF]]": (' + G + '.urlGraphiqueCours ? "<img src=\\"" + ' + G + '.urlGraphiqueCours + "\\" alt=\\"Cours en euros\\" style=\\"max-width:100%\\">\\n\\n" : "") + ' + T + '.mdTableau, "[[CLASSEMENT]]": ' + T + '.mdClassement, "[[SECTEURS]]": (' + G + '.urlGraphiqueSecteurs ? "<img src=\\"" + ' + G + '.urlGraphiqueSecteurs + "\\" alt=\\"Rendement moyen par secteur\\" style=\\"max-width:100%\\">\n\n" : "") + ' + T + '.mdSecteurs + ((' + A + '.lectureSectorielle || []).length ? "\n\n**Lecture sectorielle (Gemini analyste)**\n\n" + ' + A + '.lectureSectorielle.map(l => "- **" + l.secteur + "** : " + l.commentaire).join("\n") : ""), "[[RISQUES]]": ' + T + '.mdRisques, "[[ACTUALITES]]": ' + T + '.mdActualites, "[[SCENARIOS]]": ' + T + '.mdScenarios, "[[ERREURS]]": ' + T + '.mdErreurs + ((' + A + '.avertissements || []).length ? "\n\n**Avertissements de l’analyse IA :**\n" + ' + A + '.avertissements.map(x => "- " + x).join("\n") : "") })';
 
+// 9. Rapport : remplacement des marqueurs [[…]] par les tableaux et graphiques calculés.
 const assembler = node({
   type: 'n8n-nodes-base.set',
   version: 3.5,
@@ -1096,6 +1133,7 @@ const page = node({
   output: [{ titre: 'CAC 40 Insight AI', rapportHtml: '<h1>CAC 40 Insight AI</h1>', pageHtml: '<div><h1>CAC 40 Insight AI</h1></div>' }]
 });
 
+// 10. Diffusion : e-mail facultatif, Telegram et page du rapport.
 const emailDemande = ifElse({
   version: 2.2,
   config: {
@@ -1237,6 +1275,7 @@ const afficherRapport = node({
   output: [{}]
 });
 
+// Notes de couleur affichées sur le canevas n8n.
 const noteGenerale = sticky('## 1. Formulaire et paramètres\nWorkflow unique, sans nœud Code.\nLe formulaire choisit le périmètre (40 sociétés par défaut), la période et les modules. Le nœud « Paramètres analyse » contient tous les seuils, l’ID Telegram et l’ID de la feuille Google Sheets.', [formulaire, parametres, listeControle], { color: 7 });
 const noteComposition = sticky('## 2. Composition du CAC 40\nActualisée à chaque exécution via l’API MediaWiki (Wikipédia, tableau « constituents »), puis contrôlée : 40 sociétés, doublons, symboles, 10 sociétés clés, entrées et sorties de l’indice.', [compositionWikipedia, preparerHtml, extraireTableau, normaliserComposition, controlerComposition, uneLigneParSociete, filtrerSelection, supprimerDoublons], { color: 6 });
 const noteBoucle = sticky('## 3. Analyse société par société\nBoucle sur les sociétés : cours EODHD sur un mois, rendement, plus haut et plus bas, baisse maximale, volatilité, qualité des données, alertes et actualités facultatives. Une erreur n’arrête jamais la boucle.', [pause, coursHistoriques, controlerCours, calculerRendement, calculerVolatilite, qualifier, actualitesActivees, actualitesEodhd, joindreActualites, sansActualites], { color: 5 });
@@ -1247,6 +1286,7 @@ const notePromptRedacteur = sticky('## 🤖 Agent IA n° 2 : rédacteur\nNœud *
 const noteDiffusion = sticky('## 6. Diffusion\nRapport HTML affiché à la fin du formulaire, envoyé par Gmail si une adresse est saisie, et résumé + graphique envoyés sur Telegram si `telegramChatId` est renseigné dans « Paramètres analyse ».', [assembler, versHtml, page, emailDemande, envoyerEmail, telegramConfigure, messageTelegram, envoyerTelegram, graphiqueDisponible, envoyerGraphique, afficherRapport], { color: 6 });
 const noteCredentials = sticky('## Identifiants à configurer\n- **EODHD API (api_token)** : « Query Auth », nom `api_token`, valeur = votre clé EODHD.\n- **Google Gemini (PaLM) API** : clé Google AI Studio.\n- **Google Sheets**, **Telegram**, **Gmail** : comptes déjà connectés à n8n.\nAucune clé n’est stockée dans le workflow.', [], { color: 3 });
 
+// Assemblage du workflow : l'ordre des « .to(...) » définit les connexions.
 export default workflow('cac40-insight-ai', 'CAC 40 Insight AI', { timezone: 'Europe/Paris', executionOrder: 'v1', saveManualExecutions: true })
   .add(formulaire)
   .to(parametres)
