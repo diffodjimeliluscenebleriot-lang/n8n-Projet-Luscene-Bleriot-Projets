@@ -115,7 +115,7 @@ Les seuils se règlent dans le nœud **« Paramètres analyse »**. Ce sont des 
 
 ## Fonctionnement du workflow (54 nœuds, 9 notes, aucun groupe replié)
 
-1. **Formulaire → Paramètres** : normalise les choix, calcule la période (de J−1 mois à aujourd'hui, fuseau Europe/Paris) et fixe les seuils.
+1. **Formulaire → Paramètres** : normalise les choix, calcule la période (de J à aujourd'hui, selon la période choisie, fuseau Europe/Paris) et fixe les seuils.
 2. **Composition du CAC 40** :
    - appel à l'API MediaWiki, puis extraction HTML du tableau `#constituents` ;
    - normalisation des symboles ;
