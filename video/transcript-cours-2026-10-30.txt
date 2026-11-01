@@ -1,0 +1,78 @@
+Transcript du compte rendu du 30/10/2026 (version corrigée).
+Base : transcription automatique (Whisper), relue pour les noms propres et les termes techniques.
+Les passages marqués [?] restent incertains.
+
+[00:02] Bonjour Lucas, et du coup, là, ça c'est la vidéo pour faire le compte rendu comme tu as demandé et donc je vais commencer la vidéo va se faire en 4 parties, 1ère partie présentation du workflow, 2ème partie présentation des skills et 3ème partie ce sera ce que j'ai aimé, 4ème partie ce que j'ai pas aimé et ce qui faudrait potentiellement améliorer pour les prochaines fois.
+[00:30] Alors, ici on a la présentation du workflow donc et en gros, comme tu peux le voir, le workflow il est assez large parce que en gros c'est un projet qui porte sur la présentation, sur en gros, il fait quoi ce workflow en gros ?
+[00:53] C'est un agent IA qui permet d'analyser les performances des entreprises du CAC 40 dans tous les domaines financiers parce que ce qu'il faut savoir c'est que moi je suis investisseur et donc j'ai pensé à faire un agent IA qui analyse dans tous les compartiments donnés toutes les capacités financières des reprises du CAC 40
+[01:15] donc comme tu le sais déjà, les entreprises en fonction de leur performance, en fonction de leur performance que soit financière ou extra financière, ont voulu se voir répercuter les conséquences directes de leur performance sur leur cours d'action
+[01:33] Alors moi je sais que chaque entreprise qui a des performances financières élevées aura également, potentiellement, à 80% d'un hausse de son cours boursier.
+[01:48] Alors, voici le workflow, si tu veux me voir tourner comme ça c'est parce qu'en gros, le workflow il est sur mon écran et du coup il est axil, il faut que je le agrandisse pour qu'on puisse bien voir.
+[02:00] Alors le workflow il est là, formulaire CAC 40, Insight, il est long et du coup je ne peux pas vraiment tout expliquer.
+[02:07] Ici j'ai préféré placer un fichier Google Apps Script pour pouvoir sauvegarder en gros les données quand elles seront téléchargées.
+[02:18] Il y a la synthèse des scénarios, il y a l'agent numéro 1 qui est large en tant qu'analyste, qui permet vraiment d'apporter cette analyse technique là à toutes les informations et les données financières qui sont sur EODHD, qui incite sur où j'ai pu extirper les données financières.
+[02:38] On a l'agent numéro 2 qui est le rédacteur qui rédige les rapports, ensuite on a l'agent numéro 3 qui analyse les sociétés par société, ensuite on a l'agent numéro 4 qui fait la consolidation des secteurs et les historiques, et ensuite on a l'agent numéro 5 qui fait les synthéses des scénarios et qui fait les graphiques également et on a l'agent numéro 6 qui fait les graphiques.
+[03:00] J'ai préféré utiliser l'agent, le modèle Google Gemini et ici j'ai également choisi ajouter deux possibilités, dans la possibilité d'avoir le rapport soit par mail soit le rapport sur Telegram et ça dépend de vous, le rapport par mail est mieux recommandé parce qu'il sera plus complet, celui de Telegram sera un rapport un peu plus sophistiqué, un peu plus costumisé, un peu plus réduit.
+[03:25] Alors, pensons donc aux skills.
+[03:29] Alors les skills qu'on a eu à faire en cours, on a eu l'interview, en gros l'interview, il permet de cadrer avant de construire, c'est-à-dire de poser des questions, tu demandes l'intelligence artificielle, en gros l'intelligence artificielle va te poser plusieurs questions.
+[03:43] Et afin de vraiment comprendre ce quoi, ce quoi, le projet sur lequel tu veux travailler et de tuer qu'avant de lancer l'automatisation, il sera, il aura compris tout ce que tu veux faire tout et aura mémorisé étape par étape.
+[04:01] En gros, en gros, c'est de transformer une idée vague à une specification claire à la suite de plusieurs questions avant d'écrire la montre ligne de code.
+[04:11] Et ensuite, on a le doubt-driven-dev.
+[04:14] Ici, son rôle est de développer en considérant que rien n'est acquis, ni la mémoire, ni la documentation, ni les tests, chaque hypothèse est listée et plus vérifiée.
+[04:23] Et vérifier par les mois, les mots coûteux, une affirmation comme doit être accompagnée et la commande et la sortie, un test doit d'abord être fait et plusieurs choses.
+[04:38] Et après, on a le hostile-review qui permet de rechercher ce qui va casser, de tester, de relire le code en partant du principe qu'il peut être défectueux, qu'il n'y a rien, qu'il est parfait et qu'il peut y avoir des failles et des limites avant la production.
+[04:54] En gros, c'est ça.
+[04:55] Et alors, là, je vais essayer d'exécuter le workflow.
+[05:00] Là, j'ai cliqué sur exécuter et là, tu vois, il y a [?] (nom incertain).
+[05:04] Tu peux choisir une sélection personnalisée.
+[05:07] Je choisis les entreprises que je veux.
+[05:09] Ça peut être les entreprises du domaine boursier, les entreprises de bancaire, les entreprises du même domaine comme les entreprises de bancaire.
+[05:15] Ce sont les générales, les crédits agricoles, AXA, BNP Paribas et autres.
+[05:21] Ça peut être des entreprises qui sont plutôt orientées armement comme d'un Safran [?].
+[05:26] Et ici, on a un peu personnalisé la période.
+[05:29] Ça peut être un mois, sur une semaine, sur un semestre.
+[05:33] Si vous faites du stock picking, c'est comme du trading en mode de vous acheter et vous revendre directement.
+[05:38] Ça peut être le mieux de faire une semaine et un jour pour avoir la tendance du moment.
+[05:47] Mais si vous voulez vraiment acheter du long terme, c'est mieux de passer un an ou un semestre.
+[05:51] Et après, vous avez les modules du risque.
+[05:54] Et ici, vous avez l'opposité d'ajouter une adresse mail qui va recevoir du coup le rapport.
+[05:59] Et après, vous faites l'ancel analyse.
+[06:02] Et vous attendez un instant, ça peut prendre 2 à 3 minutes.
+[06:06] Et là, on attend.
+[06:12] Et normalement après, vous recevez directement le rapport sur Telegram.
+[06:18] Comme ceci, vous voyez le rapport, il est là.
+[06:21] Mais juste ici, il est vraiment détaillé.
+[06:23] On a CAC 40 INSIGHT, analyse de complet du CAC 40, d'objectif société.
+[06:27] Vous voyez, et si lors des bibliothèques d'un système, vous voyez, il y a les plus forts, il y a les plus faibles.
+[06:33] Et voilà, il y a le rendement pondéré, la progression.
+[06:37] En fait, si vous êtes un analyse financier, vous saurez directement ce que vous voulez faire.
+[06:42] Et là, il y a un seul, parce que j'ai cliqué sur Accor.
+[06:45] Il y a un seul graphique qui s'est montré, parce qu'en gros, j'ai cliqué sur Accor.
+[06:52] Et du coup, il m'a donné que les informations qui concernent Accor.
+[06:56] Et vous voyez, il y a tout ce qui le concerne.
+[06:57] La synthèse de l'activité, le périmètre, le table comparatif, l'analyse des performances, l'analyse des sectoriennes.
+[07:05] Et pour moi, c'est quelque chose de très, très complet.
+[07:07] Alors, maintenant là, nous sommes sur la dernière partie.
+[07:11] Et donc, ce que j'ai aimé, ce que j'ai aimé particulièrement sur le cours, c'était les masterclass.
+[07:15] Tu nous as donné plusieurs cheat codes, comment vendre nos activités, comment on vend nos automatisations, comment on vend nos services, comment faire du DevOps, comment faire héberger nos systèmes.
+[07:25] Et franchement, c'était trop bien, parce que ce n'est pas tous les profs qui le font.
+[07:29] Ce n'est pas tous les profs qui ont la mentalité, vraiment, de nous doubler de tout ce qu'ils ont appris avec tant de temps, avec tant de labeurs.
+[07:35] Et franchement, ça m'a beaucoup touché.
+[07:37] Maintenant, ce que je n'ai pas vraiment aimé, c'est le fait que...
+[07:41] J'ai également aimé le fait que tu te déplacais, que tu t'es aux petits soins, que tu venais voir tout le monde pour savoir où est-ce qu'on a été.
+[07:47] Lorsqu'on était bloqués, n'hésitez pas à nous débloquer en me montrant ce qu'il faut faire.
+[07:51] Tu nous as partagé tes cheat codes, franchement, c'était trop bien.
+[07:54] Et ce que j'ai moins aimé, du coup, c'était le fait qu'il n'y avait pas de guide pas à pas.
+[08:00] Il n'y avait pas de guide pas à pas, c'était vraiment trop orienté IA.
+[08:04] Il n'y avait pas vraiment cette partie-là où, avant de contier IA, on maîtrise vraiment le sujet.
+[08:10] Par exemple, moi, je ne peux pas construire cet agent IA de moi-même, mais je ne peux pas le faire avec IA.
+[08:16] Donc, ça aurait été bien quand même d'avoir un petit guide pas à pas au cas où on souhaiterait le construire de nous-mêmes.
+[08:23] C'est peut-être pour un autre projet un peu plus simple.
+[08:26] Donc, ma recommandation, c'est que, peut-être, pour les prochains coups, tu fasses un petit guide pas à pas.
+[08:32] Je sais que tu es capable de l'automatiser, donc ce sera encore mieux.
+[08:35] Un petit guide pas à pas qui pourra mieux orienter les étudiants.
+[08:38] Et voilà, et merci encore beaucoup.
+[08:40] Il faut de plus, merci beaucoup pour le temps que tu nous as accordé.
+[08:43] Franchement, j'ai été touché.
+[08:45] Et franchement, c'était un très chouette cours de n8n, et j'attends tes vidéos sur YouTube.
+[08:49] Merci.
